@@ -5,18 +5,24 @@ import weapon.Weapon;
 public abstract class Person {
 
     private String name;
+    private PersonType personType;
     private Integer offensiveLevel;
     private Integer defensiveLevel;
     private Weapon weapon;
     private boolean isAlive = true;
 
-    public Person(String name, Integer offensiveLevel, Integer defensiveLevel, Weapon weapon) {
+    public Person(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel, Weapon weapon, boolean isAlive) {
         this.name = name;
+        this.personType = personType;
         this.offensiveLevel = offensiveLevel;
         this.defensiveLevel = defensiveLevel;
         this.weapon = weapon;
+        this.isAlive = isAlive;
     }
 
+    public PersonType getPersonType() {
+        return personType;
+    }
 
     public String getName() {
         return name;
@@ -26,7 +32,7 @@ public abstract class Person {
         return this.offensiveLevel;
     }
 
-    public Integer getDeffensiveLevel() {
+    public Integer getDefensiveLevel() {
         return defensiveLevel;
     }
 
