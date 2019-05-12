@@ -11,13 +11,12 @@ public abstract class Person {
     private Weapon weapon;
     private boolean isAlive = true;
 
-    public Person(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel, Weapon weapon, boolean isAlive) {
+    public Person(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel, Weapon weapon) {
         this.name = name;
         this.personType = personType;
         this.offensiveLevel = offensiveLevel;
         this.defensiveLevel = defensiveLevel;
         this.weapon = weapon;
-        this.isAlive = isAlive;
     }
 
     public PersonType getPersonType() {
