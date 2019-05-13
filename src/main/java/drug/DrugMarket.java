@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class DrugShop { //implements Singleton
+public class DrugMarket { //implements Singleton
 
     private Map<DrugType, BigDecimal> priceList;
-    private static DrugShop shop = null;
+    private static DrugMarket shop = null;
     Random rand = new Random();
 
-    private DrugShop() {
+    private DrugMarket() {
         this.priceList = new HashMap<>();
         priceList.put(DrugType.MARIJUANA, BigDecimal.valueOf(100));
         priceList.put(DrugType.HEROIN, BigDecimal.valueOf(100));
@@ -23,9 +23,9 @@ public class DrugShop { //implements Singleton
 
     }
 
-    public static DrugShop getDrugShop() {
+    public static DrugMarket getDrugMarket() {
         if (shop == null) {
-            shop = new DrugShop();
+            shop = new DrugMarket();
         }
         return shop;
     }

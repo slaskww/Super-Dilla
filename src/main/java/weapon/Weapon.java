@@ -19,4 +19,28 @@ public class Weapon {
         this.price = price;
         this.weight = weight;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public WeaponType getType() {
+        return type;
+    }
+
+    public Integer getOffensiveLevel() {
+        return offensiveLevel;
+    }
+
+    public Integer getDefensiveLevel() {
+        return defensiveLevel;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
 }

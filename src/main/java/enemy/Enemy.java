@@ -12,4 +12,8 @@ public class Enemy extends Person {
         super(name, personType, offensiveLevel, defensiveLevel, weapon);
         this.isCorruptible = isCorruptible;
     }
+
+    public boolean isCorruptible() {
+        return isCorruptible;
+    }
 }

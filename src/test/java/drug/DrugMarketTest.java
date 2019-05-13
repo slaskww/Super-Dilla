@@ -7,12 +7,12 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DrugShopTest {
+public class DrugMarketTest {
 
     @Test
     public void shouldChangePrices(){
 
-        DrugShop shop = DrugShop.getDrugShop();
+        DrugMarket shop = DrugMarket.getDrugShop();
         Map<DrugType, BigDecimal> priceList = shop.getPriceList();
 
         BigDecimal valueOfFirstElementBeforeChange = priceList.get(DrugType.AMPHETAMINE);
