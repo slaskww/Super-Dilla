@@ -1,6 +1,7 @@
 package generalplayer;
 
 import weapon.Weapon;
+import weapon.WeaponFactory;
 
 public abstract class Person {
 
@@ -44,14 +45,26 @@ public abstract class Person {
         return isAlive;
     }
 
-    public void setWeapon(Weapon weapon) {
+    public void addWeapon(Weapon weapon) {
+
+        if (this.weapon != null){
+            this.dropWeapon();
+        }
+
         this.weapon = weapon;
         this.offensiveLevel += weapon.getOffensiveLevel();
         this.defensiveLevel += weapon.getDefensiveLevel();
     }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
+    public void dropWeapon() {
+        this.offensiveLevel -= weapon.getOffensiveLevel();
+        this.defensiveLevel -= weapon.getDefensiveLevel();
+        this.weapon = null;
+    }
+
+
+    public void kill() {
+        this.isAlive = false;
     }
 
     public void boostOffensiveLevel(Integer offensiveLevel) {

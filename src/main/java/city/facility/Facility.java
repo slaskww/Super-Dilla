@@ -10,12 +10,15 @@ public class Facility {
     private BigDecimal price;
     private Integer defensiveBenefitFromUsing;
     private Integer offensiveBenefitFromUsing;
+    private Integer mentalBenefitFromUsing;
 
-    public Facility(String name, BigDecimal price, Integer defensiveBenefitFromUsing, Integer offensiveBenefitFromUsing) {
+
+    public Facility(String name, BigDecimal price, Integer defensiveBenefitFromUsing, Integer offensiveBenefitFromUsing, Integer mentalBenefitFromUsing) {
         this.name = name;
         this.price = price;
         this.defensiveBenefitFromUsing = defensiveBenefitFromUsing;
         this.offensiveBenefitFromUsing = offensiveBenefitFromUsing;
+        this.mentalBenefitFromUsing = mentalBenefitFromUsing;
     }
 
     public String getName() {
@@ -24,6 +27,10 @@ public class Facility {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public Integer getMentalBenefitFromUsing() {
+        return mentalBenefitFromUsing;
     }
 
     public Integer getDefensiveBenefitFromUsing() {
@@ -37,6 +44,7 @@ public class Facility {
     public Person addBenefitFromUsing(Person person){
         person.boostDefensiveLevel(defensiveBenefitFromUsing);
         person.boostOffensiveLevel(offensiveBenefitFromUsing);
+        person.boostOffensiveLevel(mentalBenefitFromUsing);
 
         return person;
     }

@@ -12,11 +12,13 @@ public class Player extends Person {
 
     private Map<Drug, Integer> backpackWithDope;
     private BankAccount account;
+    private Integer mentalHealthLevel;
 
-    public Player(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel, Weapon weapon, Map<Drug, Integer> backpackWithDope, BankAccount account) {
+    public Player(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel, Integer mentalHealthLevel ,Weapon weapon, Map<Drug, Integer> backpackWithDope, BankAccount account) {
         super(name, personType, offensiveLevel, defensiveLevel, weapon);
         this.backpackWithDope = backpackWithDope;
         this.account = account;
+        this.mentalHealthLevel = mentalHealthLevel;
     }
 
     public Map<Drug, Integer> getBackpackWithDope() {
@@ -27,6 +29,15 @@ public class Player extends Person {
         return account;
     }
 
+    public Integer getMentalHealthLevel() {
+        return mentalHealthLevel;
+    }
 
+    public void increaseMentalHealthLevel(Integer mentalHealth){
+        this.mentalHealthLevel += mentalHealth;
+    }
+    public void decreaseMentalHealthLevel(Integer mentalHealth){
+        this.mentalHealthLevel -= mentalHealth;
+    }
 }
 

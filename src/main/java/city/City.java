@@ -13,5 +13,28 @@ public class City {
     private List<Enemy> enemies;
     private List<Facility> facilities;
 
+    public City(String name, DrugMarket market, List<Enemy> enemies, List<Facility> facilities) {
+        this.name = name;
+        this.market = market;
+        this.enemies = enemies;
+        this.facilities = facilities;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public DrugMarket getMarket() {
+        return market;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public List<Facility> getFacilities() {
+        return facilities;
+    }
+
 
 }

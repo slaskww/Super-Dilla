@@ -60,7 +60,7 @@ public class DrugMarket { //implements Singleton
     }
 
     public double getRate(){
-        return  rand.nextDouble() + 0.5; //rate has range between 0.5 - 1.5
+        return  rand.nextDouble() + 0.6; //rate has range between 0.6 - 1.6
     }
 
 }
