@@ -27,6 +27,7 @@ public class City {
         return name;
     }
 
+
     public DrugMarket getMarket() {
         return market;
     }
@@ -38,6 +39,5 @@ public class City {
     public List<Facility> getFacilities() {
         return facilities;
     }
-
 
 }

@@ -1,9 +1,38 @@
 package game;
 
+import player.Player;
+import world.World;
+import world.WorldBuilder;
+
 public class GameEngine {
+    private int MAX_NUMBER_OF_DAYS = 60;
+    private int daysFromStart = 0;
+    private World world;
+    private Player player;
+
+    public GameEngine(Player player) {
+        this.player = player;
+    }
+
+    public void prepareGame() {
+
+        WorldBuilder builder = new WorldBuilder();
+        builder
+                .addCrystalRiver()
+                .addDopeTown()
+                .addGrassbay()
+                .addWhiteMountain();
+
+        world = builder.build();
+
+    }
+
+    public void start() {
 
 
-public void prepareGame(){}
+        while (daysFromStart == MAX_NUMBER_OF_DAYS || !player.isAlive()){
 
-public void start(){}
+            daysFromStart++;
+        }
+    }
 }

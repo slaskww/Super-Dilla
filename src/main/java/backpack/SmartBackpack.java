@@ -59,13 +59,13 @@ public class SmartBackpack {
         return this.goods.get(type);
     }
 
-    public FacilityPaymentStatus payForFacilities(BigDecimal price){
+    public PaymentForFacilitiesStatus payForFacilities(BigDecimal price){
 
         if (this.wallet.compareTo(price) > 0){
             this.wallet = wallet.subtract(price);
-            return FacilityPaymentStatus.TRANSACTION_ACCEPTED;
+            return PaymentForFacilitiesStatus.TRANSACTION_ACCEPTED;
         } else{
-            return FacilityPaymentStatus.TRANSACTION_REJECTED;
+            return PaymentForFacilitiesStatus.TRANSACTION_REJECTED;
         }
     }
 }
