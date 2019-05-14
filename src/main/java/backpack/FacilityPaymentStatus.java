@@ -1,6 +1,6 @@
-package bank;
+package backpack;
 
-public enum WithdrawalStatus {
+public enum FacilityPaymentStatus {
 
     TRANSACTION_ACCEPTED,
     TRANSACTION_REJECTED
