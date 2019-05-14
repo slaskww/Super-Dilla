@@ -6,6 +6,7 @@ import city.CityFactory;
 import generalplayer.Person;
 import generalplayer.PersonType;
 import weapon.Weapon;
+import weapon.WeaponFactory;
 
 import java.math.BigDecimal;
 
@@ -14,13 +15,14 @@ public class Player extends Person {
     private SmartBackpack smartBackpack;
     private Integer mentalHealthLevel;
     private City city;
-    public static final Integer INITIAL_OFFENSIVE_LEVEL = 50;
-    public static final Integer INITIAL_DEFENSIVE_LEVEL = 50;
-    public final Integer INITIAL_MENTAL_LEVEL = 50;
+    private static PersonType PLAYER_PERSON_TYPE = PersonType.PLAYER;
+    private static final Integer INITIAL_OFFENSIVE_LEVEL = 50;
+    private static final Integer INITIAL_DEFENSIVE_LEVEL = 50;
+    private final Integer INITIAL_MENTAL_LEVEL = 50;
+    private static final Weapon BASIC_WEAPON = WeaponFactory.kitchenKnife();
 
-
-    public Player(String name, PersonType personType, Weapon weapon) {
-        super(name, personType, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, weapon);
+    public Player(String name) {
+        super(name, PLAYER_PERSON_TYPE, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, BASIC_WEAPON);
         this.smartBackpack = new SmartBackpack();
         this.mentalHealthLevel = INITIAL_MENTAL_LEVEL;
         this.city = CityFactory.grassbay();
