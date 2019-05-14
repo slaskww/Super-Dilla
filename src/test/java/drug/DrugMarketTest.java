@@ -12,7 +12,8 @@ public class DrugMarketTest {
     @Test
     public void shouldChangePrices(){
 
-        DrugMarket shop = DrugMarket.getDrugShop();
+        //Given
+        DrugMarket shop = DrugMarket.getDrugMarket();
         Map<DrugType, BigDecimal> priceList = shop.getPriceList();
 
         BigDecimal valueOfFirstElementBeforeChange = priceList.get(DrugType.AMPHETAMINE);
@@ -22,8 +23,11 @@ public class DrugMarketTest {
         BigDecimal valueOfFifthElementBeforeChange = priceList.get(DrugType.MARIJUANA);
 
         Double rate = 1.2;
+
+        //When
         shop.changePrices(rate);
         priceList = shop.getPriceList();
+
 
         BigDecimal valueOfFirstElementAfterChange = priceList.get(DrugType.AMPHETAMINE);
         BigDecimal valueOfSecondElementAfterChange = priceList.get(DrugType.COCAINE);
@@ -31,6 +35,7 @@ public class DrugMarketTest {
         BigDecimal valueOfFourthElementAfterChange = priceList.get(DrugType.HEROIN);
         BigDecimal valueOfFifthElementAfterChange = priceList.get(DrugType.MARIJUANA);
 
+        //Then
         assertThat(valueOfFirstElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
         assertThat(valueOfSecondElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
         assertThat(valueOfThirdElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));

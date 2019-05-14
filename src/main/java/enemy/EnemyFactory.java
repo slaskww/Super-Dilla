@@ -21,18 +21,18 @@ public class EnemyFactory {
     }
 
 
-    public static Enemy elChapo() {
-        Enemy enemy = new Enemy("El Chapo", PersonType.BOSS, 100, 100, WeaponFactory.machineGun(), true);
+    public static Enemy elChipotle() {
+        Enemy enemy = new Enemy("El Chipotle", PersonType.BOSS, 100, 100, WeaponFactory.machineGun(), true);
         return enemy;
     }
 
-    public static Enemy pabloEscobar() {
-        Enemy enemy = new Enemy("Pablo Escobar", PersonType.BOSS, 150, 150, WeaponFactory.machineGun(), true);
+    public static Enemy pabloHabanero() {
+        Enemy enemy = new Enemy("Pablo Habanero", PersonType.BOSS, 150, 150, WeaponFactory.machineGun(), true);
         return enemy;
     }
 
-    public static Enemy vitoCorleone() {
-        Enemy enemy = new Enemy("Vito Corleone", PersonType.BOSS, 200, 200, WeaponFactory.machineGun(), true);
+    public static Enemy vitoCapsicio() {
+        Enemy enemy = new Enemy("Vito Capsicio", PersonType.BOSS, 200, 200, WeaponFactory.machineGun(), true);
         return enemy;
     }
 
