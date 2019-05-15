@@ -18,11 +18,11 @@ public class Player extends Person {
     private static PersonType PLAYER_PERSON_TYPE = PersonType.PLAYER;
     private static final Integer INITIAL_OFFENSIVE_LEVEL = 50;
     private static final Integer INITIAL_DEFENSIVE_LEVEL = 50;
-    private final Integer INITIAL_MENTAL_LEVEL = 50;
+    private static final Integer INITIAL_MENTAL_LEVEL = 50;
     private static final Weapon BASIC_WEAPON = WeaponFactory.kitchenKnife();
 
     public Player(String name) {
-        super(name, PLAYER_PERSON_TYPE, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, BASIC_WEAPON);
+        super(name, PLAYER_PERSON_TYPE, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, INITIAL_MENTAL_LEVEL ,BASIC_WEAPON);
         this.smartBackpack = new SmartBackpack();
         this.mentalHealthLevel = INITIAL_MENTAL_LEVEL;
         this.city = CityFactory.grassbay();
@@ -44,11 +44,6 @@ public class Player extends Person {
         return city;
     }
 
-    public void increaseMentalHealthLevel(Integer mentalHealth){
-        this.mentalHealthLevel += mentalHealth;
-    }
-    public void decreaseMentalHealthLevel(Integer mentalHealth){
-        this.mentalHealthLevel -= mentalHealth;
-    }
+
 }
 

@@ -35,11 +35,12 @@ public class GameEngine {
 
         dialogAgent.spectate(EventType.GAME_STARTED);
 
-        while (daysFromStart == MAX_NUMBER_OF_DAYS || !player.isAlive()){
+        while (daysFromStart < MAX_NUMBER_OF_DAYS && player.isAlive()){
 
             daysFromStart++;
             System.out.println(daysFromStart);
-
+            System.out.println(player.getPerson());
+            player.boostMentalLevel(-1);
         }
     }
 

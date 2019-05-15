@@ -7,7 +7,7 @@ public class DillaApp {
 
     public static void main(String[] args) {
 
-        Player player = new Player("Janusz");
+        Player player = new Player("Player");
         GameEngine game = new GameEngine(player);
         game.prepareGame();
         ConsoleDialogAgent agent = new ConsoleDialogAgent();

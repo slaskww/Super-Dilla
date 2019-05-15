@@ -1,7 +1,6 @@
 package generalplayer;
 
 import weapon.Weapon;
-import weapon.WeaponFactory;
 
 public abstract class Person {
 
@@ -9,15 +8,17 @@ public abstract class Person {
     private PersonType personType;
     private Integer offensiveLevel;
     private Integer defensiveLevel;
+    private Integer mentalLevel;
     private Weapon weapon;
     private boolean isAlive = true;
 
-    public Person(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel, Weapon weapon) {
+    public Person(String name, PersonType personType, Integer offensiveLevel, Integer defensiveLevel,Integer mentalLevel ,Weapon weapon) {
         this.name = name;
         this.personType = personType;
         this.weapon = weapon;
         this.offensiveLevel = offensiveLevel + weapon.getOffensiveLevel();
         this.defensiveLevel = defensiveLevel + weapon.getDefensiveLevel();
+        this.mentalLevel = mentalLevel;
 
     }
 
@@ -42,6 +43,7 @@ public abstract class Person {
     }
 
     public boolean isAlive() {
+        killIfMentalIsZero();
         return isAlive;
     }
 
@@ -68,12 +70,35 @@ public abstract class Person {
     }
 
     public void boostOffensiveLevel(Integer offensiveLevel) {
-        this.offensiveLevel = offensiveLevel;
+        this.offensiveLevel += offensiveLevel;
     }
 
     public void boostDefensiveLevel(Integer defensiveLevel) {
-        this.defensiveLevel = defensiveLevel;
+        this.defensiveLevel += defensiveLevel;
     }
 
+    public void boostMentalLevel(Integer mentalLevel) {
+        this.mentalLevel += mentalLevel;
+    }
+
+    public String getPerson(){
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("\tName: ").append(name).append("\n");
+        builder.append("\tType: ").append(personType).append("\n");
+        builder.append("\tDefensive: ").append(defensiveLevel).append("\n");
+        builder.append("\tOffensive: ").append(offensiveLevel).append("\n");
+        builder.append("\tMental: ").append(mentalLevel).append("\n");
+        builder.append("\tWeapon: ").append(weapon.getName()).append("\n");
+
+        return builder.toString();
+    }
+
+    public void killIfMentalIsZero(){
+
+        if (mentalLevel == 0){
+            this.kill();
+        }
+    }
 
 }

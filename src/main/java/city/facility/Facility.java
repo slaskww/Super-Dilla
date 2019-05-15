@@ -44,7 +44,7 @@ public class Facility {
     public Person addBenefitFromUsing(Person person){
         person.boostDefensiveLevel(defensiveBenefitFromUsing);
         person.boostOffensiveLevel(offensiveBenefitFromUsing);
-        person.boostOffensiveLevel(mentalBenefitFromUsing);
+        person.boostMentalLevel(mentalBenefitFromUsing);
 
         return person;
     }
