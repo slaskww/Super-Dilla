@@ -38,9 +38,10 @@ public class GameEngine {
         while (daysFromStart < MAX_NUMBER_OF_DAYS && player.isAlive()){
 
             daysFromStart++;
-            System.out.println(daysFromStart);
+            System.out.println("Day:" + TimeInGame.getDay());
             System.out.println(player.getPerson());
             player.boostMentalLevel(-1);
+
         }
     }
 

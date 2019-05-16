@@ -2,5 +2,6 @@ package dialogAgent;
 
 public enum EventType {
 
-    GAME_STARTED;
+    GAME_STARTED,
+    NEW_DAY,
 }
