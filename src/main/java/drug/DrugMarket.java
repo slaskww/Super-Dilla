@@ -56,12 +56,20 @@ public class DrugMarket { //implements Singleton
         return priceList.entrySet().iterator();
     }
 
-    public double getRate(){
-        return  rand.nextDouble() + 0.6; //rate has range between 0.6 - 1.6
+    public double getRate() {
+        return rand.nextDouble() + 0.6; //rate has range between 0.6 - 1.6
     }
 
-    public List<DrugType> getDrugTypeList(){
-        return Arrays.asList(DrugType.values());
+
+    public List<DrugType> getDrugTypeList() {
+
+        List<DrugType> list = new ArrayList<>();
+
+        for (Map.Entry<DrugType, BigDecimal> entry :priceList.entrySet()){
+            list.add(entry.getKey());
+        }
+
+        return list;
     }
 }
 

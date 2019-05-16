@@ -1,5 +1,8 @@
 package dialogAgent;
 
+import drug.Drug;
+import drug.DrugFactory;
+import drug.DrugMarket;
 import drug.DrugType;
 import enemy.Enemy;
 import generalplayer.PersonType;
@@ -9,7 +12,6 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 public class ConsoleDialogAgent implements DialogAgent {
 
@@ -78,7 +80,8 @@ public class ConsoleDialogAgent implements DialogAgent {
         System.out.println("Co robimy?\n\n(1)Uderzam na rynek po towar\t(2)Jade do szpitala\n" +
                 "(3)Ide na piwo do pubu\t\t\t(4)Ide zjesc cos w restauracji\n" +
                 "(5)Ide do kosciola\t\t\t\t(6)Wpadam na silownie\n" +
-                "(7)Zmieniam miasto\t\t\t\t(8)Koncze z biznesem");
+                "(7)Zmieniam miasto\t\t\t\t(8)Koncze z biznesem\n" +
+                "(9)Sprawdzam zawartosc plecaka");
     }
 
     private Integer getChoice() {
@@ -90,10 +93,10 @@ public class ConsoleDialogAgent implements DialogAgent {
             }
             int option = input.nextInt();
 
-            if (option > 0 && option < 9) {
+            if (option > 0 && option < 10) {
                 return option;
             }
-            System.out.println("Wybierz: 1, 2, 3, 4, 5, 6, 7 albo 8!");
+            System.out.println("Wybierz: 1, 2, 3, 4, 5, 6, 7, 8 albo 9!");
         }
 
     }
@@ -103,28 +106,38 @@ public class ConsoleDialogAgent implements DialogAgent {
         switch (chosenPlace) {
             case 1:
                 System.out.println("jestes na rynku");
+                handleMarket();
                 break;
             case 2:
                 System.out.println("jestes w szpitalu");
+                handleHospital();
                 break;
             case 3:
                 System.out.println("jestes w pubie");
+                handlePub();
                 break;
             case 4:
                 System.out.println("jestes w restauracji");
+                handleRestaurant();
                 break;
             case 5:
                 System.out.println("jestes w kosciele");
+                handleChurch();
                 break;
             case 6:
                 System.out.println("jestes na silowni");
+                handleGym();
                 break;
             case 7:
                 System.out.println("zmieniasz miasto");
+                handleChangingTheCity();
                 break;
             case 8:
                 System.out.println("konczysz gre");
                 player.kill();
+                break;
+            case 9: showBackpack(player.getSmartBackpack().getWalletBalance(), player.getSmartBackpack().getGoods());
+
                 break;
         }
 
@@ -152,15 +165,18 @@ public class ConsoleDialogAgent implements DialogAgent {
 
     private void handleMarket(){
         Map<DrugType, BigDecimal> currentPriceList = player.getCity().getMarket().getPriceList();
+        boolean isPlayerDealing = true;
 
-        while(true){
+        while(isPlayerDealing){
             showPriceList(currentPriceList);
-            int transactionType = getTransactionType(); //1 = buy, 2 = sell
+            int transactionType = getTransactionType(); //1 = buy, 2 = sell 3 = exit
 
             switch(transactionType){
-                case 1: handlePurchaseProcedure(player.getBalance(), currentPriceList);
+                case 1: handlePurchaseTransaction(player.getBalance(), currentPriceList);
                 break;
-                case 2: handleSaleProcedure();
+                case 2: handleSaleTransaction();
+                break;
+                case 3: isPlayerDealing = false;
                 break;
             }
         }
@@ -190,7 +206,7 @@ public class ConsoleDialogAgent implements DialogAgent {
 
     private int getTransactionType(){
 
-        System.out.println("Wybierz: \n\t1, by dokonac kupna\t2, by dokonac sprzedazy");
+        System.out.println("Wybierz: \n\t1, by dokonac kupna\t2, by dokonac sprzedazy\t 3, by opuscic rynek");
         while (true) {
             while (!input.hasNextInt()) {
                 input.next();
@@ -198,10 +214,10 @@ public class ConsoleDialogAgent implements DialogAgent {
             }
             int option = input.nextInt();
 
-            if (option > 0 && option < 3) {
+            if (option > 0 && option < 4) {
                 return option;
             }
-            System.out.println("Wybierz: 1 lub 2");
+            System.out.println("Wybierz: 1, 2 lub 3");
         }
     }
 
@@ -216,21 +232,70 @@ public class ConsoleDialogAgent implements DialogAgent {
             int option = input.nextInt();
 
             if (option > 0 && option < 6) {
-                return DrugType.values()[option - 1];
+              //  return DrugType.values()[option - 1];
+                return DrugMarket.getDrugMarket().getDrugTypeList().get(option - 1);
             }
             System.out.println("Wybierz: 1, 2, 3, 4 lub 5");
         }
     }
 
-    private void handlePurchaseProcedure(BigDecimal walletBalance, Map<DrugType, BigDecimal> priceList){
+    private void handlePurchaseTransaction(BigDecimal walletBalance, Map<DrugType, BigDecimal> priceList){
 
         if (walletBalance.compareTo(BigDecimal.ZERO) == 0){
             System.out.println("Brak srodkow na zakup nowego towaru.");
             return;
         }
         DrugType chosenProductType = chooseDrugType();
+        System.out.println("Wybrales: " + chosenProductType.name());
         BigDecimal chosenProductPrice = priceList.get(chosenProductType);
+        int maxNumberOfGoodsPlayerCanAfford = walletBalance.divide(chosenProductPrice,1, BigDecimal.ROUND_HALF_DOWN).intValue();
+        int numberOfPurchasedProducts = getNumberOfProductsToBuy(maxNumberOfGoodsPlayerCanAfford);
 
+        player.getSmartBackpack().addDrugToBackpack(new Drug(chosenProductType, chosenProductPrice), numberOfPurchasedProducts);
+        System.out.println("Zakupiles " + numberOfPurchasedProducts + "sztuk produktu "+ chosenProductType.name());
+
+    }
+
+    private int getNumberOfProductsToBuy(int maxNumberPlayerCanAfford){
+
+        if (maxNumberPlayerCanAfford == 0){
+            System.out.println("Dostepne srodki nie pozwalaja ci na zakup tego produktu");
+            return 0;
+        }
+
+        System.out.println("Dostepne srodki pozwalaja ci na zakup " + maxNumberPlayerCanAfford + " sztuk tego produktu \n" +
+                "Podaj liczbe sztuk produktu, jaka chcesz kupic.");
+
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca dostepna liczbe towarow.");
+            }
+            int option = input.nextInt();
+
+            if (option > 0 && option <= maxNumberPlayerCanAfford) {
+                return option;
+            }
+            System.out.println("Wybierz wartosc miedzy 1 a " + maxNumberPlayerCanAfford);
+        }
+
+    }
+
+    private void handleSaleTransaction(){};
+
+    private void showBackpack(BigDecimal wallet, Map<DrugType, Integer> goods){
+
+        System.out.println(" _________________________________\n" +
+                           "| CONTENTS OF YOUR SMART BACKPACK |\n" +
+                           "|=================================|\n" +
+                           "|        Type       |    Volume   |\n" +
+                           "|---------------------------------|");
+        for (Map.Entry<DrugType, Integer> entry: goods.entrySet()){
+            System.out.format("|  %-17s| %7d     |\n",entry.getKey().name(), entry.getValue());
+        }
+        System.out.println("|---------------------------------|");
+        System.out.format("|  %-17s|  %7.2f    |\n","Available funds:", wallet);
+        System.out.println("|_________________________________|");
 
 
 

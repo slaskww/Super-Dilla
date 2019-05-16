@@ -5,15 +5,23 @@ import drug.DrugType;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class SmartBackpack {
 
     public final BigDecimal INITIAL_WALLET_BALANCE = BigDecimal.valueOf(1000);
+    public final Integer INITIAL_DRUG_VOLUME = 0;
     private BigDecimal wallet;
     private Map<DrugType, Integer> goods;
 
     public SmartBackpack() {
         this.wallet = INITIAL_WALLET_BALANCE;
+        goods = new TreeMap<>();
+        goods.put(DrugType.MARIJUANA, INITIAL_DRUG_VOLUME);
+        goods.put(DrugType.HEROIN, INITIAL_DRUG_VOLUME);
+        goods.put(DrugType.ESCTASY, INITIAL_DRUG_VOLUME);
+        goods.put(DrugType.COCAINE, INITIAL_DRUG_VOLUME);
+        goods.put(DrugType.AMPHETAMINE, INITIAL_DRUG_VOLUME);
     }
 
     public DealStatus addDrugToBackpack(Drug drug, Integer volume){
@@ -67,5 +75,9 @@ public class SmartBackpack {
         } else{
             return PaymentForFacilitiesStatus.TRANSACTION_REJECTED;
         }
+    }
+
+    public Map<DrugType, Integer> getGoods() {
+        return goods;
     }
 }
