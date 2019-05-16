@@ -38,6 +38,12 @@ public abstract class Person {
         return defensiveLevel;
     }
 
+    public Integer getMentalLevel() {
+        return mentalLevel;
+    }
+
+
+
     public Weapon getWeapon() {
         return weapon;
     }

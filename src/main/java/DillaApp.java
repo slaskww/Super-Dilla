@@ -10,7 +10,7 @@ public class DillaApp {
         Player player = new Player("Player");
         GameEngine game = new GameEngine(player);
         game.prepareGame();
-        ConsoleDialogAgent agent = new ConsoleDialogAgent();
+        ConsoleDialogAgent agent = new ConsoleDialogAgent(player);
         game.setDialogAgent(agent);
         game.start();
 

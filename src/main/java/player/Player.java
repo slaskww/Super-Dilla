@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 public class Player extends Person {
 
     private SmartBackpack smartBackpack;
-    private Integer mentalHealthLevel;
     private City city;
     private static PersonType PLAYER_PERSON_TYPE = PersonType.PLAYER;
     private static final Integer INITIAL_OFFENSIVE_LEVEL = 50;
@@ -24,7 +23,6 @@ public class Player extends Person {
     public Player(String name) {
         super(name, PLAYER_PERSON_TYPE, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, INITIAL_MENTAL_LEVEL ,BASIC_WEAPON);
         this.smartBackpack = new SmartBackpack();
-        this.mentalHealthLevel = INITIAL_MENTAL_LEVEL;
         this.city = CityFactory.grassbay();
     }
 
@@ -36,14 +34,20 @@ public class Player extends Person {
         return smartBackpack.getWalletBalance();
     }
 
-    public Integer getMentalHealthLevel() {
-        return mentalHealthLevel;
-    }
-
     public City getCity() {
         return city;
     }
 
+    public String getPerson(){
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("\tDefensive: ").append(super.getDefensiveLevel()).append("\n");
+        builder.append("\tOffensive: ").append(super.getOffensiveLevel()).append("\n");
+        builder.append("\tMental: ").append(super.getMentalLevel()).append("\n");
+        builder.append("\tWeapon: ").append(super.getWeapon().getName()).append("\n");
+
+        return builder.toString();
+    }
 
 }
 

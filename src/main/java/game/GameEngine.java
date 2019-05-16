@@ -1,6 +1,5 @@
 package game;
 
-import dialogAgent.ConsoleDialogAgent;
 import dialogAgent.DialogAgent;
 import dialogAgent.EventType;
 import player.Player;
@@ -9,10 +8,10 @@ import world.WorldBuilder;
 
 public class GameEngine {
     private int MAX_NUMBER_OF_DAYS = 60;
-    private int daysFromStart = 0;
     private World world;
     private Player player;
     private DialogAgent dialogAgent;
+    private TimeInGame time = TimeInGame.getDateInstance();
 
     public GameEngine(Player player) {
         this.player = player;
@@ -34,14 +33,16 @@ public class GameEngine {
     public void start() {
 
         dialogAgent.spectate(EventType.GAME_STARTED);
+        time.showDay();
+        dialogAgent.spectate(EventType.FIRST_DAY);
 
-        while (daysFromStart < MAX_NUMBER_OF_DAYS && player.isAlive()){
+        while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
 
-            daysFromStart++;
-            System.out.println("Day:" + TimeInGame.getDay());
-            System.out.println(player.getPerson());
+         //   System.out.println(player.getPerson());
             player.boostMentalLevel(-1);
-
+            time.setNextDay();
+            time.showDay();
+            dialogAgent.spectate(EventType.NEW_DAY);
         }
     }
 
