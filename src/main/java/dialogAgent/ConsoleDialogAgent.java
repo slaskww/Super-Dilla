@@ -1,11 +1,15 @@
 package dialogAgent;
 
+import drug.DrugType;
 import enemy.Enemy;
 import generalplayer.PersonType;
 import player.Player;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConsoleDialogAgent implements DialogAgent {
 
@@ -57,6 +61,7 @@ public class ConsoleDialogAgent implements DialogAgent {
             case NEW_DAY:
                 System.out.println("W miescie " + player.getCity().getName() + " nastal nowy dzien." +
                         "\nNajwyzszy czas, by co nieco zarobic!");
+                player.getCity().getMarket().changePrices();
                 showOptions();
                 chosenPlace = getChoice();
                 goTo(chosenPlace);
@@ -83,7 +88,7 @@ public class ConsoleDialogAgent implements DialogAgent {
                 input.next();
                 System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
             }
-            Integer option = input.nextInt();
+            int option = input.nextInt();
 
             if (option > 0 && option < 9) {
                 return option;
@@ -145,4 +150,90 @@ public class ConsoleDialogAgent implements DialogAgent {
         player.getCity().deleteEnemy(indexRandomEnemy);
     }
 
+    private void handleMarket(){
+        Map<DrugType, BigDecimal> currentPriceList = player.getCity().getMarket().getPriceList();
+
+        while(true){
+            showPriceList(currentPriceList);
+            int transactionType = getTransactionType(); //1 = buy, 2 = sell
+
+            switch(transactionType){
+                case 1: handlePurchaseProcedure(player.getBalance(), currentPriceList);
+                break;
+                case 2: handleSaleProcedure();
+                break;
+            }
+        }
+
+
+    }
+    private void handleHospital(){}
+    private void handlePub(){}
+    private void handleRestaurant(){}
+    private void handleChurch(){}
+    private void handleGym(){}
+    private void handleChangingTheCity(){}
+
+
+    private void showPriceList(Map<DrugType, BigDecimal> priceList){
+        int position = 1;
+
+        System.out.println(" ===================================\n" +
+                           "|DOPER EXCHANGE - CURRENT PRICE LIST|\n" +
+                           "|===================================|");
+        for (Map.Entry<DrugType, BigDecimal> entry: priceList.entrySet()){
+        System.out.format("|(%d) %-18s>> %-10.2f|\n",position++,entry.getKey().name(), entry.getValue());
+        }
+        System.out.println(" ===================================");
+
+    }
+
+    private int getTransactionType(){
+
+        System.out.println("Wybierz: \n\t1, by dokonac kupna\t2, by dokonac sprzedazy");
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+            }
+            int option = input.nextInt();
+
+            if (option > 0 && option < 3) {
+                return option;
+            }
+            System.out.println("Wybierz: 1 lub 2");
+        }
+    }
+
+    private DrugType chooseDrugType(){
+
+        System.out.println("Wybierz cyfre odpowiadajaca towarowi na liscie");
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+            }
+            int option = input.nextInt();
+
+            if (option > 0 && option < 6) {
+                return DrugType.values()[option - 1];
+            }
+            System.out.println("Wybierz: 1, 2, 3, 4 lub 5");
+        }
+    }
+
+    private void handlePurchaseProcedure(BigDecimal walletBalance, Map<DrugType, BigDecimal> priceList){
+
+        if (walletBalance.compareTo(BigDecimal.ZERO) == 0){
+            System.out.println("Brak srodkow na zakup nowego towaru.");
+            return;
+        }
+        DrugType chosenProductType = chooseDrugType();
+        BigDecimal chosenProductPrice = priceList.get(chosenProductType);
+
+
+
+
+
+    }
 }

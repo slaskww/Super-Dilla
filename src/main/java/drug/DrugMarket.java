@@ -1,10 +1,7 @@
 package drug;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DrugMarket { //implements Singleton
@@ -14,7 +11,7 @@ public class DrugMarket { //implements Singleton
     Random rand = new Random();
 
     private DrugMarket() {
-        this.priceList = new HashMap<>();
+        this.priceList = new TreeMap<>();
         priceList.put(DrugType.MARIJUANA, BigDecimal.valueOf(100));
         priceList.put(DrugType.HEROIN, BigDecimal.valueOf(100));
         priceList.put(DrugType.ESCTASY, BigDecimal.valueOf(100));
@@ -63,5 +60,8 @@ public class DrugMarket { //implements Singleton
         return  rand.nextDouble() + 0.6; //rate has range between 0.6 - 1.6
     }
 
+    public List<DrugType> getDrugTypeList(){
+        return Arrays.asList(DrugType.values());
+    }
 }
 
