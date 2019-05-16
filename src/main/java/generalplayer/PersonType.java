@@ -5,4 +5,5 @@ public enum PersonType {
     POLICE_OFFICER,
     DEALER,
     BOSS,
+    NOONE,
 }

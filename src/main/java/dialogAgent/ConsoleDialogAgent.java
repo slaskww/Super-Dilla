@@ -1,18 +1,22 @@
 package dialogAgent;
 
-import game.TimeInGame;
+import enemy.Enemy;
+import generalplayer.PersonType;
 import player.Player;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class ConsoleDialogAgent implements DialogAgent {
 
     private Player player;
     private Scanner input;
+    private Random rand;
 
     public ConsoleDialogAgent(Player player) {
         this.player = player;
         input = new Scanner(System.in);
+        rand = new Random();
     }
 
     @Override
@@ -58,18 +62,21 @@ public class ConsoleDialogAgent implements DialogAgent {
                 goTo(chosenPlace);
                 break;
 
+            case FIGHT:
+                fight();
+
         }
 
     }
 
-    private void showOptions(){
+    private void showOptions() {
         System.out.println("Co robimy?\n\n(1)Uderzam na rynek po towar\t(2)Jade do szpitala\n" +
                 "(3)Ide na piwo do pubu\t\t\t(4)Ide zjesc cos w restauracji\n" +
                 "(5)Ide do kosciola\t\t\t\t(6)Wpadam na silownie\n" +
                 "(7)Zmieniam miasto\t\t\t\t(8)Koncze z biznesem");
     }
 
-    private Integer getChoice(){
+    private Integer getChoice() {
 
         while (true) {
             while (!input.hasNextInt()) {
@@ -86,9 +93,9 @@ public class ConsoleDialogAgent implements DialogAgent {
 
     }
 
-    private void goTo(Integer chosenPlace){
+    private void goTo(Integer chosenPlace) {
 
-        switch (chosenPlace){
+        switch (chosenPlace) {
             case 1:
                 System.out.println("jestes na rynku");
                 break;
@@ -118,6 +125,24 @@ public class ConsoleDialogAgent implements DialogAgent {
 
     }
 
+    private void fight() {
 
+        if (!player.getCity().isAnyDangerousOrdinaryEnemy()) {
+            System.out.println("Walczysz z bossem" + player.getCity().getBoss().getName());
+            return;
+        }
+
+        int currentNumberOfEnemies = player.getCity().getEnemies().size();
+        int indexRandomEnemy = rand.nextInt(currentNumberOfEnemies);
+        Enemy randomEnemyFormTheCity = player.getCity().getEnemies().get(indexRandomEnemy);
+
+        if (randomEnemyFormTheCity.getPersonType() == PersonType.NOONE) {
+            System.out.println("Udalo ci sie uniknac konfrontacji z twoimi wrogami. Jutro mozesz nie miec tyle szczescia.");
+            player.getCity().deleteEnemy(indexRandomEnemy);
+            return;
+        }
+        System.out.println("Walczysz z " + randomEnemyFormTheCity.getName());
+        player.getCity().deleteEnemy(indexRandomEnemy);
+    }
 
 }

@@ -38,7 +38,8 @@ public class GameEngine {
 
         while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
 
-         //   System.out.println(player.getPerson());
+            dialogAgent.spectate(EventType.FIGHT);
+            //   System.out.println(player.getPerson());
             player.boostMentalLevel(-1);
             time.setNextDay();
             time.showDay();

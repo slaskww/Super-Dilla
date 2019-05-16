@@ -5,6 +5,11 @@ import weapon.WeaponFactory;
 
 public class EnemyFactory {
 
+    public static Enemy noone(){
+        Enemy enemy = new Enemy("No-one", PersonType.NOONE, 0, 0, 0 , WeaponFactory.flower(), false);
+        return enemy;
+    }
+
     public static Enemy policeOfficer(){
     Enemy enemy = new Enemy("Officer Barbrady", PersonType.POLICE_OFFICER, 60, 60, 15 , WeaponFactory.pistol(), true);
     return enemy;

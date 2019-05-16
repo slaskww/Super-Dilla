@@ -33,4 +33,7 @@ public class WeaponFactory {
         return new Weapon("Laser walking stick", WeaponType.STICK, 120, 120, BigDecimal.valueOf(50000),12.5);
     }
 
+    public static Weapon flower(){
+        return new Weapon("Bloomy flower", WeaponType.FLOWER, 0, 0, BigDecimal.valueOf(0),1.5);
+    }
 }
