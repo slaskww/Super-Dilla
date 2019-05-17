@@ -3,6 +3,7 @@ package city;
 import enemy.EnemyFactory;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class CityFactory {
     }
 
     public static List<City> mapOfCities(){
-        return  Arrays.asList(grassbay(), whiteMountain(), dopeTown(), crystalRiver());
+        List<City> cities = new ArrayList<>();
+        cities.add(grassbay());
+        cities.add(whiteMountain());
+        cities.add(dopeTown());
+        cities.add(crystalRiver());
+        return cities;
     }
 }

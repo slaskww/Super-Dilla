@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 public class FacilityFactory {
 
     public static Facility hospital() {
-        return new Facility("Private hospital", BigDecimal.valueOf(100), 50, 25, 65);
+        return new Facility("Private hospital", BigDecimal.valueOf(200), 50, 25, 25);
     }
 
     public static Facility pub() {
-        return new Facility("Local pub", BigDecimal.valueOf(20), 10, 35, 45);
+        return new Facility("Local pub", BigDecimal.valueOf(50), 10, 35, 45);
     }
 
     public static Facility gym() {
@@ -17,11 +17,11 @@ public class FacilityFactory {
     }
 
     public static Facility church() {
-        return new Facility("Church", BigDecimal.valueOf(10), 0, 0, 85);
+        return new Facility("Church", BigDecimal.valueOf(30), 0, 0, 65);
     }
 
     public static Facility restaurant() {
-        return new Facility("Restaurant Big Dumpling", BigDecimal.valueOf(70), 30, 30, 35);
+        return new Facility("Restaurant Big Dumpling", BigDecimal.valueOf(110), 30, 30, 35);
     }
 
 }

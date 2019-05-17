@@ -11,10 +11,7 @@ import generalplayer.PersonType;
 import player.Player;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleDialogAgent implements DialogAgent {
 
@@ -35,6 +32,7 @@ public class ConsoleDialogAgent implements DialogAgent {
         switch (type) {
             case GAME_STARTED:
                 startGameStatement();
+                forceEnterAction();
                 break;
 
             case FIRST_DAY:
@@ -42,6 +40,7 @@ public class ConsoleDialogAgent implements DialogAgent {
                 showOptions();
                 Integer chosenPlace = getChoice();
                 goTo(chosenPlace);
+                forceEnterAction();
                 break;
 
             case NEW_DAY:
@@ -50,43 +49,45 @@ public class ConsoleDialogAgent implements DialogAgent {
                 showOptions();
                 chosenPlace = getChoice();
                 goTo(chosenPlace);
+                forceEnterAction();
                 break;
 
             case FIGHT:
                 fight();
+                forceEnterAction();
 
         }
     }
 
     private void startGameStatement() {
-        System.out.println("Witaj, zaczynasz karierę dobrze prosperujacego, miejmy nadzieje, przedsiebiorcy." +
-                "\nDo dyspozycji masz cztery znane ze zlej slawy miasta, w ktorych zdobedziesz cenne doswiadczenie." +
-                "\nMiej oczy otwarte i strzez sie konfliktow z lokalnymi bossami\n" +
-                "\nW każdym z miast znajdziesz miejsca, gdzie bedziesz mogl sie napic, najesc lub nieco rozerwac." +
-                "\nW kazdym z miast dziala preznie rynek wymiany towaru. Ich ceny zmienia sie z dnia na dzien," +
-                "\nwiec kupuj i sprzedawaj madrze. Szacuj podaz i blyskawicznie reaguj na popyt.\n" +
-                "\nTwoja postac posiada trzy poziomy umiejetnisci, ktore bedziesz wzbogacal w trakcie gry." +
-                "\nUmiejetnosciami tymi sa: poziom obrony, poziom ataku oraz poziom zdrowia psychicznego." +
-                "\nPoziomy obrony i ataku wykorzystasz przeciwko zlu, jakim przesiakniete sa owe miasta." +
-                "\nJesli nie chcesz stracic gruntu pod nogami, pamietaj, by utrzymywac  zdrowie psychiczne na wysokim poziomie.\n" +
-                "\nPrzygode zaczynasz w miescie GrassBay, w ktorym za sznurki pociaga nieslawny El Chipotle." +
-                "\nMasz 60 dni na to, by rozkrecic interes zycia. \nZaczynamy!\n");
+        System.out.println("# Witaj, zaczynasz karierę dobrze prosperujacego, miejmy nadzieje, przedsiebiorcy." +
+                "\n# Do dyspozycji masz cztery znane ze zlej slawy miasta, w ktorych zdobedziesz cenne doswiadczenie." +
+                "\n# Miej oczy otwarte i strzez sie konfliktow z lokalnymi bossami\n" +
+                "\n# W każdym z miast znajdziesz miejsca, gdzie bedziesz mogl sie napic, najesc lub nieco rozerwac." +
+                "\n# W kazdym z miast dziala preznie rynek wymiany towaru. Ich ceny zmienia sie z dnia na dzien," +
+                "\n# wiec kupuj i sprzedawaj madrze. Szacuj podaz i blyskawicznie reaguj na popyt.\n" +
+                "\n# Twoja postac posiada trzy poziomy umiejetnisci, ktore bedziesz wzbogacal w trakcie gry." +
+                "\n# Umiejetnosciami tymi sa: poziom obrony, poziom ataku oraz poziom zdrowia psychicznego." +
+                "\n# Poziomy obrony i ataku wykorzystasz przeciwko zlu, jakim przesiakniete sa owe miasta." +
+                "\n# Jesli nie chcesz stracic gruntu pod nogami, pamietaj, by utrzymywac  zdrowie psychiczne na wysokim poziomie.\n" +
+                "\n# Przygode zaczynasz w miescie GrassBay, w ktorym za sznurki pociaga nieslawny El Chipotle." +
+                "\n# Masz 60 dni na to, by rozkrecic interes zycia. \nZaczynamy!\n");
     }
 
     private void firstDayStatement() {
-        System.out.println("W miescie " + player.getCity().getName() + " nastal nowy dzien." +
-                "\nNajwyzszy czas, by co nieco zarobic! Zajrzyj na lokalny rynek towaru i poszukaj dobrych okazji." +
-                "\nSpragniony? Wpadnij do pubu na dobre piwo albo zamow stolik w lokalnej restauracji. " +
-                "\nChwila relaksu na pewno poprawi Twoje samopoczucie." +
-                "\nW swiecie pelnym przemocy wygrywaja tylko najsilniejsi. Odwiedz lokalna silownie i popracuj nad kondycja." +
-                "\nW kazdym biznesie zdarzaja sie dni lepsze i gorsze. Podlamany? Moze czas siegnac po duchowe wsparcie? " +
-                "\nZajrzyj do lokalnego kosciola i poszukaj w nim ukojenia. " +
-                "\nRozmowa z konkurencja skonczyla sie dla ciebie lekkim zlamaniem zuchwy? Daj sie uleczyc najlepszym specjalistom w miescie." +
-                "\nJesli poczujesz silna potrzebe zmiany, spakuj towar i wyjedz z miasta.\n");
+        System.out.println("# W miescie " + player.getCity().getName() + " nastal nowy dzien." +
+                "\n# Najwyzszy czas, by co nieco zarobic! Zajrzyj na lokalny rynek towaru i poszukaj dobrych okazji." +
+                "\n# Spragniony? Wpadnij do pubu na dobre piwo albo zamow stolik w lokalnej restauracji. " +
+                "\n# Chwila relaksu na pewno poprawi Twoje samopoczucie." +
+                "\n# W swiecie pelnym przemocy wygrywaja tylko najsilniejsi. Odwiedz lokalna silownie i popracuj nad kondycja." +
+                "\n# W kazdym biznesie zdarzaja sie dni lepsze i gorsze. Podlamany? Moze czas siegnac po duchowe wsparcie? " +
+                "\n# Zajrzyj do lokalnego kosciola i poszukaj w nim ukojenia. " +
+                "\n# Rozmowa z konkurencja skonczyla sie dla ciebie lekkim zlamaniem zuchwy? Daj sie uleczyc najlepszym specjalistom w miescie." +
+                "\n# Jesli poczujesz silna potrzebe zmiany, spakuj towar i wyjedz z miasta.\n");
     }
 
     private void showOptions() {
-        System.out.println("Co robimy?\n\t(1)Uderzam na rynek po towar\t(2)Jade do szpitala\n" +
+        System.out.println("# Co robimy?\n\t(1)Uderzam na rynek po towar\t(2)Jade do szpitala\n" +
                 "\t(3)Ide na piwo do pubu\t\t\t(4)Ide zjesc cos w restauracji\n" +
                 "\t(5)Ide do kosciola\t\t\t\t(6)Wpadam na silownie\n" +
                 "\t(7)Zmieniam miasto\t\t\t\t(8)Koncze z biznesem\n" +
@@ -95,8 +96,8 @@ public class ConsoleDialogAgent implements DialogAgent {
 
 
     private void newDayStatement(){
-        System.out.println("W miescie " + player.getCity().getName() + " nastal nowy dzien." +
-                "\nNajwyzszy czas, by co nieco zarobic!");
+        System.out.println("# W miescie " + player.getCity().getName() + " nastal nowy dzien." +
+                "\n# Najwyzszy czas, by co nieco zarobic!");
     }
 
     private Integer getChoice() {
@@ -104,14 +105,14 @@ public class ConsoleDialogAgent implements DialogAgent {
         while (true) {
             while (!input.hasNextInt()) {
                 input.next();
-                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
             }
             int option = input.nextInt();
 
             if (option > 0 && option < 10) {
                 return option;
             }
-            System.out.println("Wybierz: 1, 2, 3, 4, 5, 6, 7, 8 albo 9!");
+            System.out.println("# Wybierz: 1, 2, 3, 4, 5, 6, 7, 8 albo 9!");
         }
 
     }
@@ -153,7 +154,7 @@ public class ConsoleDialogAgent implements DialogAgent {
     private void fight() {
 
         if (!player.getCity().isAnyDangerousOrdinaryEnemy()) {
-            System.out.println("Walczysz z bossem" + player.getCity().getBoss().getName());
+            System.out.println("# Walczysz z bossem" + player.getCity().getBoss().getName());
             return;
         }
 
@@ -162,18 +163,18 @@ public class ConsoleDialogAgent implements DialogAgent {
         Enemy randomEnemyFormTheCity = player.getCity().getEnemies().get(indexRandomEnemy);
 
         if (randomEnemyFormTheCity.getPersonType() == PersonType.NOONE) {
-            System.out.println("Udalo ci sie uniknac konfrontacji z twoimi wrogami. Jutro mozesz nie miec tyle szczescia.");
+            System.out.println("# Udalo ci sie uniknac konfrontacji z twoimi wrogami. Jutro mozesz nie miec tyle szczescia.");
             player.getCity().deleteEnemy(indexRandomEnemy);
             return;
         }
-        System.out.println("Walczysz z " + randomEnemyFormTheCity.getName());
+        System.out.println("# Walczysz z " + randomEnemyFormTheCity.getName());
         player.getCity().deleteEnemy(indexRandomEnemy);
     }
 
     private void handleMarket() {
         Map<DrugType, BigDecimal> currentPriceList = player.getCity().getMarket().getPriceList();
         boolean isPlayerDealing = true;
-        System.out.println(">Witaj na rynku wymiany towaru.\n");
+        System.out.println("# Witaj na rynku wymiany towaru.\n");
 
         while (isPlayerDealing) {
             showPriceList(currentPriceList);
@@ -198,38 +199,38 @@ public class ConsoleDialogAgent implements DialogAgent {
     private void handleHospital() {
         Facility hospital = FacilityFactory.hospital();
         BigDecimal costOfHospitalisation = hospital.getPrice();
-        System.out.println("Witaj w najlepszym szpitalu w tym miescie. Pomozemy ci stanac na nogi.");
+        System.out.println("# Witaj w najlepszym szpitalu w tym miescie. Pomozemy ci stanac na nogi.");
 
         if (player.getBalance().compareTo(costOfHospitalisation) < 0) {
-            System.out.println("Oj, przykro nam, ale nie stac ciebie na wizyte w szpitalu. Koszt leczenia wynosi " + costOfHospitalisation.setScale(2) + ".\n" +
-                    "Przyjdz, gdy uzbierasz potrzebna kwote.");
+            System.out.println("# Oj, przykro nam, ale nie stac ciebie na wizyte w szpitalu. Koszt leczenia wynosi " + costOfHospitalisation.setScale(2) + ".\n" +
+                    "# Przyjdz, gdy uzbierasz potrzebna kwote.");
             return;
         }
-
+        slowActionDown();
         player.boostDefensiveLevel(hospital.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(hospital.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(hospital.getMentalBenefitFromUsing());
         player.getSmartBackpack().payForFacilities(costOfHospitalisation);
-        System.out.println("Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz sie slabiej.");
+        System.out.println("# Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz sie slabiej.");
 
     }
 
     private void handlePub() {
         Facility pub = FacilityFactory.pub();
         BigDecimal costOfDrinks = pub.getPrice();
-        System.out.println("Cieszymy sie, ze wpadles. Mocne Ale z naszej warzelni od razu poprawi Ci humor.");
+        System.out.println("# Cieszymy sie, ze wpadles. Mocne Ale z naszej warzelni od razu poprawi Ci humor.");
 
         if (player.getBalance().compareTo(costOfDrinks) < 0) {
-            System.out.println("Oj, przykro nam, ale nie stac ciebie na nasze trunki. Koszt dobrego ale to " + costOfDrinks.setScale(2) + ".\n" +
-                    "Przyjdz, gdy uzbierasz potrzebna kwote.");
+            System.out.println("# Oj, przykro nam, ale nie stac ciebie na nasze trunki. Koszt dobrego ale to " + costOfDrinks.setScale(2) + ".\n" +
+                    "# Przyjdz, gdy uzbierasz potrzebna kwote.");
             return;
         }
-
+        slowActionDown();
         player.boostDefensiveLevel(pub.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(pub.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(pub.getMentalBenefitFromUsing());
         player.getSmartBackpack().payForFacilities(costOfDrinks);
-        System.out.println("Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz pragnienie.");
+        System.out.println("# Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz pragnienie.");
     }
 
     private void handleRestaurant() {
@@ -237,18 +238,19 @@ public class ConsoleDialogAgent implements DialogAgent {
         BigDecimal costOfDinner = restaurant.getPrice();
 
         if (player.getBalance().compareTo(costOfDinner) < 0) {
-            System.out.println("Oj, przykro nam, ale nie stac ciebie na wizyte u nas. Koszt dobrego obiadu to " + costOfDinner.setScale(2) + ".\n" +
-                    "Przyjdz, gdy uzbierasz potrzebna kwote.");
+            System.out.println("# Oj, przykro nam, ale nie stac ciebie na wizyte u nas. Koszt dobrego obiadu to " + costOfDinner.setScale(2) + ".\n" +
+                    "# Przyjdz, gdy uzbierasz potrzebna kwote.");
             return;
         }
 
-        System.out.println("Witamy dostojnego goscia. Prosimy zajac miejsce przy stoliku. Nasz szef kuchni przyrzadza wlasnie pana ulubiony stek.");
+        System.out.println("# Witamy szanownego goscia. Prosimy zajac miejsce przy stoliku. Nasz szef kuchni przyrzadza wlasnie pana ulubiony stek.");
 
         player.boostDefensiveLevel(restaurant.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(restaurant.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(restaurant.getMentalBenefitFromUsing());
         player.getSmartBackpack().payForFacilities(costOfDinner);
-        System.out.println("Smakowalo? Nasze steki to nasza duma. Zajrzyj do nas znowu, kiedy tylko poczujesz burczenie w zoladku.");
+        slowActionDown();
+        System.out.println("# Smakowalo? Nasze steki to nasza duma. Prosimy zajrzec do nas ponownie.");
     }
 
 
@@ -256,19 +258,19 @@ public class ConsoleDialogAgent implements DialogAgent {
         Facility church = FacilityFactory.church();
 
         if (player.getBalance().compareTo(church.getPrice()) < 0) {
-            System.out.println("Co laska wynosi " + church.getPrice().setScale(2) + ".\n" +
-                    "Przyjdz prosze, gdy uzbierasz potrzebna kwote.");
+            System.out.println("# Co laska wynosi " + church.getPrice().setScale(2) + ".\n" +
+                    "# Przyjdz prosze, gdy uzbierasz potrzebna kwote.");
             return;
         }
 
-        System.out.println("Witam zagubiona owieczke. Zajmij prosze miejsce i poswiec chwile Bogu.");
-
+        System.out.println("# Witam zagubiona owieczke. Zajmij prosze miejsce i poswiec chwile Bogu.");
+        slowActionDown();
         player.boostDefensiveLevel(church.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(church.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(church.getMentalBenefitFromUsing());
         player.getSmartBackpack().payForFacilities(church.getPrice());
-        System.out.println("Lepiej, prawda? Kazdy potrzebuje chwile duchowego wyciszenia.\n" +
-                "Odwiedz nasz kosciol, gdy tylko poczujesz sie gorzej");
+        System.out.println("# Lepiej, prawda? Kazdy potrzebuje chwile duchowego wyciszenia.\n" +
+                "# Odwiedz nasz kosciol, gdy tylko poczujesz sie gorzej");
     }
 
     private void handleGym() {
@@ -276,18 +278,18 @@ public class ConsoleDialogAgent implements DialogAgent {
         BigDecimal ticketPrice = gym.getPrice();
 
         if (player.getBalance().compareTo(ticketPrice) < 0) {
-            System.out.println("Nie ma wstepu, koles. Wyrzucaj z siebie " + ticketPrice.setScale(2) + " albo pakuj w parku\n");
+            System.out.println("# Nie ma wstepu, koles. Wyrzucaj z siebie " + ticketPrice.setScale(2) + " albo pakuj w parku\n");
             return;
         }
 
-        System.out.println("Strzala brachu. Wolne ciezary juz na ciebie czekaja. Pakuj, szkoda czasu.");
-
+        System.out.println("# Strzala brachu. Wolne ciezary juz na ciebie czekaja. Pakuj, szkoda czasu.");
+        slowActionDown();
         player.boostDefensiveLevel(gym.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(gym.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(gym.getMentalBenefitFromUsing());
         player.getSmartBackpack().payForFacilities(ticketPrice);
-        System.out.println("Jest pompa, nie? Klata, plecy, barki, od tego sa ciezarki!\n" +
-                "Zawin do nas jeszcze, ziomek.");
+        System.out.println("# Jest pompa, nie? Klata, plecy, barki, od tego sa ciezarki!\n" +
+                "# Zawin do nas jeszcze, ziomek.");
     }
 
     private void handleChangingTheCity() {
@@ -295,14 +297,21 @@ public class ConsoleDialogAgent implements DialogAgent {
 
         City chosenCity = chooseCity();
         BigDecimal ticketPrice = chosenCity.getCostOfTheTicketToGetHere();
-        if (player.getBalance().compareTo(ticketPrice) < 0) {
-            System.out.println("Nie posiadasz srodkow na zakup biletu.");
+
+        while (player.getBalance().compareTo(ticketPrice) < 0){
+            System.out.println("# Nie posiadasz srodkow na zakup biletu.");
+            chosenCity = chooseCity();
+            ticketPrice = chosenCity.getCostOfTheTicketToGetHere();
+        }
+
+        if (chosenCity.getName() == player.getCity().getName()){
             return;
         }
         player.changeCity(chosenCity);
         player.getSmartBackpack().payForFacilities(ticketPrice);
-        System.out.println("Zyczymy milej podrozy.");
-        System.out.println("Witamy w " + chosenCity.getName() + ". Niech nasze miasto stanie sie Twoim nowym domem.");
+        System.out.println("# Zyczymy milej podrozy.");
+        slowActionDown();
+        System.out.println("# Witamy w " + chosenCity.getName() + ". Niech nasze miasto stanie sie Twoim nowym domem.");
     }
 
 
@@ -311,24 +320,34 @@ public class ConsoleDialogAgent implements DialogAgent {
         int position = 1;
         System.out.println("\nDostepne miasta:");
         List<City> cities = CityFactory.mapOfCities();
-        for (City city : cities) {
-            if (!city.getName().equals(player.getCity().getName())) {
-                System.out.format("\t(%d)%s - koszt biletu: %.2f\n", position++, city.getName(), city.getCostOfTheTicketToGetHere().setScale(2));
-            }
-        }
+        City city;
+        Iterator<City> iterator = cities.iterator();
 
-        System.out.println("Wybierz numer reprezentujacy miasto.");
+        while(iterator.hasNext()) {
+                city = iterator.next();
+            if (city.getName().equals(player.getCity().getName())) {
+                iterator.remove();
+            } else
+            System.out.format("\t(%d)%s - koszt biletu: %.2f\n", position++, city.getName(), city.getCostOfTheTicketToGetHere().setScale(2));
+        }
+        System.out.format("\t(%d)%s\n\n", position, "Zrezygnuj z wyjazdu");
+        System.out.println("\n# Wybierz numer reprezentujacy miasto.");
+
         while (true) {
             while (!input.hasNextInt()) {
                 input.next();
-                System.out.println("Taki wybor to zaden wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+                System.out.println("# Taki wybor to zaden wybor. Podaj cyfre reprezentujaca wybrana opcje.");
             }
             int option = input.nextInt();
+
+            if (option == 4){
+                return player.getCity();
+            }
 
             if (option > 0 && option < 5) {
                 return cities.get(option - 1);
             }
-            System.out.println("Wybierz: 1, 2, lub 3.");
+            System.out.println("# Wybierz: 1, 2, 3 lub 4.");
         }
 
     }
@@ -350,28 +369,28 @@ public class ConsoleDialogAgent implements DialogAgent {
 
     private int getTransactionType() {
 
-        System.out.println("Wybierz: \n\t1, by dokonac kupna\t\t2, by dokonac sprzedazy\n\t3, by opuscic rynek\t\t4, by sprawdzic zawartosc plecaka");
+        System.out.println("# Wybierz: \n\t1, by dokonac kupna\t\t2, by dokonac sprzedazy\n\t3, by opuscic rynek\t\t4, by sprawdzic zawartosc plecaka");
         while (true) {
             while (!input.hasNextInt()) {
                 input.next();
-                System.out.println("Taki wybor to zaden wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+                System.out.println("# Taki wybor to zaden wybor. Podaj cyfre reprezentujaca wybrana opcje.");
             }
             int option = input.nextInt();
 
             if (option > 0 && option < 5) {
                 return option;
             }
-            System.out.println("Wybierz: 1, 2, 3 lub 4");
+            System.out.println("# Wybierz: 1, 2, 3 lub 4");
         }
     }
 
     private DrugType chooseDrugType(List<DrugType> drugTypeListInOrder) {
 
-        System.out.println("Wybierz cyfre odpowiadajaca towarowi na liscie");
+        System.out.println("# Wybierz cyfre odpowiadajaca towarowi na liscie");
         while (true) {
             while (!input.hasNextInt()) {
                 input.next();
-                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
             }
             int option = input.nextInt();
 
@@ -379,14 +398,14 @@ public class ConsoleDialogAgent implements DialogAgent {
                 //  return DrugType.values()[option - 1];
                 return drugTypeListInOrder.get(option - 1);
             }
-            System.out.println("Wybierz: 1, 2, 3, 4 lub 5");
+            System.out.println("# Wybierz: 1, 2, 3, 4 lub 5");
         }
     }
 
     private void handlePurchaseTransaction(BigDecimal walletBalance, Map<DrugType, BigDecimal> priceList) {
 
         if (walletBalance.compareTo(BigDecimal.ZERO) == 0) {
-            System.out.println("Brak srodkow na zakup nowego towaru.");
+            System.out.println("# Brak srodkow na zakup nowego towaru.");
             return;
         }
         List<DrugType> drugTypeList = player.getCity().getMarket().getDrugTypeListInOrder();
@@ -400,14 +419,14 @@ public class ConsoleDialogAgent implements DialogAgent {
         }
 
         player.getSmartBackpack().addDrugToBackpack(new Drug(chosenProductType, chosenProductPrice), numberOfPurchasedProducts);
-        System.out.format("Kupiles %d  sztuk produktu %s  po cenie %.2f  za sztuke.\n", numberOfPurchasedProducts, chosenProductType.name(), chosenProductPrice);
+        System.out.format("# Kupiles %d  sztuk produktu %s  po cenie %.2f  za sztuke.\n", numberOfPurchasedProducts, chosenProductType.name(), chosenProductPrice);
 
     }
 
     private void handleSaleTransaction() {
 
         if (!player.getSmartBackpack().areGoodsInBackpack()) {
-            System.out.println("Brak towaru na sprzedaz.");
+            System.out.println("# Brak towaru na sprzedaz.");
             return;
         }
         showBackpack();
@@ -422,19 +441,19 @@ public class ConsoleDialogAgent implements DialogAgent {
         }
 
         player.getSmartBackpack().removeDrugFromBackpack(new Drug(chosenProductType, chosenProductPrice), numberOfSoldProducts);
-        System.out.format("Sprzedales %d  sztuk produktu %s  po cenie %.2f  za sztuke.\n", numberOfSoldProducts, chosenProductType.name(), chosenProductPrice);
+        System.out.format("# Sprzedales %d  sztuk produktu %s  po cenie %.2f  za sztuke.\n", numberOfSoldProducts, chosenProductType.name(), chosenProductPrice);
     }
 
 
     private int getNumberOfProductsToBuy(int maxNumberPlayerCanAfford) {
 
         if (maxNumberPlayerCanAfford == 0) {
-            System.out.println("Dostepne srodki nie pozwalaja ci na zakup tego produktu");
+            System.out.println("# Dostepne srodki nie pozwalaja ci na zakup tego produktu");
             return 0;
         }
 
-        System.out.println("Dostepne srodki pozwalaja ci na zakup " + maxNumberPlayerCanAfford + " sztuk tego produktu \n" +
-                "Podaj liczbe sztuk produktu, jaka chcesz kupic.");
+        System.out.println("# Dostepne srodki pozwalaja ci na zakup " + maxNumberPlayerCanAfford + " sztuk tego produktu \n" +
+                "# Podaj liczbe sztuk produktu, jaka chcesz kupic.");
 
         while (true) {
             while (!input.hasNextInt()) {
@@ -446,30 +465,30 @@ public class ConsoleDialogAgent implements DialogAgent {
             if (option > 0 && option <= maxNumberPlayerCanAfford) {
                 return option;
             }
-            System.out.println("Wybierz wartosc miedzy 1 a " + maxNumberPlayerCanAfford);
+            System.out.println("# Wybierz wartosc miedzy 1 a " + maxNumberPlayerCanAfford);
         }
     }
 
     private int getNumberOfProductsToSell(int volumeOfChosenProductInBackpack) {
         if (volumeOfChosenProductInBackpack == 0) {
-            System.out.println("Nie posiadasz tego produktu");
+            System.out.println("# Nie posiadasz tego produktu");
             return 0;
         }
 
-        System.out.println("Mozesz sprzedac maksymalnie " + volumeOfChosenProductInBackpack + " sztuk tego produktu \n" +
-                "Podaj liczbe sztuk produktu, jaka chcesz sprzedac.");
+        System.out.println("# Mozesz sprzedac maksymalnie " + volumeOfChosenProductInBackpack + " sztuk tego produktu \n" +
+                "# Podaj liczbe sztuk produktu, jaka chcesz sprzedac.");
 
         while (true) {
             while (!input.hasNextInt()) {
                 input.next();
-                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca dostepna liczbe towarow.");
+                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca dostepna liczbe towarow.");
             }
             int option = input.nextInt();
 
             if (option > 0 && option <= volumeOfChosenProductInBackpack) {
                 return option;
             }
-            System.out.println("Wybierz wartosc miedzy 1 a " + volumeOfChosenProductInBackpack);
+            System.out.println("# Wybierz wartosc miedzy 1 a " + volumeOfChosenProductInBackpack);
         }
     }
 
@@ -491,6 +510,31 @@ public class ConsoleDialogAgent implements DialogAgent {
         System.out.format("|  %-17s|  %7.2f    |\n", "Available funds:", wallet);
         System.out.println("|_________________________________|");
 
+    }
 
+    private static void slowActionDown() {
+
+        System.out.print("\n         |SERVICE IN PROGRESS|\n");
+        System.out.print(" ========================================\n");
+        System.out.print("|0%                 |50%             100%|\n ");
+        for (int i = 0; i < 40; i++) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print("=");
+        }
+        System.out.print("\n\n");
+    }
+
+    public static void forceEnterAction() {
+        try {
+            System.out.println("Nacisnij ENTER aby kontynuowac...");
+            Scanner scanner = new Scanner(System.in).useDelimiter("");
+            scanner.next();
+        } catch (Exception error) {
+            //
+        }
     }
 }
