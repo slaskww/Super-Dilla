@@ -1,5 +1,7 @@
 package dialogAgent;
 
+import city.facility.Facility;
+import city.facility.FacilityFactory;
 import drug.Drug;
 import drug.DrugType;
 import enemy.Enemy;
@@ -108,7 +110,6 @@ public class ConsoleDialogAgent implements DialogAgent {
                 handleMarket();
                 break;
             case 2:
-                System.out.println("jestes w szpitalu");
                 handleHospital();
                 break;
             case 3:
@@ -184,12 +185,94 @@ public class ConsoleDialogAgent implements DialogAgent {
 
 
     }
-    private void handleHospital(){}
-    private void handlePub(){}
-    private void handleRestaurant(){}
-    private void handleChurch(){}
-    private void handleGym(){}
-    private void handleChangingTheCity(){}
+    private void handleHospital(){
+        Facility hospital = FacilityFactory.hospital();
+        System.out.println("Witaj w najlepszym szpitalu w tym miescie. Pomozemy ci stanac na nogi.");
+
+        if (player.getBalance().compareTo(hospital.getPrice()) < 0){
+            System.out.println("Oj, przykro nam, ale nie stac ciebie na wizyte w szpitalu. Koszt leczenia wynosi " + hospital.getPrice().setScale(2) + ".\n" +
+                    "Przyjdz, gdy uzbierasz potrzebna kwote.");
+            return;
+        }
+
+        player.boostDefensiveLevel(hospital.getDefensiveBenefitFromUsing());
+        player.boostOffensiveLevel(hospital.getOffensiveBenefitFromUsing());
+        player.boostMentalLevel(hospital.getMentalBenefitFromUsing());
+        System.out.println("Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz sie slabiej.");
+
+    }
+    private void handlePub(){
+        Facility pub = FacilityFactory.pub();
+        System.out.println("Cieszymy sie, ze wpadles. Mocne Ale z naszej warzelni od razu poprawi Ci humor.");
+
+        if (player.getBalance().compareTo(pub.getPrice()) < 0){
+            System.out.println("Oj, przykro nam, ale nie stac ciebie na nasze trunki. Koszt dobrego ale to " + pub.getPrice().setScale(2) + ".\n" +
+                    "Przyjdz, gdy uzbierasz potrzebna kwote.");
+            return;
+        }
+
+        player.boostDefensiveLevel(pub.getDefensiveBenefitFromUsing());
+        player.boostOffensiveLevel(pub.getOffensiveBenefitFromUsing());
+        player.boostMentalLevel(pub.getMentalBenefitFromUsing());
+        System.out.println("Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz pragnienie.");
+    }
+    private void handleRestaurant(){
+        Facility restaurant = FacilityFactory.restaurant();
+
+        if (player.getBalance().compareTo(restaurant.getPrice()) < 0){
+            System.out.println("Oj, przykro nam, ale nie stac ciebie na wizyte u nas. Koszt dobrego obiadu to " + restaurant.getPrice().setScale(2) + ".\n" +
+                    "Przyjdz, gdy uzbierasz potrzebna kwote.");
+            return;
+        }
+
+        System.out.println("Witamy dostojnego goscia. Prosimy zajac miejsce przy stoliku. Nasz szef kuchni przyrzadza wlasnie pana ulubiony stek.");
+
+        player.boostDefensiveLevel(restaurant.getDefensiveBenefitFromUsing());
+        player.boostOffensiveLevel(restaurant.getOffensiveBenefitFromUsing());
+        player.boostMentalLevel(restaurant.getMentalBenefitFromUsing());
+        System.out.println("Smakowalo? Nasze steki to nasza duma. Zajrzyj do nas znowu, kiedy tylko poczujesz burczenie w zoladku.");
+    }
+
+
+    private void handleChurch(){
+        Facility church = FacilityFactory.church();
+
+        if (player.getBalance().compareTo(church.getPrice()) < 0){
+            System.out.println("Co laska wynosi " + church.getPrice().setScale(2) + ".\n" +
+                    "Przyjdz prosze, gdy uzbierasz potrzebna kwote.");
+            return;
+        }
+
+        System.out.println("Witam zagubiona owieczke. Zajmij prosze miejsce i poswiec chwile Bogu.");
+
+        player.boostDefensiveLevel(church.getDefensiveBenefitFromUsing());
+        player.boostOffensiveLevel(church.getOffensiveBenefitFromUsing());
+        player.boostMentalLevel(church.getMentalBenefitFromUsing());
+        System.out.println("Lepiej, prawda? Kazdy potrzebuje chwile duchowego wyciszenia.\n" +
+                "Odwiedz nasz kosciol, gdy tylko poczujesz sie gorzej");
+    }
+
+    private void handleGym(){
+        Facility gym = FacilityFactory.gym();
+
+        if (player.getBalance().compareTo(gym.getPrice()) < 0){
+            System.out.println("Nie ma wstepu, koles. Wyrzucaj z siebie " + gym.getPrice().setScale(2) + " albo pakuj w parku\n");
+            return;
+        }
+
+        System.out.println("Strzala brachu. Wolne ciezary juz na ciebie czekaja. Pakuj, szkoda czasu.");
+
+        player.boostDefensiveLevel(gym.getDefensiveBenefitFromUsing());
+        player.boostOffensiveLevel(gym.getOffensiveBenefitFromUsing());
+        player.boostMentalLevel(gym.getMentalBenefitFromUsing());
+        System.out.println("Jest pompa, nie? Klata, plecy, barki, od tego sa ciezarki!\n" +
+                "Zawin do nas jeszcze, ziomek.");
+    }
+
+    private void handleChangingTheCity(){
+
+
+    }
 
 
     private void showPriceList(Map<DrugType, BigDecimal> priceList){
