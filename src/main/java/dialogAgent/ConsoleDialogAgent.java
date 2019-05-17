@@ -61,16 +61,21 @@ public class ConsoleDialogAgent implements DialogAgent {
 
         int numberOfEventsPerDay = 0;
 
-        while (numberOfEventsPerDay != MAX_NUMBER_OF_EVENTS_PER_DAY) {
+        while (numberOfEventsPerDay != MAX_NUMBER_OF_EVENTS_PER_DAY && player.isAlive()) {
             showOptions();
             Integer chosenPlace = getChoice();
             goTo(chosenPlace);
             forceEnterAction();
             numberOfEventsPerDay++;
         }
+
+        if (!player.isAlive()){
+            return;
+        }
+
         player.boostMentalLevel(MILD_DEPRESSION);
         statementAtTheEndOfTheDay();
-
+        forceEnterAction();
 
     }
 

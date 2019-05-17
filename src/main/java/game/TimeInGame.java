@@ -1,5 +1,7 @@
 package game;
 
+import player.Player;
+
 public class TimeInGame {
 
     public static Integer INITIAL_DAY = 1;
@@ -18,6 +20,10 @@ public class TimeInGame {
 
     public void showDay(){
         System.out.println("\n* * *\nDay:" + day + "\n");
+    }
+
+    public void showFullHeader(Player player){
+        System.out.format("\nDay: %-2s | Twoje imie: %-8s | Obrona: %-3d | Atak: %-3d | Poziomm mentalny: %-3d |\n\n", day, player.getName() ,player.getDefensiveLevel(), player.getOffensiveLevel(), player.getMentalLevel());
     }
 
     public void setNextDay(){

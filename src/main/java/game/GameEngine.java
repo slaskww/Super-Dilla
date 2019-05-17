@@ -33,12 +33,12 @@ public class GameEngine {
     public void start() {
 
         dialogAgent.spectate(EventType.GAME_STARTED);
-        time.showDay();
+        time.showFullHeader(player);
         dialogAgent.spectate(EventType.FIRST_DAY);
 
         while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
             time.setNextDay();
-            time.showDay();
+            time.showFullHeader(player);
             dialogAgent.spectate(EventType.NEW_DAY);
             dialogAgent.spectate(EventType.FIGHT);
         }

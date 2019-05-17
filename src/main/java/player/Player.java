@@ -50,6 +50,10 @@ public class Player extends Person {
         return builder.toString();
     }
 
+    public String getName(){
+        return super.getName();
+    }
+
     public void changeCity(City newCity){
         city = newCity;
     }
