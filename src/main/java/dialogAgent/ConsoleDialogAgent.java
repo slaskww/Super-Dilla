@@ -7,6 +7,7 @@ import city.facility.FacilityFactory;
 import drug.Drug;
 import drug.DrugType;
 import enemy.Enemy;
+import generalplayer.Person;
 import generalplayer.PersonType;
 import player.Player;
 
@@ -18,6 +19,8 @@ public class ConsoleDialogAgent implements DialogAgent {
     private Player player;
     private Scanner input;
     private Random rand;
+    private final int MAX_NUMBER_OF_EVENTS_PER_DAY = 3;
+    private final Integer MILD_DEPRESSION = -1;
 
     public ConsoleDialogAgent(Player player) {
         this.player = player;
@@ -37,26 +40,42 @@ public class ConsoleDialogAgent implements DialogAgent {
 
             case FIRST_DAY:
                 firstDayStatement();
-                showOptions();
-                Integer chosenPlace = getChoice();
-                goTo(chosenPlace);
-                forceEnterAction();
+                executeDay();
                 break;
 
             case NEW_DAY:
                 newDayStatement();
                 player.getCity().getMarket().changePrices();
-                showOptions();
-                chosenPlace = getChoice();
-                goTo(chosenPlace);
-                forceEnterAction();
+                executeDay();
                 break;
 
             case FIGHT:
                 fight();
                 forceEnterAction();
+                break;
 
         }
+    }
+
+    private void executeDay() {
+
+        int numberOfEventsPerDay = 0;
+
+        while (numberOfEventsPerDay != MAX_NUMBER_OF_EVENTS_PER_DAY) {
+            showOptions();
+            Integer chosenPlace = getChoice();
+            goTo(chosenPlace);
+            forceEnterAction();
+            numberOfEventsPerDay++;
+        }
+        player.boostMentalLevel(MILD_DEPRESSION);
+        statementAtTheEndOfTheDay();
+
+
+    }
+
+    private void statementAtTheEndOfTheDay() {
+        System.out.println("# Sciemnia sie, wiec bezpiecznie bedzie wrocic do domu. Zaliczyles kolejny udany dzien.");
     }
 
     private void startGameStatement() {
@@ -95,7 +114,7 @@ public class ConsoleDialogAgent implements DialogAgent {
     }
 
 
-    private void newDayStatement(){
+    private void newDayStatement() {
         System.out.println("# W miescie " + player.getCity().getName() + " nastal nowy dzien." +
                 "\n# Najwyzszy czas, by co nieco zarobic!");
     }
@@ -118,6 +137,7 @@ public class ConsoleDialogAgent implements DialogAgent {
     }
 
     private void goTo(Integer chosenPlace) {
+
 
         switch (chosenPlace) {
             case 1:
@@ -154,21 +174,94 @@ public class ConsoleDialogAgent implements DialogAgent {
     private void fight() {
 
         if (!player.getCity().isAnyDangerousOrdinaryEnemy()) {
-            System.out.println("# Walczysz z bossem" + player.getCity().getBoss().getName());
+            fightWithBoss(player.getCity().getBoss());
             return;
         }
 
         int currentNumberOfEnemies = player.getCity().getEnemies().size();
-        int indexRandomEnemy = rand.nextInt(currentNumberOfEnemies);
-        Enemy randomEnemyFormTheCity = player.getCity().getEnemies().get(indexRandomEnemy);
+        int indexOfRandomEnemy = rand.nextInt(currentNumberOfEnemies);
+        Enemy randomEnemyFormTheCity = player.getCity().getEnemies().get(indexOfRandomEnemy);
 
         if (randomEnemyFormTheCity.getPersonType() == PersonType.NOONE) {
-            System.out.println("# Udalo ci sie uniknac konfrontacji z twoimi wrogami. Jutro mozesz nie miec tyle szczescia.");
-            player.getCity().deleteEnemy(indexRandomEnemy);
+            player.getCity().deleteEnemy(indexOfRandomEnemy);
             return;
         }
-        System.out.println("# Walczysz z " + randomEnemyFormTheCity.getName());
-        player.getCity().deleteEnemy(indexRandomEnemy);
+
+        if (randomEnemyFormTheCity.getPersonType() == PersonType.POLICE_OFFICER) {
+            fightWithPolice(randomEnemyFormTheCity);
+            return;
+        }
+        fightWithDealer(randomEnemyFormTheCity);
+
+        player.getCity().deleteEnemy(indexOfRandomEnemy);
+    }
+
+    private void fightWithPolice(Enemy enemy) {
+        System.out.println("# Wpadles! Policja wyczula, ze dobrze idzie ci w biznesie.");
+        System.out.println("# Co robisz?\n\t(1)Zaproponuj lapowke\t(2)Walcz");
+        int option;
+
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("# Robi sie goroco. Podaj cyfre reprezentujaca wybrana opcje.");
+            }
+            option = input.nextInt();
+
+            if (option > 0 && option < 3) {
+                break;
+            }
+            System.out.println("# Wybierz: 1 lub 2.");
+        }
+
+
+        if (option == 1 && enemy.isCorruptible() && player.getBalance().compareTo(enemy.BRIBE) >= 0) {
+            System.out.println("# Masz szczescie. Policjant zgodzil sie wziac kase. Jestes stratny " + enemy.BRIBE + " ale zyjesz.");
+            player.getSmartBackpack().updateWallet(BigDecimal.ZERO.subtract(enemy.BRIBE));
+            return;
+
+        } else if (option == 1 && enemy.isCorruptible()) {
+            System.out.println("# Nie masz srodkow, by oplacic policje. Kwota " + enemy.BRIBE + " to dla ciebie za duzo.");
+        } else if (option == 1 && !enemy.isCorruptible()){
+            System.out.println("# Cholera, trafil ci sie nieprzekupny glina. Musisz walczyc.");
+        } else {
+            System.out.println("# Wybrales walke. Coz moze lepiej byloby poswiecic te kilka stowek i zniknac w spokoju. Zatem walcz.");
+        }
+
+        fightMode(enemy);
+    }
+
+    private void fightWithBoss(Enemy enemy) {
+        System.out.println("# By stac sie panem tego miasta musisz pokonac swojego arcywroga.");
+        System.out.println("# Walczysz z bossem" + player.getCity().getBoss().getName());
+        fightMode(enemy);
+    }
+
+    private void fightWithDealer(Enemy enemy) {
+        System.out.println("# Ktos staje ci na drodze! To konkurencja, ktora mocno ostatnio wkurzyles.");
+        System.out.println("# Walczysz z " + enemy.getName());
+        fightMode(enemy);
+    }
+
+    private void fightMode(Enemy enemy) {
+
+        Integer accumulatedStrengthOfEnemy = enemy.getDefensiveLevel() + enemy.getOffensiveLevel() + enemy.getMentalLevel();
+        Integer accumulatedStrengthOfPlayer = player.getDefensiveLevel() + player.getOffensiveLevel() + player.getMentalLevel();
+        showStrengthLevel(player);
+        showStrengthLevel(enemy);
+        showFightInProgress();
+
+        if (accumulatedStrengthOfEnemy.compareTo(accumulatedStrengthOfPlayer) > 0) {
+            player.kill();
+            System.out.println("Walczyles dzielnie, ale rany byly zbyt glebokie. Giniesz, ale miasto o tobie nie zapomni.");
+        } else {
+            player.reduceStrengthAfterFight(enemy);
+            System.out.println("Wygrales, ale straciles sporo krwi. Przydalaby sie wizyta w szpitalu");
+        }
+    }
+
+    private void showStrengthLevel(Person person) {
+        System.out.format("\n\tUmiejetnosci %-17s >>> Obrona: %-3d Atak: %-3d Poziom mentalny: %-3d\n", person.getName(), person.getDefensiveLevel(), person.getOffensiveLevel(), person.getMentalLevel());
     }
 
     private void handleMarket() {
@@ -206,7 +299,7 @@ public class ConsoleDialogAgent implements DialogAgent {
                     "# Przyjdz, gdy uzbierasz potrzebna kwote.");
             return;
         }
-        slowActionDown();
+        showActionInProgress();
         player.boostDefensiveLevel(hospital.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(hospital.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(hospital.getMentalBenefitFromUsing());
@@ -225,7 +318,7 @@ public class ConsoleDialogAgent implements DialogAgent {
                     "# Przyjdz, gdy uzbierasz potrzebna kwote.");
             return;
         }
-        slowActionDown();
+        showActionInProgress();
         player.boostDefensiveLevel(pub.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(pub.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(pub.getMentalBenefitFromUsing());
@@ -249,7 +342,7 @@ public class ConsoleDialogAgent implements DialogAgent {
         player.boostOffensiveLevel(restaurant.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(restaurant.getMentalBenefitFromUsing());
         player.getSmartBackpack().payForFacilities(costOfDinner);
-        slowActionDown();
+        showActionInProgress();
         System.out.println("# Smakowalo? Nasze steki to nasza duma. Prosimy zajrzec do nas ponownie.");
     }
 
@@ -264,7 +357,7 @@ public class ConsoleDialogAgent implements DialogAgent {
         }
 
         System.out.println("# Witam zagubiona owieczke. Zajmij prosze miejsce i poswiec chwile Bogu.");
-        slowActionDown();
+        showActionInProgress();
         player.boostDefensiveLevel(church.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(church.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(church.getMentalBenefitFromUsing());
@@ -283,7 +376,7 @@ public class ConsoleDialogAgent implements DialogAgent {
         }
 
         System.out.println("# Strzala brachu. Wolne ciezary juz na ciebie czekaja. Pakuj, szkoda czasu.");
-        slowActionDown();
+        showActionInProgress();
         player.boostDefensiveLevel(gym.getDefensiveBenefitFromUsing());
         player.boostOffensiveLevel(gym.getOffensiveBenefitFromUsing());
         player.boostMentalLevel(gym.getMentalBenefitFromUsing());
@@ -298,19 +391,19 @@ public class ConsoleDialogAgent implements DialogAgent {
         City chosenCity = chooseCity();
         BigDecimal ticketPrice = chosenCity.getCostOfTheTicketToGetHere();
 
-        while (player.getBalance().compareTo(ticketPrice) < 0){
+        while (player.getBalance().compareTo(ticketPrice) < 0) {
             System.out.println("# Nie posiadasz srodkow na zakup biletu.");
             chosenCity = chooseCity();
             ticketPrice = chosenCity.getCostOfTheTicketToGetHere();
         }
 
-        if (chosenCity.getName() == player.getCity().getName()){
+        if (chosenCity.getName() == player.getCity().getName()) {
             return;
         }
         player.changeCity(chosenCity);
         player.getSmartBackpack().payForFacilities(ticketPrice);
         System.out.println("# Zyczymy milej podrozy.");
-        slowActionDown();
+        showActionInProgress();
         System.out.println("# Witamy w " + chosenCity.getName() + ". Niech nasze miasto stanie sie Twoim nowym domem.");
     }
 
@@ -323,12 +416,12 @@ public class ConsoleDialogAgent implements DialogAgent {
         City city;
         Iterator<City> iterator = cities.iterator();
 
-        while(iterator.hasNext()) {
-                city = iterator.next();
+        while (iterator.hasNext()) {
+            city = iterator.next();
             if (city.getName().equals(player.getCity().getName())) {
                 iterator.remove();
             } else
-            System.out.format("\t(%d)%s - koszt biletu: %.2f\n", position++, city.getName(), city.getCostOfTheTicketToGetHere().setScale(2));
+                System.out.format("\t(%d)%s - koszt biletu: %.2f\n", position++, city.getName(), city.getCostOfTheTicketToGetHere().setScale(2));
         }
         System.out.format("\t(%d)%s\n\n", position, "Zrezygnuj z wyjazdu");
         System.out.println("\n# Wybierz numer reprezentujacy miasto.");
@@ -340,7 +433,7 @@ public class ConsoleDialogAgent implements DialogAgent {
             }
             int option = input.nextInt();
 
-            if (option == 4){
+            if (option == 4) {
                 return player.getCity();
             }
 
@@ -512,9 +605,25 @@ public class ConsoleDialogAgent implements DialogAgent {
 
     }
 
-    private static void slowActionDown() {
+    private static void showActionInProgress() {
 
         System.out.print("\n         |SERVICE IN PROGRESS|\n");
+        System.out.print(" ========================================\n");
+        System.out.print("|0%                 |50%             100%|\n ");
+        for (int i = 0; i < 40; i++) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print("=");
+        }
+        System.out.print("\n\n");
+    }
+
+    private static void showFightInProgress() {
+
+        System.out.print("\n         |FIGHT IN PROGRESS|\n");
         System.out.print(" ========================================\n");
         System.out.print("|0%                 |50%             100%|\n ");
         for (int i = 0; i < 40; i++) {

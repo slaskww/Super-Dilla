@@ -37,13 +37,10 @@ public class GameEngine {
         dialogAgent.spectate(EventType.FIRST_DAY);
 
         while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
-
-            dialogAgent.spectate(EventType.FIGHT);
-            //   System.out.println(player.getPerson());
-            player.boostMentalLevel(-1);
             time.setNextDay();
             time.showDay();
             dialogAgent.spectate(EventType.NEW_DAY);
+            dialogAgent.spectate(EventType.FIGHT);
         }
     }
 

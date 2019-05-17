@@ -3,6 +3,7 @@ package player;
 import backpack.SmartBackpack;
 import city.City;
 import city.CityFactory;
+import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
 import weapon.Weapon;
@@ -15,9 +16,9 @@ public class Player extends Person {
     private SmartBackpack smartBackpack;
     private City city;
     private static PersonType PLAYER_PERSON_TYPE = PersonType.PLAYER;
-    private static final Integer INITIAL_OFFENSIVE_LEVEL = 50;
-    private static final Integer INITIAL_DEFENSIVE_LEVEL = 50;
-    private static final Integer INITIAL_MENTAL_LEVEL = 50;
+    private static final Integer INITIAL_OFFENSIVE_LEVEL = 100;
+    private static final Integer INITIAL_DEFENSIVE_LEVEL = 100;
+    private static final Integer INITIAL_MENTAL_LEVEL = 60;
     private static final Weapon BASIC_WEAPON = WeaponFactory.kitchenKnife();
 
     public Player(String name) {
@@ -51,6 +52,12 @@ public class Player extends Person {
 
     public void changeCity(City newCity){
         city = newCity;
+    }
+
+    public void reduceStrengthAfterFight(Enemy enemy){
+        this.boostOffensiveLevel(-enemy.getOffensiveLevel());
+        this.boostDefensiveLevel(-enemy.getDefensiveLevel());
+        this.boostMentalLevel(-enemy.getMentalLevel());
     }
 }
 

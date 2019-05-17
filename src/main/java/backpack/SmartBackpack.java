@@ -57,7 +57,7 @@ public class SmartBackpack {
 
     }
 
-    private void updateWallet(BigDecimal amount){
+    public void updateWallet(BigDecimal amount){
         this.wallet = wallet.add(amount);
     }
 
