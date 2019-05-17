@@ -49,5 +49,8 @@ public class Player extends Person {
         return builder.toString();
     }
 
+    public void changeCity(City newCity){
+        city = newCity;
+    }
 }
 

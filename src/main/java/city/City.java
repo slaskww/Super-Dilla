@@ -7,6 +7,7 @@ import enemy.Enemy;
 import enemy.EnemyFactory;
 import generalplayer.PersonType;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,10 +19,13 @@ public class City {
     private List<Enemy> ordinaryEnemies;
     private Enemy superEnemy;
     private List<Facility> facilities;
+    private BigDecimal costOfTheTicketToGetHere;
 
-    public City(String name, Enemy boss) {
+
+    public City(String name, Enemy boss, BigDecimal costOfTheTicketToGetHere) {
         this.name = name;
         this.market = DrugMarket.getDrugMarket();
+        this.costOfTheTicketToGetHere = costOfTheTicketToGetHere;
         this.ordinaryEnemies = new LinkedList<>(Arrays.asList(EnemyFactory.youngDealer()
                 ,EnemyFactory.youngDealer()
                 ,EnemyFactory.oldDealer()
@@ -79,5 +83,8 @@ public class City {
         return false;
     }
 
+    public BigDecimal getCostOfTheTicketToGetHere() {
+        return costOfTheTicketToGetHere;
+    }
 
 }
