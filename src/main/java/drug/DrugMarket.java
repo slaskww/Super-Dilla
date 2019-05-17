@@ -61,7 +61,7 @@ public class DrugMarket { //implements Singleton
     }
 
 
-    public List<DrugType> getDrugTypeList() {
+    public List<DrugType> getDrugTypeListInOrder() {
 
         List<DrugType> list = new ArrayList<>();
 

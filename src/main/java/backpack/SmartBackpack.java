@@ -4,6 +4,8 @@ import drug.Drug;
 import drug.DrugType;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -79,5 +81,26 @@ public class SmartBackpack {
 
     public Map<DrugType, Integer> getGoods() {
         return goods;
+    }
+
+    public boolean areGoodsInBackpack(){
+
+        for (Map.Entry<DrugType, Integer> entry : goods.entrySet()){
+            if (entry.getValue().compareTo(INITIAL_DRUG_VOLUME) > 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<DrugType> getDrugTypeListInOrder() {
+
+        List<DrugType> list = new ArrayList<>();
+
+        for (Map.Entry<DrugType, Integer> entry : goods.entrySet()){
+            list.add(entry.getKey());
+        }
+
+        return list;
     }
 }
