@@ -12,11 +12,11 @@ public class DrugMarket { //implements Singleton
 
     private DrugMarket() {
         this.priceList = new TreeMap<>();
-        priceList.put(DrugType.MARIJUANA, BigDecimal.valueOf(100));
-        priceList.put(DrugType.HEROIN, BigDecimal.valueOf(100));
-        priceList.put(DrugType.ESCTASY, BigDecimal.valueOf(100));
-        priceList.put(DrugType.COCAINE, BigDecimal.valueOf(100));
-        priceList.put(DrugType.AMPHETAMINE, BigDecimal.valueOf(100));
+        priceList.put(DrugType.MARIJUANA, BigDecimal.valueOf(40));
+        priceList.put(DrugType.HEROIN, BigDecimal.valueOf(50));
+        priceList.put(DrugType.ESCTASY, BigDecimal.valueOf(50));
+        priceList.put(DrugType.COCAINE, BigDecimal.valueOf(200));
+        priceList.put(DrugType.AMPHETAMINE, BigDecimal.valueOf(30));
 
     }
 
