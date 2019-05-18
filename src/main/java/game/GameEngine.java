@@ -38,8 +38,10 @@ public class GameEngine {
 
         while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
             time.setNextDay();
-            time.showFullHeader(player);
+            time.showFullHeader(player); //timee + skills
             dialogAgent.spectate(EventType.NEW_DAY);
+
+            if (!player.isAlive()){break;}
             dialogAgent.spectate(EventType.FIGHT);
         }
     }

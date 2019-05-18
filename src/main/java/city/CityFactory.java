@@ -4,34 +4,38 @@ import enemy.EnemyFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class CityFactory {
 
+    private static List<City> mapOfCities = new ArrayList<>();
+
     public static City grassbay(){
-        return new City("Grassbay", EnemyFactory.elChipotle(), BigDecimal.valueOf(100));
+        City city = new City("Grassbay", EnemyFactory.elChipotle(), BigDecimal.valueOf(100));
+        mapOfCities.add(city);
+        return city;
     }
 
     public static City whiteMountain(){
-        return new City("White Mountain", EnemyFactory.pabloHabanero(), BigDecimal.valueOf(200));
+        City city =  new City("White Mountain", EnemyFactory.pabloHabanero(), BigDecimal.valueOf(200));
+        mapOfCities.add(city);
+        return city;
     }
 
     public static City dopeTown(){
-        return new City("Dope Town", EnemyFactory.vitoCapsicio(), BigDecimal.valueOf(400));
+        City city =   new City("Dope Town", EnemyFactory.vitoCapsicio(), BigDecimal.valueOf(400));
+        mapOfCities.add(city);
+        return city;
     }
 
     public static City crystalRiver(){
-        return new City("Crystal River", EnemyFactory.kingpin(), BigDecimal.valueOf(700));
+        City city =  new City("Crystal River", EnemyFactory.kingpin(), BigDecimal.valueOf(700));
+        mapOfCities.add(city);
+        return city;
     }
 
     public static List<City> mapOfCities(){
-        List<City> cities = new ArrayList<>();
-        cities.add(grassbay());
-        cities.add(whiteMountain());
-        cities.add(dopeTown());
-        cities.add(crystalRiver());
-        return cities;
+        return mapOfCities;
     }
 }

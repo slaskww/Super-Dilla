@@ -1,5 +1,5 @@
 import dialogAgent.ConsoleDialogAgent;
-import dialogAgent.DialogAgent;
+import dialogAgent.VisualConsoleAgent;
 import game.GameEngine;
 import player.Player;
 
@@ -10,7 +10,8 @@ public class DillaApp {
         Player player = new Player("Player");
         GameEngine game = new GameEngine(player);
         game.prepareGame();
-        ConsoleDialogAgent agent = new ConsoleDialogAgent(player);
+        VisualConsoleAgent visualConsoleAgent = VisualConsoleAgent.getVisualConsoleAgent();
+        ConsoleDialogAgent agent = new ConsoleDialogAgent(player, visualConsoleAgent);
         game.setDialogAgent(agent);
         game.start();
 

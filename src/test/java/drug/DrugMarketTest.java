@@ -22,6 +22,7 @@ public class DrugMarketTest {
         BigDecimal valueOfFourthElementBeforeChange = priceList.get(DrugType.HEROIN);
         BigDecimal valueOfFifthElementBeforeChange = priceList.get(DrugType.MARIJUANA);
 
+
         Double rate = 1.2;
 
         //When
@@ -36,11 +37,11 @@ public class DrugMarketTest {
         BigDecimal valueOfFifthElementAfterChange = priceList.get(DrugType.MARIJUANA);
 
         //Then
-        assertThat(valueOfFirstElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
-        assertThat(valueOfSecondElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
-        assertThat(valueOfThirdElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
-        assertThat(valueOfFourthElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
-        assertThat(valueOfFifthElementAfterChange).isEqualTo(BigDecimal.valueOf(120.0));
+        assertThat(valueOfFirstElementBeforeChange.multiply(BigDecimal.valueOf(rate))).isEqualTo(valueOfFirstElementAfterChange);
+        assertThat(valueOfSecondElementBeforeChange.multiply(BigDecimal.valueOf(rate))).isEqualTo(valueOfSecondElementAfterChange);
+        assertThat(valueOfThirdElementBeforeChange.multiply(BigDecimal.valueOf(rate))).isEqualTo(valueOfThirdElementAfterChange);
+        assertThat(valueOfFourthElementBeforeChange.multiply(BigDecimal.valueOf(rate))).isEqualTo(valueOfFourthElementAfterChange);
+        assertThat(valueOfFifthElementBeforeChange.multiply(BigDecimal.valueOf(rate))).isEqualTo(valueOfFifthElementAfterChange);
 
 
     }
