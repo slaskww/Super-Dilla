@@ -14,7 +14,7 @@ public class Announcer {
         this.listeners = new LinkedHashSet<>();
     }
 
-    public void addListenet(Listener listener){
+    public void addListener(Listener listener){
         listeners.add(listener);
     }
 
