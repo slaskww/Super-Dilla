@@ -16,6 +16,8 @@ import java.util.*;
 
 public class VisualConsoleAgent {
 
+
+
     static {
         input = new Scanner(System.in);
         rand = new Random();

@@ -6,6 +6,7 @@ import city.CityFactory;
 import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
+import utils.Announcer;
 import weapon.Weapon;
 import weapon.WeaponFactory;
 
@@ -20,11 +21,13 @@ public class Player extends Person {
     private static final Integer INITIAL_DEFENSIVE_LEVEL = 100;
     private static final Integer INITIAL_MENTAL_LEVEL = 60;
     private static final Weapon BASIC_WEAPON = WeaponFactory.kitchenKnife();
+    private Announcer announcer;
 
-    public Player(String name) {
+    public Player(String name, Announcer announcer) {
         super(name, PLAYER_PERSON_TYPE, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, INITIAL_MENTAL_LEVEL ,BASIC_WEAPON);
         this.smartBackpack = new SmartBackpack();
         this.city = CityFactory.grassbay();
+        this.announcer = announcer;
     }
 
     public SmartBackpack getSmartBackpack() {
@@ -56,6 +59,7 @@ public class Player extends Person {
 
     public void changeCity(City newCity){
         city = newCity;
+        announcer.informListeners(this.getName(), this.getBalance(), newCity);
     }
 
     public void reduceStrengthAfterFight(Enemy enemy){
