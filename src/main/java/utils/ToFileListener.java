@@ -1,27 +1,34 @@
 package utils;
 
 import city.City;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Formatter;
+
+
 
 public class ToFileListener implements Listener {
 
-    public ToFileListener() {}
+    static final Logger log = LogManager.getLogger(ToFileListener.class.getName());
+
+    public ToFileListener() {
+    }
 
     @Override
     public void informListener(String name, BigDecimal balance, City city) {
 
-       try (FileWriter output = new FileWriter("Player_logs.txt", true)){
-           output.write("player " + name + " moved to " + city.getName() + " with capital " + balance);
-           output.write(System.lineSeparator());
-       }
+        try (FileWriter output = new FileWriter("Player_logs.txt", true)) {
+            String message = "player " + name + " moved to " + city.getName() + " with capital " + balance;
+            output.write(message);
+            log.log(Level.INFO, message);
 
-       catch (IOException e)
-       {
-           e.printStackTrace();
-       }
-
+            output.write(System.lineSeparator());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
