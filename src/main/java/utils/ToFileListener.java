@@ -13,11 +13,12 @@ public class ToFileListener implements Listener {
     @Override
     public void informListener(String name, BigDecimal balance, City city) {
 
-       try (Formatter output = new Formatter("Player_logs.txt")){
-           output.format("player %s moved to %s with capital %.2f", name,city.getName(),balance);
+       try (FileWriter output = new FileWriter("Player_logs.txt", true)){
+           output.write("player " + name + " moved to " + city.getName() + " with capital " + balance);
+           output.write(System.lineSeparator());
        }
 
-       catch (FileNotFoundException e)
+       catch (IOException e)
        {
            e.printStackTrace();
        }
