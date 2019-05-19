@@ -2,6 +2,9 @@ package backpack;
 
 import drug.Drug;
 import drug.DrugType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,6 +13,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class SmartBackpack {
+
+    private final Logger log = LogManager.getLogger(SmartBackpack.class.getName());
 
     public final BigDecimal INITIAL_WALLET_BALANCE = BigDecimal.valueOf(1000);
     public final Integer INITIAL_DRUG_VOLUME = 0;
@@ -30,6 +35,7 @@ public class SmartBackpack {
 
         BigDecimal costOfDrug = drug.getPrice().multiply(BigDecimal.valueOf(volume));
 
+
         if (wallet.compareTo(costOfDrug) < 0){
             return DealStatus.NOT_ENOUGH_MONEY_IN_WALLET;
         } else {
@@ -37,6 +43,8 @@ public class SmartBackpack {
             Integer newVolume = oldVolume + volume;
             goods.replace(drug.getName(),newVolume);
             updateWallet(BigDecimal.ZERO.subtract(costOfDrug));
+            String message = "Added drug: " + drug.getName() + "price: " + drug.getPrice() + ", volume: " + volume;
+            log.log(Level.INFO, message);
             return DealStatus.MAKE_A_DEAL;
         }
 
@@ -52,6 +60,9 @@ public class SmartBackpack {
             goods.replace(drug.getName(),newVolume);
             BigDecimal profitFromDrug = drug.getPrice().multiply(BigDecimal.valueOf(volume));
             updateWallet(profitFromDrug);
+            String message = "Removed drug: " + drug.getName()  + ", price: " + drug.getPrice() + ", volume: " + volume;
+            log.log(Level.INFO, message);
+
             return DealStatus.MAKE_A_DEAL;
         }
 
@@ -103,4 +114,5 @@ public class SmartBackpack {
 
         return list;
     }
+
 }

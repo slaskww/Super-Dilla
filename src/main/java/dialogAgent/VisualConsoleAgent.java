@@ -1,7 +1,6 @@
 package dialogAgent;
 
 import city.City;
-import city.CityFactory;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.Drug;
@@ -10,8 +9,10 @@ import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
 import player.Player;
+import world.WorldBuilder;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.util.*;
 
 public class VisualConsoleAgent {
@@ -20,7 +21,7 @@ public class VisualConsoleAgent {
 
     static {
         input = new Scanner(System.in);
-        rand = new Random();
+        rand = new SecureRandom();
     }
 
    private static Scanner input;
@@ -483,13 +484,13 @@ public class VisualConsoleAgent {
         City chosenCity = chooseCity(player);
         BigDecimal ticketPrice = chosenCity.getCostOfTheTicketToGetHere();
 
-        while (player.getBalance().compareTo(ticketPrice) < 0) {
+        while (player.getBalance().compareTo(ticketPrice) < 0 && !chosenCity.getName().equals(player.getCity().getName())) {
             System.out.println("# Nie posiadasz srodkow na zakup biletu.");
             chosenCity = chooseCity(player);
             ticketPrice = chosenCity.getCostOfTheTicketToGetHere();
         }
 
-        if (chosenCity.getName() == player.getCity().getName()) {
+        if (chosenCity.getName().equals(player.getCity().getName())) {
             return;
         }
         player.changeCity(chosenCity);
@@ -504,7 +505,7 @@ public class VisualConsoleAgent {
 
         int position = 1;
         System.out.println("\nDostepne miasta:");
-        List<City> cities = CityFactory.mapOfCities();
+        List<City> cities = new ArrayList<>(WorldBuilder.mapOfCities());
         City city;
         Iterator<City> iterator = cities.iterator();
 

@@ -1,11 +1,17 @@
 package drug;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class DrugMarket { //implements Singleton
 
+    private final Logger log = LogManager.getLogger(DrugMarket.class.getName());
     private Map<DrugType, BigDecimal> priceList;
     private static DrugMarket shop = null;
     Random rand = new Random();
@@ -38,7 +44,7 @@ public class DrugMarket { //implements Singleton
         Map<DrugType, BigDecimal> priceListAfterChange;
 
         priceListAfterChange = priceList.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> BigDecimal.valueOf(getRate()).multiply(e.getValue())));
-
+        log.log(Level.INFO, priceListAfterChange.toString());
         this.priceList = priceListAfterChange;
     }
 
@@ -48,7 +54,7 @@ public class DrugMarket { //implements Singleton
         Map<DrugType, BigDecimal> priceListAfterChange;
 
         priceListAfterChange = priceList.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> BigDecimal.valueOf(rate).multiply(e.getValue())));
-
+        log.log(Level.INFO, priceListAfterChange.toString());
         this.priceList = priceListAfterChange;
     }
 
@@ -70,6 +76,16 @@ public class DrugMarket { //implements Singleton
         }
 
         return list;
+    }
+
+    private String priceListToString(Map<DrugType, BigDecimal> priceList){
+        StringBuilder list = new StringBuilder();
+
+        for (Map.Entry<DrugType, BigDecimal> entry: priceList.entrySet()){
+            list.append("type: " + entry.getKey() + " price: " + entry.getValue().setScale(0, RoundingMode.HALF_UP) + " ");
+        }
+        return list.toString();
+
     }
 }
 
