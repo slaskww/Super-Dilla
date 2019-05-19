@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!-- Apendery slluza do pblikowania logow w konkretne miejsce np. konsole, plik, baze danych -->
+
+    <Appenders>
+        <!--<Console name="Console" target="SYSTEM_OUT">-->
+            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+        <!--</Console>-->
+
+
+        <File name="observerFileLog" fileName="logs/observer.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <File name="priceFluctuationsLog" fileName="logs/fluctuationsOnMarket.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
+    </Appenders>
+
+    <!-- Za pomocą logerow okreslamy co ma byc logowane  -->
+
+    <Loggers>
+
+        <Logger name="utils" additivity="true" level="trace">
+            <AppenderRef ref="observerFileLog"/>
+        </Logger>
+
+        <Logger name="backpack" additivity="true" level="trace">
+            <AppenderRef ref="observerFileLog"/>
+        </Logger>
+
+        <Logger name="drug" additivity="true" level="trace">
+            <AppenderRef ref="priceFluctuationsLog"/>
+        </Logger>
+
+        <Root level="all">
+            <!--<AppenderRef ref="Console"/>-->
+            <!--<AppenderRef ref="errorFileLog" level="error"/>-->
+        </Root>
+
+    </Loggers>
+</Configuration>
