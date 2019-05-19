@@ -1,0 +1,9 @@
+2019-05-19 14:12:49,793 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 4
+2019-05-19 14:12:49,798 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 5
+2019-05-19 14:13:57,028 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 4
+2019-05-19 14:13:57,036 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 50, volume: 5
+2019-05-19 14:59:44,775 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 4
+2019-05-19 15:09:06,593 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 4
+2019-05-19 15:09:06,599 INFO b.SmartBackpack [main] Removed drug: AMPHETAMINE, price: 50, volume: 4
+2019-05-19 15:38:25,597 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 1
+2019-05-19 15:48:43,533 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 4
