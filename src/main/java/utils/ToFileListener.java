@@ -19,7 +19,7 @@ public class ToFileListener implements Listener {
     }
 
     @Override
-    public void informListener(String name, BigDecimal balance, City city) {
+    public void update(String name, BigDecimal balance, City city) {
 
         try (FileWriter output = new FileWriter("Player_logs.txt", true)) {
             String message = "player " + name + " moved to " + city.getName() + " with capital " + balance;

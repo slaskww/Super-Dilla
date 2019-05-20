@@ -4,7 +4,7 @@ import city.City;
 
 import java.math.BigDecimal;
 
-public interface Listener {
+public interface Listener { //or Observer
 
- void  informListener(String nanme, BigDecimal balance, City city);
+ void update(String nanme, BigDecimal balance, City city);
 }

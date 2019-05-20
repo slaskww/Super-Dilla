@@ -107,4 +107,8 @@ public abstract class Person {
         }
     }
 
+    public boolean isWeapon(){
+        return weapon != null;
+    }
+
 }

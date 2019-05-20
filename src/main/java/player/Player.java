@@ -67,5 +67,7 @@ public class Player extends Person {
         this.boostDefensiveLevel(-enemy.getDefensiveLevel());
         this.boostMentalLevel(-enemy.getMentalLevel());
     }
+
+
 }
 

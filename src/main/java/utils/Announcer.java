@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Announcer {
+public class Announcer { //or Subject
 
     private Set<Listener> listeners;
 
@@ -23,6 +23,6 @@ public class Announcer {
     }
 
     public void informListeners(String name, BigDecimal balance, City city){
-        listeners.forEach(listener -> listener.informListener(name, balance, city));
+        listeners.forEach(listener -> listener.update(name, balance, city));
     }
 }
