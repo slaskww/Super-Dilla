@@ -3,6 +3,8 @@ package game;
 import dialogAgent.DialogAgent;
 import dialogAgent.EventType;
 import player.Player;
+import utils.Announcer;
+import utils.MessageCreator;
 import world.World;
 import world.WorldBuilder;
 
@@ -12,9 +14,11 @@ public class GameEngine {
     private Player player;
     private DialogAgent dialogAgent;
     private TimeInGame time = TimeInGame.getDateInstance();
+    private Announcer endOfTheDayAnnouncer;
 
-    public GameEngine(Player player) {
+    public GameEngine(Player player, Announcer announcer) {
         this.player = player;
+        this.endOfTheDayAnnouncer = announcer;
     }
 
     public void prepareGame() {
@@ -35,6 +39,8 @@ public class GameEngine {
         dialogAgent.spectate(EventType.GAME_STARTED);
         time.showFullHeader(player);
         dialogAgent.spectate(EventType.FIRST_DAY);
+        endOfTheDayAnnouncer.informListeners(time.getDay().toString());
+
 
         while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
             time.setNextDay();
@@ -43,6 +49,9 @@ public class GameEngine {
 
             if (!player.isAlive()){break;}
             dialogAgent.spectate(EventType.FIGHT);
+           // MessageCreator.executeLog(); //
+            endOfTheDayAnnouncer.informListeners(time.getDay().toString());
+
         }
     }
 

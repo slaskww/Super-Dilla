@@ -6,13 +6,17 @@ import city.CityFactory;
 import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utils.Announcer;
+import utils.Listener;
 import weapon.Weapon;
 import weapon.WeaponFactory;
 
 import java.math.BigDecimal;
 
-public class Player extends Person {
+public class Player extends Person implements Listener {
 
     private SmartBackpack smartBackpack;
     private City city;
@@ -22,6 +26,7 @@ public class Player extends Person {
     private static final Integer INITIAL_MENTAL_LEVEL = 60;
     private static final Weapon BASIC_WEAPON = WeaponFactory.kitchenKnife();
     private Announcer announcer;
+    private final Logger log = LogManager.getLogger(Player.class.getName());
 
     public Player(String name, Announcer announcer) {
         super(name, PLAYER_PERSON_TYPE, INITIAL_OFFENSIVE_LEVEL, INITIAL_DEFENSIVE_LEVEL, INITIAL_MENTAL_LEVEL ,BASIC_WEAPON);
@@ -59,7 +64,8 @@ public class Player extends Person {
 
     public void changeCity(City newCity){
         city = newCity;
-        announcer.informListeners(this.getName(), this.getBalance(), newCity);
+        String message = this.getName() + " moved to " + this.city + " with capital " + this.getBalance();
+        announcer.informListeners(message);
     }
 
     public void reduceStrengthAfterFight(Enemy enemy){
@@ -69,5 +75,28 @@ public class Player extends Person {
     }
 
 
+    @Override
+    public void update(String message) {
+        StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder.append("Day ");
+                messageBuilder.append(message);
+                messageBuilder.append(", player=");
+                messageBuilder.append(this.getName());
+                messageBuilder.append(", city=");
+                messageBuilder.append(this.city.getName());
+                messageBuilder.append(", balance=");
+                messageBuilder.append(this.getBalance());
+                messageBuilder.append(", offensive=");
+                messageBuilder.append(getOffensiveLevel());
+                messageBuilder.append(", defensive=");
+                messageBuilder.append(this.getDefensiveLevel());
+                messageBuilder.append(", mental=");
+                messageBuilder.append(this.getMentalLevel());
+                messageBuilder.append(", weapon=");
+                messageBuilder.append(this.getWeapon().getName());
+
+      //  MessageCreator.appendMessage(messageBuilder.toString());
+        log.log(Level.INFO, messageBuilder.toString());
+    }
 }
 

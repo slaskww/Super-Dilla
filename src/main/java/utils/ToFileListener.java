@@ -19,10 +19,9 @@ public class ToFileListener implements Listener {
     }
 
     @Override
-    public void update(String name, BigDecimal balance, City city) {
+    public void update(String message) {
 
         try (FileWriter output = new FileWriter("Player_logs.txt", true)) {
-            String message = "player " + name + " moved to " + city.getName() + " with capital " + balance;
             output.write(message);
             log.log(Level.INFO, message);
 

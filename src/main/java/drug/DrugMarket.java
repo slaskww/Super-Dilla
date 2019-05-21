@@ -3,15 +3,17 @@ package drug;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.Listener;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DrugMarket { //implements Singleton
+public class DrugMarket implements Listener { //implements Singleton
 
     private final Logger log = LogManager.getLogger(DrugMarket.class.getName());
+    private final Logger log2 = LogManager.getLogger(DrugMarket.class.getName());
     private Map<DrugType, BigDecimal> priceList;
     private static DrugMarket shop = null;
     Random rand = new Random();
@@ -82,10 +84,16 @@ public class DrugMarket { //implements Singleton
         StringBuilder list = new StringBuilder();
 
         for (Map.Entry<DrugType, BigDecimal> entry: priceList.entrySet()){
-            list.append("type: " + entry.getKey() + " price: " + entry.getValue().setScale(0, RoundingMode.HALF_UP) + " ");
+            list.append("type=" + entry.getKey() + " price=" + entry.getValue().setScale(0, RoundingMode.HALF_UP) + ", ");
         }
         return list.toString();
 
+    }
+
+    @Override
+    public void update(String message) {
+        String messageToLog = "Day " + message + ", Prices on the market: " + priceListToString(this.priceList);
+        log2.log(Level.INFO, messageToLog);
     }
 }
 

@@ -1,5 +1,6 @@
 import dialogAgent.ConsoleDialogAgent;
 import dialogAgent.VisualConsoleAgent;
+import drug.DrugMarket;
 import game.GameEngine;
 import player.Player;
 import utils.Announcer;
@@ -9,10 +10,13 @@ public class DillaApp {
 
     public static void main(String[] args) {
 
-        Announcer announcer = new Announcer();
-        announcer.addListener(new ToFileListener());
-        Player player = new Player("Player", announcer);
-        GameEngine game = new GameEngine(player);
+        Announcer changeTheCityAnnouncer = new Announcer();
+        changeTheCityAnnouncer.addListener(new ToFileListener());
+        Player player = new Player("Player", changeTheCityAnnouncer);
+        Announcer endOfTheDayAnnouncer = new Announcer();
+        endOfTheDayAnnouncer.addListener(player);
+        endOfTheDayAnnouncer.addListener(DrugMarket.getDrugMarket());
+        GameEngine game = new GameEngine(player, endOfTheDayAnnouncer);
         game.prepareGame();
         VisualConsoleAgent visualConsoleAgent = VisualConsoleAgent.getVisualConsoleAgent();
         ConsoleDialogAgent agent = new ConsoleDialogAgent(player, visualConsoleAgent);

@@ -67,7 +67,7 @@ public class ConsoleDialogAgent implements DialogAgent {
 
         player.boostMentalLevel(MILD_DEPRESSION);
         visualAgent.statementAtTheEndOfTheDay();
-        visualAgent.forceEnterAction();
+     //   visualAgent.forceEnterAction();
 
     }
 

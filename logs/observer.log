@@ -11,3 +11,6 @@
 2019-05-20 19:11:39,676 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 1
 2019-05-20 19:11:39,683 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 50, volume: 4
 2019-05-20 19:11:39,683 INFO b.SmartBackpack [main] Removed drug: AMPHETAMINE, price: 50, volume: 4
+2019-05-21 07:56:09,130 INFO u.ToFileListener [main] Player moved to city.City@7cbd213e with capital 1000
+2019-05-21 09:00:49,701 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 6
+2019-05-21 09:01:01,112 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 14

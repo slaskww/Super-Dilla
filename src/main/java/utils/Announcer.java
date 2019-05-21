@@ -22,7 +22,7 @@ public class Announcer { //or Subject
         listeners.remove(listener);
     }
 
-    public void informListeners(String name, BigDecimal balance, City city){
-        listeners.forEach(listener -> listener.update(name, balance, city));
+    public void informListeners(String message){
+        listeners.forEach(listener -> listener.update(message));
     }
 }

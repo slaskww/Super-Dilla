@@ -20,6 +20,12 @@
             </PatternLayout>
         </File>
 
+        <File name="dailySummaryLog" fileName="logs/dailySummary.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
     </Appenders>
 
     <!-- Za pomocą logerow okreslamy co ma byc logowane  -->
@@ -37,6 +43,15 @@
         <Logger name="drug" additivity="true" level="trace">
             <AppenderRef ref="priceFluctuationsLog"/>
         </Logger>
+
+        <Logger name="player" additivity="true" level="trace">
+            <AppenderRef ref="dailySummaryLog"/>
+        </Logger>
+
+        <Logger name="drug" additivity="true" level="trace">
+            <AppenderRef ref="dailySummaryLog"/>
+        </Logger>
+
 
         <Root level="all">
             <!--<AppenderRef ref="Console"/>-->
