@@ -10,14 +10,16 @@ public class Weapon {
     private Integer defensiveLevel;
     private BigDecimal price;
     private Double weight;
+    private String description;
 
-    public Weapon(String name, WeaponType type, Integer offensiveLevel, Integer defensiveLevel, BigDecimal price, Double weight) {
+    public Weapon(String name, WeaponType type, Integer offensiveLevel, Integer defensiveLevel, BigDecimal price, Double weight, String description) {
         this.name = name;
         this.type = type;
         this.offensiveLevel = offensiveLevel;
         this.defensiveLevel = defensiveLevel;
         this.price = price;
         this.weight = weight;
+        this.description = description;
     }
 
     public String getName() {
@@ -42,5 +44,9 @@ public class Weapon {
 
     public Double getWeight() {
         return weight;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

@@ -9,7 +9,8 @@ import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
 import player.Player;
-import utils.Announcer;
+import weapon.Weapon;
+import weapon.WeaponFactory;
 import world.WorldBuilder;
 
 import java.math.BigDecimal;
@@ -19,23 +20,22 @@ import java.util.*;
 public class VisualConsoleAgent {
 
 
-
     static {
         input = new Scanner(System.in);
         rand = new SecureRandom();
     }
 
-   private static Scanner input;
-   private static Random rand;
-   private static VisualConsoleAgent visualConsoleAgent;
+    private static Scanner input;
+    private static Random rand;
+    private static VisualConsoleAgent visualConsoleAgent;
 
     private VisualConsoleAgent() {
 
     }
 
-    public static VisualConsoleAgent getVisualConsoleAgent(){
-        if (visualConsoleAgent == null){
-           visualConsoleAgent = new VisualConsoleAgent();
+    public static VisualConsoleAgent getVisualConsoleAgent() {
+        if (visualConsoleAgent == null) {
+            visualConsoleAgent = new VisualConsoleAgent();
         }
         return visualConsoleAgent;
     }
@@ -113,6 +113,10 @@ public class VisualConsoleAgent {
                 System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
             }
             int option = input.nextInt();
+
+            if (option == 99){
+                return option;
+            }
 
             if (option > 0 && option <= 10) {
                 return option;
@@ -257,7 +261,7 @@ public class VisualConsoleAgent {
         System.out.print("\n\n");
     }
 
-    public  void forceEnterAction() {
+    public void forceEnterAction() {
         try {
             System.out.println("Nacisnij ENTER aby kontynuowac...");
             Scanner scanner = new Scanner(System.in).useDelimiter("");
@@ -318,7 +322,7 @@ public class VisualConsoleAgent {
 
         } else if (option == 1 && enemy.isCorruptible()) {
             System.out.println("# Nie masz srodkow, by oplacic policje. Kwota " + enemy.BRIBE + " to dla ciebie za duzo.");
-        } else if (option == 1 && !enemy.isCorruptible()){
+        } else if (option == 1 && !enemy.isCorruptible()) {
             System.out.println("# Cholera, trafil ci sie nieprzekupny glina. Musisz walczyc.");
         } else {
             System.out.println("# Wybrales walke. Coz moze lepiej byloby poswiecic te kilka stowek i zniknac w spokoju. Zatem walcz.");
@@ -336,7 +340,7 @@ public class VisualConsoleAgent {
     private void fightWithDealer(Enemy enemy, Player player) {
         System.out.println("# Ktos staje ci na drodze! To konkurencja, ktora mocno ostatnio wkurzyles.");
         System.out.println("# Walczysz z " + enemy.getName());
-        fightMode(enemy,  player);
+        fightMode(enemy, player);
     }
 
     private void fightMode(Enemy enemy, Player player) {
@@ -355,7 +359,6 @@ public class VisualConsoleAgent {
             System.out.println("Wygrales, ale straciles sporo krwi. Przydalaby sie wizyta w szpitalu");
         }
     }
-
 
 
     public void handleMarket(Player player) {
@@ -534,7 +537,6 @@ public class VisualConsoleAgent {
     }
 
 
-
     private void handlePurchaseTransaction(BigDecimal walletBalance, Map<DrugType, BigDecimal> priceList, Player player) {
 
         if (walletBalance.compareTo(BigDecimal.ZERO) == 0) {
@@ -577,17 +579,52 @@ public class VisualConsoleAgent {
         System.out.format("# Sprzedales %d  sztuk produktu %s  po cenie %.2f  za sztuke.\n", numberOfSoldProducts, chosenProductType.name(), chosenProductPrice);
     }
 
-    private void handleGunShop(Player player){
-        System.out.println("Witam pana, panie..." + player.getName() + "... dobrze pamietam? Siwy wspominal mi o panu.\n" +
-                "Potrzebna pukawka? Mam tu troche ciekawych zabawek: ");
+    public void handleGunShop(Player player) {
+        System.out.println("# Witam pana, panie..." + player.getName() + "... dobrze pamietam? 'Siwy' wspominal o panu.\n" +
+                "# Potrzebna pukawka? Mam tu troche ciekawych zabawek: ");
+        int index = 1;
+        List<Weapon> weapons = WeaponFactory.getWeapons();
+        for (Weapon weapon : weapons) {
+            System.out.print("(" + index++ + ")" + weapon.getName() + " " + weapon.getDescription() + "\n");
+        }
+        chooseWeaponType(weapons, player);
     }
 
-    private void showBenefitFromUsingFacility(Player player, Facility facility){
+    private void showBenefitFromUsingFacility(Player player, Facility facility) {
         System.out.println("SKILLS IMPROVEMENT: " +
-                "OFFENSE +" + facility.getOffensiveBenefitFromUsing() + "("  + player.getOffensiveLevel() + "), " +
-                "DEFENSE +" + facility.getDefensiveBenefitFromUsing() + "("  + player.getDefensiveLevel() + "), " +
+                "OFFENSE +" + facility.getOffensiveBenefitFromUsing() + "(" + player.getOffensiveLevel() + "), " +
+                "DEFENSE +" + facility.getDefensiveBenefitFromUsing() + "(" + player.getDefensiveLevel() + "), " +
                 "MENTAL +" + facility.getMentalBenefitFromUsing() + "(" + player.getMentalLevel() + ")\n");
 
+    }
+
+    private void chooseWeaponType(List<Weapon> weapons, Player player) {
+
+        System.out.println("# Wybierz cyfre odpowiadajaca towarowi na liscie");
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+            }
+            int option = input.nextInt();
+
+            if (option == 0) {
+                return ;
+            }
+
+            if (option > 0 && option <= weapons.size()) {
+                //  return DrugType.values()[option - 1];
+                if (player.getBalance().compareTo(weapons.get(option - 1).getPrice()) >= 0) {
+                    System.out.println("# Dobry wybor. Sasiedzi pozazdroszcza.");
+                    player.addWeapon(weapons.get(option - 1));
+                    return;
+
+                } else {
+                    System.out.println("# Poszukajmy czegos tanszego.");
+                }
+            }
+            System.out.println("# Wybierz wartosc od 1 do " + weapons.size() + "lub 0 by zrezygnowac z kupna");
+        }
     }
 
 }
