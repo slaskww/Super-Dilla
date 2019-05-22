@@ -41,12 +41,10 @@ public class Facility {
         return offensiveBenefitFromUsing;
     }
 
-    public Person addBenefitFromUsing(Person person){
+    public void addBenefitFromUsing(Person person){
         person.boostDefensiveLevel(defensiveBenefitFromUsing);
         person.boostOffensiveLevel(offensiveBenefitFromUsing);
         person.boostMentalLevel(mentalBenefitFromUsing);
-
-        return person;
     }
 
 }

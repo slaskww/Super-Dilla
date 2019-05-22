@@ -81,10 +81,13 @@ public class ConsoleDialogAgent implements DialogAgent {
         switch (chosenPlace) {
             case 1:
                 visualAgent.handleMarket(player);
+                break;
             case 2:
                 visualAgent.handleHospital(player);
+                break;
             case 3:
                 visualAgent.handlePub(player);
+                break;
             case 4:
                 visualAgent.handleRestaurant(player);
                 break;

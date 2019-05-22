@@ -26,7 +26,7 @@ public class WeaponFactory {
     }
 
     public static Weapon pistol(){
-        return new Weapon("Automatic pistol", WeaponType.GUN, 75, 75, BigDecimal.valueOf(100),17.5);
+        return new Weapon("Automatic pistol", WeaponType.GUN, 75, 75, BigDecimal.valueOf(1000),17.5);
     }
 
     public static Weapon walkingStick(){

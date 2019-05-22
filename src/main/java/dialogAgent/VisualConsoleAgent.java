@@ -9,6 +9,7 @@ import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
 import player.Player;
+import utils.Announcer;
 import world.WorldBuilder;
 
 import java.math.BigDecimal;
@@ -224,7 +225,7 @@ public class VisualConsoleAgent {
 
     }
 
-    private static void showActionInProgress() {
+    public static void showActionInProgress() {
 
         System.out.print("\n         |SERVICE IN PROGRESS|\n");
         System.out.print(" ========================================\n");
@@ -389,13 +390,12 @@ public class VisualConsoleAgent {
 
         if (player.getBalance().compareTo(costOfHospitalisation) < 0) {
             System.out.println("# Oj, przykro nam, ale nie stac ciebie na wizyte w szpitalu. Koszt leczenia wynosi " + costOfHospitalisation.setScale(2) + ".\n" +
-                    "# Przyjdz, gdy uzbierasz potrzebna kwote.");
+                    "# Przyjdz, gdy bedzie cie stac.");
             return;
         }
         showActionInProgress();
-        player.boostDefensiveLevel(hospital.getDefensiveBenefitFromUsing());
-        player.boostOffensiveLevel(hospital.getOffensiveBenefitFromUsing());
-        player.boostMentalLevel(hospital.getMentalBenefitFromUsing());
+        hospital.addBenefitFromUsing(player);
+        showBenefitFromUsingFacility(player, hospital);
         player.getSmartBackpack().payForFacilities(costOfHospitalisation);
         System.out.println("# Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz sie slabiej.");
 
@@ -404,7 +404,7 @@ public class VisualConsoleAgent {
     public void handlePub(Player player) {
         Facility pub = FacilityFactory.pub();
         BigDecimal costOfDrinks = pub.getPrice();
-        System.out.println("# Cieszymy sie, ze wpadles. Mocne Ale z naszej warzelni od razu poprawi Ci humor.");
+        System.out.println("# Cieszymy sie, ze wpadles. Mocne ale z naszej warzelni od razu poprawi Ci humor.");
 
         if (player.getBalance().compareTo(costOfDrinks) < 0) {
             System.out.println("# Oj, przykro nam, ale nie stac ciebie na nasze trunki. Koszt dobrego ale to " + costOfDrinks.setScale(2) + ".\n" +
@@ -412,9 +412,8 @@ public class VisualConsoleAgent {
             return;
         }
         showActionInProgress();
-        player.boostDefensiveLevel(pub.getDefensiveBenefitFromUsing());
-        player.boostOffensiveLevel(pub.getOffensiveBenefitFromUsing());
-        player.boostMentalLevel(pub.getMentalBenefitFromUsing());
+        pub.addBenefitFromUsing(player);
+        showBenefitFromUsingFacility(player, pub);
         player.getSmartBackpack().payForFacilities(costOfDrinks);
         System.out.println("# Jak samopoczucie? Lepiej, prawda? Zajrzyj do nas znowu, kiedy tylko poczujesz pragnienie.");
     }
@@ -430,12 +429,10 @@ public class VisualConsoleAgent {
         }
 
         System.out.println("# Witamy szanownego goscia. Prosimy zajac miejsce przy stoliku. Nasz szef kuchni przyrzadza wlasnie pana ulubiony stek.");
-
-        player.boostDefensiveLevel(restaurant.getDefensiveBenefitFromUsing());
-        player.boostOffensiveLevel(restaurant.getOffensiveBenefitFromUsing());
-        player.boostMentalLevel(restaurant.getMentalBenefitFromUsing());
-        player.getSmartBackpack().payForFacilities(costOfDinner);
         showActionInProgress();
+        restaurant.addBenefitFromUsing(player);
+        showBenefitFromUsingFacility(player, restaurant);
+        player.getSmartBackpack().payForFacilities(costOfDinner);
         System.out.println("# Smakowalo? Nasze steki to nasza duma. Prosimy zajrzec do nas ponownie.");
     }
 
@@ -451,9 +448,8 @@ public class VisualConsoleAgent {
 
         System.out.println("# Witam zagubiona owieczke. Zajmij prosze miejsce i poswiec chwile Bogu.");
         showActionInProgress();
-        player.boostDefensiveLevel(church.getDefensiveBenefitFromUsing());
-        player.boostOffensiveLevel(church.getOffensiveBenefitFromUsing());
-        player.boostMentalLevel(church.getMentalBenefitFromUsing());
+        church.addBenefitFromUsing(player);
+        showBenefitFromUsingFacility(player, church);
         player.getSmartBackpack().payForFacilities(church.getPrice());
         System.out.println("# Lepiej, prawda? Kazdy potrzebuje chwile duchowego wyciszenia.\n" +
                 "# Odwiedz nasz kosciol, gdy tylko poczujesz sie gorzej");
@@ -470,9 +466,8 @@ public class VisualConsoleAgent {
 
         System.out.println("# Strzala brachu. Wolne ciezary juz na ciebie czekaja. Pakuj, szkoda czasu.");
         showActionInProgress();
-        player.boostDefensiveLevel(gym.getDefensiveBenefitFromUsing());
-        player.boostOffensiveLevel(gym.getOffensiveBenefitFromUsing());
-        player.boostMentalLevel(gym.getMentalBenefitFromUsing());
+        gym.addBenefitFromUsing(player);
+        showBenefitFromUsingFacility(player, gym);
         player.getSmartBackpack().payForFacilities(ticketPrice);
         System.out.println("# Jest pompa, nie? Klata, plecy, barki, od tego sa ciezarki!\n" +
                 "# Zawin do nas jeszcze, ziomek.");
@@ -582,5 +577,17 @@ public class VisualConsoleAgent {
         System.out.format("# Sprzedales %d  sztuk produktu %s  po cenie %.2f  za sztuke.\n", numberOfSoldProducts, chosenProductType.name(), chosenProductPrice);
     }
 
+    private void handleGunShop(Player player){
+        System.out.println("Witam pana, panie..." + player.getName() + "... dobrze pamietam? Siwy wspominal mi o panu.\n" +
+                "Potrzebna pukawka? Mam tu troche ciekawych zabawek: ");
+    }
+
+    private void showBenefitFromUsingFacility(Player player, Facility facility){
+        System.out.println("SKILLS IMPROVEMENT: " +
+                "OFFENSE +" + facility.getOffensiveBenefitFromUsing() + "("  + player.getOffensiveLevel() + "), " +
+                "DEFENSE +" + facility.getDefensiveBenefitFromUsing() + "("  + player.getDefensiveLevel() + "), " +
+                "MENTAL +" + facility.getMentalBenefitFromUsing() + "(" + player.getMentalLevel() + ")\n");
+
+    }
 
 }
