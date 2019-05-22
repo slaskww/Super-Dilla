@@ -84,7 +84,7 @@ public class DrugMarket implements Listener { //implements Singleton
         StringBuilder list = new StringBuilder();
 
         for (Map.Entry<DrugType, BigDecimal> entry: priceList.entrySet()){
-            list.append("type=" + entry.getKey() + " price=" + entry.getValue().setScale(0, RoundingMode.HALF_UP) + ", ");
+            list.append("type=" + entry.getKey() + " price=" + entry.getValue().setScale(2, RoundingMode.HALF_UP) + ", ");
         }
         return list.toString();
 

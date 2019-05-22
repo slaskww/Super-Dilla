@@ -10,8 +10,12 @@ public class ConsoleDialogAgent implements DialogAgent {
     private Player player;
     private Scanner input;
     private Random rand;
-    private static int MAX_NUMBER_OF_EVENTS_PER_DAY = 3;
-    private static Integer MILD_DEPRESSION = -1;
+    public static int MAX_NUMBER_OF_EVENTS_PER_DAY = 3;
+    public static Integer MILD_DEPRESSION = -1;
+    public static final int SINGLE_ACTIVITY_TIME_SPAN = 1;
+    public static final int FULL_DAY_ACTIVITY_TIME_SPAN = 3;
+    public static final int ZERO_ACTIVITY_TIME_SPAN = 0;
+
 
     public ConsoleDialogAgent(Player player, VisualConsoleAgent visualAgent) {
         this.player = player;
@@ -53,12 +57,11 @@ public class ConsoleDialogAgent implements DialogAgent {
 
         int numberOfEventsPerDay = 0;
 
-        while (numberOfEventsPerDay != MAX_NUMBER_OF_EVENTS_PER_DAY && player.isAlive()) {
+        while (numberOfEventsPerDay < MAX_NUMBER_OF_EVENTS_PER_DAY && player.isAlive()) {
             visualAgent.showOptions();
             Integer chosenPlace = visualAgent.getChoice();
-            goTo(chosenPlace);
+            numberOfEventsPerDay += goTo(chosenPlace);
             visualAgent.forceEnterAction();
-            numberOfEventsPerDay++;
         }
 
         if (!player.isAlive()) {
@@ -72,19 +75,16 @@ public class ConsoleDialogAgent implements DialogAgent {
     }
 
 
-    private void goTo(Integer chosenPlace) {
+    private int goTo(Integer chosenPlace) {
 
 
         switch (chosenPlace) {
             case 1:
                 visualAgent.handleMarket(player);
-                break;
             case 2:
                 visualAgent.handleHospital(player);
-                break;
             case 3:
                 visualAgent.handlePub(player);
-                break;
             case 4:
                 visualAgent.handleRestaurant(player);
                 break;
@@ -102,9 +102,13 @@ public class ConsoleDialogAgent implements DialogAgent {
                 break;
             case 9:
                 visualAgent.showBackpack(player);
-                break;
+                return ZERO_ACTIVITY_TIME_SPAN;
+            case 10:
+                return FULL_DAY_ACTIVITY_TIME_SPAN;
+
         }
 
+        return SINGLE_ACTIVITY_TIME_SPAN;
     }
 
 

@@ -81,7 +81,7 @@ public class VisualConsoleAgent {
                 "\t(3)Ide na piwo do pubu\t\t\t(4)Ide zjesc cos w restauracji\n" +
                 "\t(5)Ide do kosciola\t\t\t\t(6)Wpadam na silownie\n" +
                 "\t(7)Zmieniam miasto\t\t\t\t(8)Koncze z biznesem\n" +
-                "\t(9)Sprawdzam zawartosc plecaka");
+                "\t(9)Sprawdzam zawartosc plecaka\t(10)Ide spac\n");
     }
 
 
@@ -113,10 +113,10 @@ public class VisualConsoleAgent {
             }
             int option = input.nextInt();
 
-            if (option > 0 && option < 10) {
+            if (option > 0 && option <= 10) {
                 return option;
             }
-            System.out.println("# Wybierz: 1, 2, 3, 4, 5, 6, 7, 8 albo 9!");
+            System.out.println("# Wybierz wartosc miedzy : 1 a 10!");
         }
 
     }
