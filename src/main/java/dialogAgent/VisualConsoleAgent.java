@@ -8,6 +8,7 @@ import drug.DrugType;
 import enemy.Enemy;
 import generalplayer.Person;
 import generalplayer.PersonType;
+import player.LinesRepository;
 import player.Player;
 import weapon.Weapon;
 import weapon.WeaponFactory;
@@ -18,6 +19,22 @@ import java.security.SecureRandom;
 import java.util.*;
 
 public class VisualConsoleAgent {
+
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_RED = "\u001B[31m";
+
+
+
+
+
 
 
     static {
@@ -93,7 +110,7 @@ public class VisualConsoleAgent {
     private void showPriceList(Map<DrugType, BigDecimal> priceList) {
         int position = 1;
 
-        System.out.println(" ===================================\n" +
+        System.out.println(ANSI_GREEN + " ===================================\n " +
                 "|DIPPER EXCHANGE - IN DRUGS WE TRUST|\n" +
                 "|===================================|\n" +
                 "|   Type                Price       |\n" +
@@ -101,7 +118,7 @@ public class VisualConsoleAgent {
         for (Map.Entry<DrugType, BigDecimal> entry : priceList.entrySet()) {
             System.out.format("|(%d) %-18s>> %-10.2f|\n", position++, entry.getKey().name(), entry.getValue());
         }
-        System.out.println(" ===================================");
+        System.out.println(" ===================================" + ANSI_RESET);
 
     }
 
@@ -215,7 +232,7 @@ public class VisualConsoleAgent {
         BigDecimal wallet = player.getBalance();
         Map<DrugType, Integer> goods = player.getSmartBackpack().getGoods();
         int position = 1;
-        System.out.println(" _________________________________\n" +
+        System.out.println(ANSI_PURPLE + " _________________________________\n" +
                 "| CONTENTS OF YOUR SMART BACKPACK |\n" +
                 "|=================================|\n" +
                 "|        Type       |    Volume   |\n" +
@@ -225,45 +242,45 @@ public class VisualConsoleAgent {
         }
         System.out.println("|---------------------------------|");
         System.out.format("|  %-17s|  %7.2f    |\n", "Available funds:", wallet);
-        System.out.println("|_________________________________|");
+        System.out.println("|_________________________________|" + ANSI_RESET);
 
     }
 
     public static void showActionInProgress() {
 
-        System.out.print("\n         |SERVICE IN PROGRESS|\n");
-        System.out.print(" ========================================\n");
-        System.out.print("|0%                 |50%             100%|\n ");
+        System.out.print(ANSI_BLUE + "\n         |SERVICE IN PROGRESS|\n" + ANSI_RESET);
+        System.out.print( ANSI_BLUE + " ========================================\n" +  ANSI_RESET);
+        System.out.print(ANSI_BLUE + "|0%                 |50%             100%|\n " + ANSI_RESET);
         for (int i = 0; i < 40; i++) {
             try {
                 Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.print("=");
+            System.out.print(ANSI_BLUE_BACKGROUND + " " + ANSI_RESET);
         }
         System.out.print("\n\n");
     }
 
     private static void showFightInProgress() {
 
-        System.out.print("\n         |FIGHT IN PROGRESS|\n");
-        System.out.print(" ========================================\n");
-        System.out.print("|0%                 |50%             100%|\n ");
+        System.out.print(ANSI_RED + "\n         |FIGHT IN PROGRESS|\n" + ANSI_RESET);
+        System.out.print(ANSI_RED + " ========================================\n" + ANSI_RESET);
+        System.out.print(ANSI_RED + "|0%                 |50%             100%|\n " + ANSI_RESET);
         for (int i = 0; i < 40; i++) {
             try {
                 Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.print("=");
+            System.out.print(ANSI_RED_BACKGROUND + " " + ANSI_RESET);
         }
         System.out.print("\n\n");
     }
 
     public void forceEnterAction() {
         try {
-            System.out.println("Nacisnij ENTER aby kontynuowac...");
+            System.out.println(ANSI_BLUE + "Nacisnij ENTER aby kontynuowac..." + ANSI_RESET);
             Scanner scanner = new Scanner(System.in).useDelimiter("");
             scanner.next();
         } catch (Exception error) {
@@ -469,11 +486,13 @@ public class VisualConsoleAgent {
 
         System.out.println("# Strzala brachu. Wolne ciezary juz na ciebie czekaja. Pakuj, szkoda czasu.");
         showActionInProgress();
+        System.out.println(LinesRepository.getRandomLines() + "\n");
         gym.addBenefitFromUsing(player);
         showBenefitFromUsingFacility(player, gym);
         player.getSmartBackpack().payForFacilities(ticketPrice);
         System.out.println("# Jest pompa, nie? Klata, plecy, barki, od tego sa ciezarki!\n" +
                 "# Zawin do nas jeszcze, ziomek.");
+
     }
 
     public void handleChangingTheCity(Player player) {
@@ -591,10 +610,10 @@ public class VisualConsoleAgent {
     }
 
     private void showBenefitFromUsingFacility(Player player, Facility facility) {
-        System.out.println("SKILLS IMPROVEMENT: " +
+        System.out.println(ANSI_BLUE  + "SKILLS IMPROVEMENT: " +
                 "OFFENSE +" + facility.getOffensiveBenefitFromUsing() + "(" + player.getOffensiveLevel() + "), " +
                 "DEFENSE +" + facility.getDefensiveBenefitFromUsing() + "(" + player.getDefensiveLevel() + "), " +
-                "MENTAL +" + facility.getMentalBenefitFromUsing() + "(" + player.getMentalLevel() + ")\n");
+                "MENTAL +" + facility.getMentalBenefitFromUsing() + "(" + player.getMentalLevel() + ")\n" + ANSI_RESET);
 
     }
 
