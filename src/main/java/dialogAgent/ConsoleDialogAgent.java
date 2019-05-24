@@ -108,7 +108,7 @@ public class ConsoleDialogAgent implements DialogAgent {
                 return ZERO_ACTIVITY_TIME_SPAN;
             case 10:
                 return FULL_DAY_ACTIVITY_TIME_SPAN;
-            case 99:
+            case 997:
                 visualAgent.handleGunShop(player);
 
         }

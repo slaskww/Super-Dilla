@@ -1,6 +1,7 @@
 package game;
 
 import player.Player;
+import utils.Announcer;
 
 public class TimeInGame {
 
@@ -9,6 +10,7 @@ public class TimeInGame {
 
     public static Integer day;
     private static TimeInGame date = null;
+    private static Announcer announcer  = new Announcer();
 
     private TimeInGame() {
         this.day = INITIAL_DAY;
@@ -28,6 +30,7 @@ public class TimeInGame {
 
     public void setNextDay(){
         day += DAY;
+        announcer.informListeners(day.toString());
     }
 
     public static TimeInGame getDateInstance(){

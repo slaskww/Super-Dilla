@@ -646,4 +646,12 @@ public class VisualConsoleAgent {
         }
     }
 
+    public static void bankDepositError(){
+        System.out.println("Podana kwota nie moze byc ujemna.");
+    }
+
+    public static void bankWithdrawalError(){
+        System.out.println("Podana kwota przekracza stan konta.");
+    }
+
 }

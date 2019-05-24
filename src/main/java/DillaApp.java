@@ -1,3 +1,4 @@
+import city.facility.Bank;
 import dialogAgent.ConsoleDialogAgent;
 import dialogAgent.VisualConsoleAgent;
 import drug.DrugMarket;
@@ -10,8 +11,12 @@ public class DillaApp {
 
     public static void main(String[] args) {
 
+        Announcer timeInGameAnnouncer = new Announcer();
+        timeInGameAnnouncer.addListener(Bank.getBankInstance());
+
         Announcer changeTheCityAnnouncer = new Announcer();
         changeTheCityAnnouncer.addListener(new ToFileListener());
+
         Player player = new Player("Player", changeTheCityAnnouncer);
         Announcer endOfTheDayAnnouncer = new Announcer();
         endOfTheDayAnnouncer.addListener(player);
