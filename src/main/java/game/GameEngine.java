@@ -13,12 +13,13 @@ public class GameEngine {
     private World world;
     private Player player;
     private DialogAgent dialogAgent;
-    private TimeInGame time = TimeInGame.getDateInstance();
+    private TimeInGame time;
     private Announcer endOfTheDayAnnouncer;
 
-    public GameEngine(Player player, Announcer announcer) {
+    public GameEngine(Player player, Announcer announcer, TimeInGame time) {
         this.player = player;
         this.endOfTheDayAnnouncer = announcer;
+        this.time = time;
     }
 
     public void prepareGame() {

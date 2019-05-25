@@ -1,5 +1,6 @@
 package city;
 
+import city.facility.Bank;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.DrugMarket;
@@ -16,6 +17,7 @@ public class City {
 
     private String name;
     private DrugMarket market;
+    private Bank bank;
     private List<Enemy> ordinaryEnemies;
     private Enemy superEnemy;
     private List<Facility> facilities;
@@ -25,6 +27,7 @@ public class City {
     public City(String name, Enemy boss, BigDecimal costOfTheTicketToGetHere) {
         this.name = name;
         this.market = DrugMarket.getDrugMarket();
+        this.bank = Bank.getBankInstance();
         this.costOfTheTicketToGetHere = costOfTheTicketToGetHere;
         this.ordinaryEnemies = new LinkedList<>(Arrays.asList(EnemyFactory.youngDealer()
                 ,EnemyFactory.youngDealer()
@@ -81,6 +84,10 @@ public class City {
             }
         }
         return false;
+    }
+
+    public Bank getBank() {
+        return bank;
     }
 
     public BigDecimal getCostOfTheTicketToGetHere() {

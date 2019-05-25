@@ -7,7 +7,7 @@
             <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
         <!--</Console>-->
 
-
+        <!--'name =...' nazwa appendera, do ktorego bedziemy sie odwolywac, 'fileName' nazwa pliku, do ktorego zapipsywane beda logi-->
         <File name="observerFileLog" fileName="logs/observer.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
@@ -33,7 +33,9 @@
     <Loggers>
 
         <Logger name="utils" additivity="true" level="trace">
+            <!--//'name = ...' tu podajemy nazwe pakietu glownego (jesli jest), potem nazwe pakietu z klasą klasa, w ktorej ma byc stworzony obiekt loggera-->
             <AppenderRef ref="observerFileLog"/>
+            <!--//'ref=' //tutaj podajemy nazwe appendera, ktorego stworzylismy wyzej-->
         </Logger>
 
         <Logger name="backpack" additivity="true" level="trace">

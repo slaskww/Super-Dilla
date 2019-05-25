@@ -1,23 +1,23 @@
 package city.facility;
 
 import dialogAgent.VisualConsoleAgent;
-import game.TimeInGame;
 import utils.Listener;
-
 import java.math.BigDecimal;
 
 public class Bank implements Listener {
 
-    static {
-userDeposit = BigDecimal.ZERO;
-interestRate = BigDecimal.valueOf(1.05);
-    }
+static {
+    userDeposit = BigDecimal.ZERO;
+    interestRate = BigDecimal.valueOf(1.05);
+}
 
     private static BigDecimal userDeposit;
     private static BigDecimal interestRate;
     private static Bank instanceOfBank;
 
     private Bank() {
+
+
     }
 
 
@@ -28,7 +28,7 @@ interestRate = BigDecimal.valueOf(1.05);
         return instanceOfBank;
     }
 
-    public void deposit(BigDecimal amount){
+    public  void deposit(BigDecimal amount){
         if (amount.compareTo(BigDecimal.ZERO) > 0)
         {userDeposit = userDeposit.add(amount);
         }else
@@ -37,7 +37,7 @@ interestRate = BigDecimal.valueOf(1.05);
         }
     }
 
-    public BigDecimal withdraw(BigDecimal amount){
+    public  BigDecimal withdraw(BigDecimal amount){
         if (amount.compareTo(BigDecimal.ZERO) < 0)
         {VisualConsoleAgent.bankDepositError();
         return BigDecimal.ZERO;
@@ -50,11 +50,19 @@ interestRate = BigDecimal.valueOf(1.05);
         return amount;
     }
 
-    private void calculateInterest(){
+    private  void calculateInterest(){
         if (userDeposit.compareTo(BigDecimal.ZERO) > 0){
             userDeposit = userDeposit.multiply(interestRate);
         }
 
+    }
+
+    public  BigDecimal getUserBalance(){
+        return userDeposit;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
     }
 
     @Override

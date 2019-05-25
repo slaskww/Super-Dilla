@@ -1,6 +1,7 @@
 package dialogAgent;
 
 import city.City;
+import city.facility.Bank;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.Drug;
@@ -30,11 +31,6 @@ public class VisualConsoleAgent {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RED = "\u001B[31m";
-
-
-
-
-
 
 
     static {
@@ -99,7 +95,8 @@ public class VisualConsoleAgent {
                 "\t(3)Ide na piwo do pubu\t\t\t(4)Ide zjesc cos w restauracji\n" +
                 "\t(5)Ide do kosciola\t\t\t\t(6)Wpadam na silownie\n" +
                 "\t(7)Zmieniam miasto\t\t\t\t(8)Koncze z biznesem\n" +
-                "\t(9)Sprawdzam zawartosc plecaka\t(10)Ide spac\n");
+                "\t(9)Sprawdzam zawartosc plecaka\t(10)Ide spac\n" +
+                "\t(11)Ide do banku");
     }
 
 
@@ -131,14 +128,14 @@ public class VisualConsoleAgent {
             }
             int option = input.nextInt();
 
-            if (option == 99){
+            if (option == 99) {
                 return option;
             }
 
-            if (option > 0 && option <= 10) {
+            if (option > 0 && option <= 11) {
                 return option;
             }
-            System.out.println("# Wybierz wartosc miedzy : 1 a 10!");
+            System.out.println("# Wybierz wartosc miedzy : 1 a 11!");
         }
 
     }
@@ -249,7 +246,7 @@ public class VisualConsoleAgent {
     public static void showActionInProgress() {
 
         System.out.print(ANSI_BLUE + "\n         |SERVICE IN PROGRESS|\n" + ANSI_RESET);
-        System.out.print( ANSI_BLUE + " ========================================\n" +  ANSI_RESET);
+        System.out.print(ANSI_BLUE + " ========================================\n" + ANSI_RESET);
         System.out.print(ANSI_BLUE + "|0%                 |50%             100%|\n " + ANSI_RESET);
         for (int i = 0; i < 40; i++) {
             try {
@@ -610,7 +607,7 @@ public class VisualConsoleAgent {
     }
 
     private void showBenefitFromUsingFacility(Player player, Facility facility) {
-        System.out.println(ANSI_BLUE  + "SKILLS IMPROVEMENT: " +
+        System.out.println(ANSI_BLUE + "SKILLS IMPROVEMENT: " +
                 "OFFENSE +" + facility.getOffensiveBenefitFromUsing() + "(" + player.getOffensiveLevel() + "), " +
                 "DEFENSE +" + facility.getDefensiveBenefitFromUsing() + "(" + player.getDefensiveLevel() + "), " +
                 "MENTAL +" + facility.getMentalBenefitFromUsing() + "(" + player.getMentalLevel() + ")\n" + ANSI_RESET);
@@ -628,7 +625,7 @@ public class VisualConsoleAgent {
             int option = input.nextInt();
 
             if (option == 0) {
-                return ;
+                return;
             }
 
             if (option > 0 && option <= weapons.size()) {
@@ -646,12 +643,116 @@ public class VisualConsoleAgent {
         }
     }
 
-    public static void bankDepositError(){
-        System.out.println("Podana kwota nie moze byc ujemna.");
+
+    public void handleBank(Player player) {
+
+        Bank bank = player.getCity().getBank();
+
+        System.out.println("<$ BANK $>");
+        System.out.println("Witamy w oddziale naszego banku. U nas moze pan zdeponowac srodki na korzystny procent.\n" +
+                "W kazdej chwili moze Pan wycofac z rachunku zgromadzone srodki, zachowujac odsetki.\n" +
+                "Jaki jest pana wybor?");
+        System.out.println("\t(1)deponuje srodki (maksymalnie: " + player.getBalance().setScale(2) + ", oproc: " + (bank.getInterestRate().subtract(BigDecimal.ONE)).multiply(BigDecimal.valueOf(100)).setScale(2) + "%)");
+        System.out.println("\t(2)wyplacam srodki (maksymalnie: " + bank.getUserBalance().setScale(2) + ")\n" +
+                            "\t(3)wychodze z banku");
+        handleBankService(bank, player);
+
+
+
+
     }
 
-    public static void bankWithdrawalError(){
-        System.out.println("Podana kwota przekracza stan konta.");
+    public void handleBankService(Bank bank, Player player) {
+
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+            }
+            int option = input.nextInt();
+
+
+            if (option > 0 && option <= 3) {
+
+                switch(option){
+                    case 1:
+                        BigDecimal amountToDeposit = getAmountToDeposit(player);
+                        bank.deposit(amountToDeposit);
+                        player.getSmartBackpack().updateWallet(BigDecimal.ZERO.subtract(amountToDeposit));
+                        break;
+                    case 2:
+                        BigDecimal amountToWithdraw = getAmountToWithdraw(bank);
+                        bank.withdraw(amountToWithdraw);
+                        player.getSmartBackpack().updateWallet(amountToWithdraw);
+                        break;
+
+                    case 3:
+
+                        break;
+
+                }
+                System.out.println("Dziekujemy za wizyte. Do widzenia");
+                return;
+            }
+            System.out.println("# Wybierz wartosc miedzy : 1 a 3!");
+        }
     }
 
-}
+    private BigDecimal getAmountToDeposit(Player player){
+
+        if (player.getBalance().compareTo(BigDecimal.ZERO) == 0){
+            System.out.println("Nie posiada pan srodkow, ktore moglby Pan zdeponowac na rachunku.");
+            return BigDecimal.ZERO;
+        }
+
+        System.out.println("Prosze podac kwote depozytu (maksymalnie: " + player.getBalance() + ")");
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("# Taki wybor to nie wybor. Prosze podac wartosc liczbowa.");
+            }
+            int deposit = input.nextInt();
+
+            if (deposit > 0 && BigDecimal.valueOf(deposit).compareTo(player.getBalance()) <= 0){
+                System.out.println("Kwota " + deposit + " zostala zdeponowana na Pana rachunku.");
+                return BigDecimal.valueOf(deposit);
+            }
+
+            System.out.println("Kwota depozytu nie moze byc ujemna. Nie moze takze przekraczac sumy Pana srodkow.");
+        }
+
+    }
+    private BigDecimal getAmountToWithdraw(Bank bank){
+
+        if (bank.getUserBalance().compareTo(BigDecimal.ZERO) == 0){
+            System.out.println("Nie posiada pan srodkow zdeponowanych na koncie.");
+            return BigDecimal.ZERO;
+        }
+
+        System.out.println("Prosze podac kwote do wyplaty (maksymalnie: " + bank.getUserBalance() + ")");
+        while (true) {
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("# Taki wybor to nie wybor. Prosze podac wartosc liczbowa.");
+            }
+            int amountToWithdraw = input.nextInt();
+
+            if (amountToWithdraw > 0 && BigDecimal.valueOf(amountToWithdraw).compareTo(bank.getUserBalance()) <= 0){
+                System.out.println("Kwota " + amountToWithdraw + " zostala zdeponowana na Pana rachunku.");
+                return BigDecimal.valueOf(amountToWithdraw);
+            }
+
+            System.out.println("Kwota depozytu nie moze byc ujemna. Nie moze takze przekraczac sumy Pana srodkow.");        }
+
+    }
+
+
+        public static void bankDepositError () {
+            System.out.println("Podana kwota nie moze byc ujemna.");
+        }
+
+        public static void bankWithdrawalError () {
+            System.out.println("Podana kwota przekracza stan konta.");
+        }
+
+    }

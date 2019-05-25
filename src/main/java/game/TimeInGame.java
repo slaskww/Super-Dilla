@@ -10,10 +10,11 @@ public class TimeInGame {
 
     public static Integer day;
     private static TimeInGame date = null;
-    private static Announcer announcer  = new Announcer();
+    private static Announcer announcer;
 
-    private TimeInGame() {
+    private TimeInGame(Announcer announcer) {
         this.day = INITIAL_DAY;
+        this.announcer = announcer;
     }
 
     public Integer getDay() {
@@ -33,9 +34,9 @@ public class TimeInGame {
         announcer.informListeners(day.toString());
     }
 
-    public static TimeInGame getDateInstance(){
+    public static TimeInGame getDateInstance(Announcer announcer){
         if (date == null) {
-            date = new TimeInGame();
+            date = new TimeInGame(announcer);
         }
         return date;
     }
