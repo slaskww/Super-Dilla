@@ -15,7 +15,7 @@ public class ConsoleDialogAgent implements DialogAgent {
     public static final int SINGLE_ACTIVITY_TIME_SPAN = 1;
     public static final int FULL_DAY_ACTIVITY_TIME_SPAN = 3;
     public static final int ZERO_ACTIVITY_TIME_SPAN = 0;
-
+    public static final int ALL_AVAILABLE_EVENTS = 11;
 
     public ConsoleDialogAgent(Player player, VisualConsoleAgent visualAgent) {
         this.player = player;
@@ -59,7 +59,7 @@ public class ConsoleDialogAgent implements DialogAgent {
 
         while (numberOfEventsPerDay < MAX_NUMBER_OF_EVENTS_PER_DAY && player.isAlive()) {
             visualAgent.showOptions();
-            Integer chosenPlace = visualAgent.getChoice();
+            Integer chosenPlace = visualAgent.getChoice(ALL_AVAILABLE_EVENTS);
             numberOfEventsPerDay += goTo(chosenPlace);
             visualAgent.forceEnterAction();
         }

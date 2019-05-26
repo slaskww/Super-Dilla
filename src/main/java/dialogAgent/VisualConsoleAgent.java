@@ -5,6 +5,8 @@ import city.facility.Bank;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.Drug;
+import drug.DrugFactory;
+import drug.DrugMarket;
 import drug.DrugType;
 import enemy.Enemy;
 import generalplayer.Person;
@@ -31,6 +33,10 @@ public class VisualConsoleAgent {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RED = "\u001B[31m";
+    public static final int NUMBER_OF_TRANSACTIONS_ON_THE_MARKET = 4;
+    public static final int NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_CAUGHT_BY_POLICE = 2;
+    public static final int NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_CHANGE_THE_CITY = 4;
+    public static final int NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK = 3;
 
 
     static {
@@ -119,7 +125,7 @@ public class VisualConsoleAgent {
 
     }
 
-    public Integer getChoice() {
+    private Integer getChoice(int numberOfOptions) {
 
         while (true) {
             while (!input.hasNextInt()) {
@@ -132,47 +138,25 @@ public class VisualConsoleAgent {
                 return option;
             }
 
-            if (option > 0 && option <= 11) {
+            if (option > 0 && option <= numberOfOptions) {
                 return option;
             }
-            System.out.println("# Wybierz wartosc miedzy : 1 a 11!");
+            System.out.println("# Wybierz wartosc miedzy : 1 a " + numberOfOptions);
         }
 
     }
 
-    private int getTransactionType() {
+    private Integer getTransactionType() {
 
         System.out.println("# Wybierz: \n\t1, by dokonac kupna\t\t2, by dokonac sprzedazy\n\t3, by opuscic rynek\t\t4, by sprawdzic zawartosc plecaka");
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("# Taki wybor to zaden wybor. Podaj cyfre reprezentujaca wybrana opcje.");
-            }
-            int option = input.nextInt();
-
-            if (option > 0 && option < 5) {
-                return option;
-            }
-            System.out.println("# Wybierz: 1, 2, 3 lub 4");
-        }
+        return getChoice(NUMBER_OF_TRANSACTIONS_ON_THE_MARKET);
     }
 
     private DrugType chooseDrugType(List<DrugType> drugTypeListInOrder) {
 
         System.out.println("# Wybierz cyfre odpowiadajaca towarowi na liscie");
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
-            }
-            int option = input.nextInt();
-
-            if (option > 0 && option < 6) {
-                //  return DrugType.values()[option - 1];
-                return drugTypeListInOrder.get(option - 1);
-            }
-            System.out.println("# Wybierz: 1, 2, 3, 4 lub 5");
-        }
+        int option = getChoice(DrugType.values().length);
+        return drugTypeListInOrder.get(option - 1);
     }
 
 
@@ -186,18 +170,7 @@ public class VisualConsoleAgent {
         System.out.println("# Dostepne srodki pozwalaja ci na zakup " + maxNumberPlayerCanAfford + " sztuk tego produktu \n" +
                 "# Podaj liczbe sztuk produktu, jaka chcesz kupic.");
 
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("Taki wybor to nie wybor. Podaj cyfre reprezentujaca dostepna liczbe towarow.");
-            }
-            int option = input.nextInt();
-
-            if (option > 0 && option <= maxNumberPlayerCanAfford) {
-                return option;
-            }
-            System.out.println("# Wybierz wartosc miedzy 1 a " + maxNumberPlayerCanAfford);
-        }
+        return getChoice(maxNumberPlayerCanAfford);
     }
 
     private int getNumberOfProductsToSell(int volumeOfChosenProductInBackpack) {
@@ -209,18 +182,7 @@ public class VisualConsoleAgent {
         System.out.println("# Mozesz sprzedac maksymalnie " + volumeOfChosenProductInBackpack + " sztuk tego produktu \n" +
                 "# Podaj liczbe sztuk produktu, jaka chcesz sprzedac.");
 
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca dostepna liczbe towarow.");
-            }
-            int option = input.nextInt();
-
-            if (option > 0 && option <= volumeOfChosenProductInBackpack) {
-                return option;
-            }
-            System.out.println("# Wybierz wartosc miedzy 1 a " + volumeOfChosenProductInBackpack);
-        }
+       return getChoice(volumeOfChosenProductInBackpack);
     }
 
 
@@ -313,21 +275,8 @@ public class VisualConsoleAgent {
     private void fightWithPolice(Enemy enemy, Player player) {
         System.out.println("# Wpadles! Policja wyczula, ze dobrze idzie ci w biznesie.");
         System.out.println("# Co robisz?\n\t(1)Zaproponuj lapowke\t(2)Walcz");
-        int option;
 
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("# Robi sie goroco. Podaj cyfre reprezentujaca wybrana opcje.");
-            }
-            option = input.nextInt();
-
-            if (option > 0 && option < 3) {
-                break;
-            }
-            System.out.println("# Wybierz: 1 lub 2.");
-        }
-
+        int option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_CAUGHT_BY_POLICE);
 
         if (option == 1 && enemy.isCorruptible() && player.getBalance().compareTo(enemy.BRIBE) >= 0) {
             System.out.println("# Masz szczescie. Policjant zgodzil sie wziac kase. Jestes stratny " + enemy.BRIBE + " ale zyjesz.");
@@ -533,22 +482,14 @@ public class VisualConsoleAgent {
         System.out.format("\t(%d)%s\n\n", position, "Zrezygnuj z wyjazdu");
         System.out.println("\n# Wybierz numer reprezentujacy miasto.");
 
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("# Taki wybor to zaden wybor. Podaj cyfre reprezentujaca wybrana opcje.");
-            }
-            int option = input.nextInt();
+        int option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_CHANGE_THE_CITY);
 
-            if (option == 4) {
-                return player.getCity();
-            }
-
-            if (option > 0 && option < 5) {
-                return cities.get(option - 1);
-            }
-            System.out.println("# Wybierz: 1, 2, 3 lub 4.");
+        if (option == 4) {
+            return player.getCity();
+        } else {
+            return cities.get(option - 1);
         }
+
 
     }
 
@@ -664,38 +605,24 @@ public class VisualConsoleAgent {
 
     public void handleBankService(Bank bank, Player player) {
 
-        while (true) {
-            while (!input.hasNextInt()) {
-                input.next();
-                System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
-            }
-            int option = input.nextInt();
+        int option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK);
+        switch(option){
+            case 1:
+                BigDecimal amountToDeposit = getAmountToDeposit(player);
+                bank.deposit(amountToDeposit);
+                player.getSmartBackpack().updateWallet(BigDecimal.ZERO.subtract(amountToDeposit));
+                break;
+            case 2:
+                BigDecimal amountToWithdraw = getAmountToWithdraw(bank);
+                bank.withdraw(amountToWithdraw);
+                player.getSmartBackpack().updateWallet(amountToWithdraw);
+                break;
 
+            case 3:
 
-            if (option > 0 && option <= 3) {
-
-                switch(option){
-                    case 1:
-                        BigDecimal amountToDeposit = getAmountToDeposit(player);
-                        bank.deposit(amountToDeposit);
-                        player.getSmartBackpack().updateWallet(BigDecimal.ZERO.subtract(amountToDeposit));
-                        break;
-                    case 2:
-                        BigDecimal amountToWithdraw = getAmountToWithdraw(bank);
-                        bank.withdraw(amountToWithdraw);
-                        player.getSmartBackpack().updateWallet(amountToWithdraw);
-                        break;
-
-                    case 3:
-
-                        break;
-
-                }
-                System.out.println("Dziekujemy za wizyte. Do widzenia");
-                return;
-            }
-            System.out.println("# Wybierz wartosc miedzy : 1 a 3!");
+                break;
         }
+        System.out.println("Dziekujemy za wizyte. Do widzenia");
     }
 
     private BigDecimal getAmountToDeposit(Player player){
