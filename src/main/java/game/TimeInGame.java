@@ -26,13 +26,14 @@ public class TimeInGame {
     }
 
     public void showFullHeader(Player player){
-        System.out.format("\nDAY: %-2s | NICKNAME: %-8s | DEFENSE: %-3d | OFFENSE: %-3d | MENTAL: %-3d | WEAPON: %-3s\n\n"
+        System.out.format("\nDAY: %-2s | NICKNAME: %-8s | DEFENSE: %-3d | OFFENSE: %-3d | MENTAL: %-3d | WEAPON: %-3s | BALANCE: %-3.2f\n\n"
                 ,day
                 ,player.getName()
                 ,player.getDefensiveLevel()
                 ,player.getOffensiveLevel()
                 ,player.getMentalLevel()
-                ,player.getWeapon().getName());
+                ,player.getWeapon().getName()
+                ,player.getBalance());
     }
 
     public void setNextDay(){

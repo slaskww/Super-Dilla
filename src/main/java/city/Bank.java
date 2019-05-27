@@ -92,20 +92,24 @@ static {
 
 
     private static void setResistanceToRobbery(){
-        resistanceToRobbery = (resistanceToRobbery) * (rand.nextInt(RESISTANCE_BOOSTING_RATIO) + 1) * rand.nextDouble();
+        resistanceToRobbery = INITIAL_RESISTANCE_TO_ROBBERY + (resistanceToRobbery) * (rand.nextInt(RESISTANCE_BOOSTING_RATIO) + 1) * rand.nextDouble();
 
     }
 
     @Override
     public RobberyStatus rob(Player player) {
 
+        System.out.println("obrona banku: " + resistanceToRobbery);
+
         if (player.getOverallSkill() > resistanceToRobbery){
             player.getSmartBackpack().updateWallet(bankSafe);
+            setResistanceToRobbery();
             return RobberyStatus.FACILITY_WAS_ROBBED;
         } else {
             player.kill();
             return RobberyStatus.FACILITY_WAS_NOT_ROBBED;
         }
+
     }
 
     public static Double getResistanceToRobbery() {

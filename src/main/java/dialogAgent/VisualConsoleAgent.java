@@ -1,7 +1,8 @@
 package dialogAgent;
 
-import city.City;
 import city.Bank;
+import city.City;
+import city.RobberyStatus;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.Drug;
@@ -180,7 +181,7 @@ public class VisualConsoleAgent {
         System.out.println("# Mozesz sprzedac maksymalnie " + volumeOfChosenProductInBackpack + " sztuk tego produktu \n" +
                 "# Podaj liczbe sztuk produktu, jaka chcesz sprzedac.");
 
-       return getChoice(volumeOfChosenProductInBackpack);
+        return getChoice(volumeOfChosenProductInBackpack);
     }
 
 
@@ -243,6 +244,39 @@ public class VisualConsoleAgent {
         } catch (Exception error) {
             //
         }
+    }
+
+    public void forceEnterToFacilityAction(Player player, Facility facility) {
+        try {
+            System.out.println(ANSI_BLUE + "Nacisnij ENTER aby wejść do " + facility.getName() + ANSI_RESET);
+            Scanner scanner = new Scanner(System.in).useDelimiter("");
+            String input = scanner.next();
+            if (input.equals("rob")) {
+                rob(player, facility);
+            }
+
+        } catch (Exception error) {
+            //
+        }
+    }
+
+    public boolean isViolentEnterToBank(Player player, Bank bank) {
+        try {
+            System.out.println(ANSI_BLUE + "Nacisnij ENTER aby wejść do banku." + ANSI_RESET);
+            Scanner scanner = new Scanner(System.in).useDelimiter("");
+            String input = scanner.nextLine();
+
+            if (input.equals("rob")) {
+                rob(player, bank);
+                return true;
+            }
+
+            
+
+        } catch (Exception error) {
+            //
+        }
+        return false;
     }
 
     public void fight(Player player) {
@@ -352,6 +386,7 @@ public class VisualConsoleAgent {
 
     public void handleHospital(Player player) {
         Facility hospital = FacilityFactory.hospital();
+        forceEnterToFacilityAction(player, hospital);
         BigDecimal costOfHospitalisation = hospital.getPrice();
         System.out.println("# Witaj w najlepszym szpitalu w tym miescie. Pomozemy ci stanac na nogi.");
 
@@ -370,6 +405,7 @@ public class VisualConsoleAgent {
 
     public void handlePub(Player player) {
         Facility pub = FacilityFactory.pub();
+        forceEnterToFacilityAction(player, pub);
         BigDecimal costOfDrinks = pub.getPrice();
         System.out.println("# Cieszymy sie, ze wpadles. Mocne ale z naszej warzelni od razu poprawi Ci humor.");
 
@@ -387,6 +423,7 @@ public class VisualConsoleAgent {
 
     public void handleRestaurant(Player player) {
         Facility restaurant = FacilityFactory.restaurant();
+        forceEnterToFacilityAction(player, restaurant);
         BigDecimal costOfDinner = restaurant.getPrice();
 
         if (player.getBalance().compareTo(costOfDinner) < 0) {
@@ -406,6 +443,7 @@ public class VisualConsoleAgent {
 
     public void handleChurch(Player player) {
         Facility church = FacilityFactory.church();
+        forceEnterToFacilityAction(player, church);
 
         if (player.getBalance().compareTo(church.getPrice()) < 0) {
             System.out.println("# Co laska wynosi " + church.getPrice().setScale(2) + ".\n" +
@@ -424,6 +462,7 @@ public class VisualConsoleAgent {
 
     public void handleGym(Player player) {
         Facility gym = FacilityFactory.gym();
+        forceEnterToFacilityAction(player, gym);
         BigDecimal ticketPrice = gym.getPrice();
 
         if (player.getBalance().compareTo(ticketPrice) < 0) {
@@ -544,12 +583,12 @@ public class VisualConsoleAgent {
         List<Weapon> weapons = WeaponFactory.getWeapons();
         for (Weapon weapon : weapons) {
             System.out.format("(%d)%s - %s, (cena: %.2f, def:%d, off:%d)\n"
-                    ,index++
-                    ,weapon.getName()
-                    ,weapon.getDescription()
-                    ,weapon.getPrice()
-                    ,weapon.getDefensiveLevel()
-                    ,weapon.getOffensiveLevel());
+                    , index++
+                    , weapon.getName()
+                    , weapon.getDescription()
+                    , weapon.getPrice()
+                    , weapon.getDefensiveLevel()
+                    , weapon.getOffensiveLevel());
         }
         chooseWeaponType(weapons, player);
     }
@@ -597,7 +636,11 @@ public class VisualConsoleAgent {
     public void handleBank(Player player) {
 
         Bank bank = player.getCity().getBank();
-
+        
+        if(isViolentEnterToBank(player, bank)){
+            return;
+        }
+        
         System.out.println(ANSI_YELLOW + "<$ BANK $>" + ANSI_RESET);
         System.out.println("Witamy w oddziale naszego banku. U nas moze pan zdeponowac srodki na korzystny procent.\n" +
                 "W kazdej chwili moze Pan wycofac z rachunku zgromadzone srodki, zachowujac wszystkie odsetki.\n" +
@@ -610,7 +653,7 @@ public class VisualConsoleAgent {
 
         int option = 0;
 
-        while(option != 3){
+        while (option != 3) {
 
             System.out.println("\t(1)deponuje srodki (maksymalnie: " + player.getBalance().setScale(2) + ", oproc: " + (bank.getInterestRate().subtract(BigDecimal.ONE)).multiply(BigDecimal.valueOf(100)).setScale(2) + "%)");
             System.out.println("\t(2)wyplacam srodki (maksymalnie: " + bank.getUserBalance().setScale(2) + ")\n" +
@@ -618,7 +661,7 @@ public class VisualConsoleAgent {
 
             option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK);
 
-            switch(option){
+            switch (option) {
                 case 1:
                     BigDecimal amountToDeposit = getAmountToDeposit(player);
                     bank.deposit(amountToDeposit);
@@ -638,9 +681,9 @@ public class VisualConsoleAgent {
         System.out.println("Dziekujemy za wizyte. Do widzenia");
     }
 
-    private BigDecimal getAmountToDeposit(Player player){
+    private BigDecimal getAmountToDeposit(Player player) {
 
-        if (player.getBalance().compareTo(BigDecimal.ZERO) == 0){
+        if (player.getBalance().compareTo(BigDecimal.ZERO) == 0) {
             System.out.println("Nie posiada pan srodkow, ktore moglby Pan zdeponowac na rachunku.");
             return BigDecimal.ZERO;
         }
@@ -653,7 +696,7 @@ public class VisualConsoleAgent {
             }
             int deposit = input.nextInt();
 
-            if (deposit > 0 && BigDecimal.valueOf(deposit).compareTo(player.getBalance()) <= 0){
+            if (deposit > 0 && BigDecimal.valueOf(deposit).compareTo(player.getBalance()) <= 0) {
                 System.out.println("Kwota " + deposit + " zostala zdeponowana na Pana rachunku.");
                 return BigDecimal.valueOf(deposit);
             }
@@ -662,9 +705,10 @@ public class VisualConsoleAgent {
         }
 
     }
-    private BigDecimal getAmountToWithdraw(Bank bank){
 
-        if (bank.getUserBalance().compareTo(BigDecimal.ZERO) == 0){
+    private BigDecimal getAmountToWithdraw(Bank bank) {
+
+        if (bank.getUserBalance().compareTo(BigDecimal.ZERO) == 0) {
             System.out.println("Nie posiada pan srodkow zdeponowanych na koncie.");
             return BigDecimal.ZERO;
         }
@@ -677,22 +721,39 @@ public class VisualConsoleAgent {
             }
             int amountToWithdraw = input.nextInt();
 
-            if (amountToWithdraw > 0 && BigDecimal.valueOf(amountToWithdraw).compareTo(bank.getUserBalance()) <= 0){
+            if (amountToWithdraw > 0 && BigDecimal.valueOf(amountToWithdraw).compareTo(bank.getUserBalance()) <= 0) {
                 System.out.println("Kwota " + amountToWithdraw + " zostala zdeponowana na Pana rachunku.");
                 return BigDecimal.valueOf(amountToWithdraw);
             }
 
-            System.out.println("Kwota depozytu nie moze byc ujemna. Nie moze takze przekraczac sumy Pana srodkow.");        }
-
-    }
-
-
-        public static void bankDepositError () {
-            System.out.println("Podana kwota nie moze byc ujemna.");
-        }
-
-        public static void bankWithdrawalError () {
-            System.out.println("Podana kwota przekracza stan konta.");
+            System.out.println("Kwota depozytu nie moze byc ujemna. Nie moze takze przekraczac sumy Pana srodkow.");
         }
 
     }
+
+
+    public static void bankDepositError() {
+        System.out.println("Podana kwota nie moze byc ujemna.");
+    }
+
+    public static void bankWithdrawalError() {
+        System.out.println("Podana kwota przekracza stan konta.");
+    }
+
+    public void rob(Player player, Facility facility) {
+        facility.rob(player);
+    }
+
+    public void rob(Player player, Bank bank) {
+       RobberyStatus robberyStatus = bank.rob(player);
+
+       switch (robberyStatus){
+          case FACILITY_WAS_ROBBED:
+              System.out.println("Obrobiles bank. Masz respekt na dzielni!");
+              break;
+           case FACILITY_WAS_NOT_ROBBED:
+               System.out.println("Polegles. Bank okazal sie twierdza nie do przejscia");
+           break;
+       }
+    }
+}
