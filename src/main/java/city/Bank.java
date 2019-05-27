@@ -1,22 +1,37 @@
-package city.facility;
+package city;
 
 import dialogAgent.VisualConsoleAgent;
+import player.Player;
 import utils.Listener;
 import java.math.BigDecimal;
+import java.util.Random;
 
-public class Bank implements Listener {
+public class Bank implements Listener, Robberable {
 
 static {
     userDeposit = BigDecimal.ZERO;
     interestRate = BigDecimal.valueOf(1.05);
+    rand = new Random();
+
+
 }
 
     private static BigDecimal userDeposit;
     private static BigDecimal interestRate;
     private static Bank instanceOfBank;
+    private static Double resistanceToRobbery;
+    private static final Double INITIAL_RESISTANCE_TO_ROBBERY = 200.00;
+    private static final BigDecimal INITIAL_AMOUNT_IN_BANK_SAFE = BigDecimal.valueOf(2000);
+    private static Integer RESISTANCE_BOOSTING_RATIO = 3;
+    private static BigDecimal bankSafe; //safe can be robbed
+    private static Random rand;
+    private static final Double ROE = 0.2; //Return On Equity
+
 
     private Bank() {
-
+        bankSafe = INITIAL_AMOUNT_IN_BANK_SAFE;
+        resistanceToRobbery = INITIAL_RESISTANCE_TO_ROBBERY;
+        setResistanceToRobbery();
 
     }
 
@@ -73,5 +88,27 @@ static {
     @Override
     public void update(String message) {
         calculateInterest();
+    }
+
+
+    private static void setResistanceToRobbery(){
+        resistanceToRobbery = (resistanceToRobbery) * (rand.nextInt(RESISTANCE_BOOSTING_RATIO) + 1) * rand.nextDouble();
+
+    }
+
+    @Override
+    public RobberyStatus rob(Player player) {
+
+        if (player.getOverallSkill() > resistanceToRobbery){
+            player.getSmartBackpack().updateWallet(bankSafe);
+            return RobberyStatus.FACILITY_WAS_ROBBED;
+        } else {
+            player.kill();
+            return RobberyStatus.FACILITY_WAS_NOT_ROBBED;
+        }
+    }
+
+    public static Double getResistanceToRobbery() {
+        return resistanceToRobbery;
     }
 }

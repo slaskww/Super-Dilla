@@ -111,4 +111,8 @@ public abstract class Person {
         return weapon != null;
     }
 
+    public Integer getOverallSkill(){
+        return offensiveLevel + defensiveLevel + mentalLevel;
+    }
+
 }

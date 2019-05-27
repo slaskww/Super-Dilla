@@ -1,12 +1,10 @@
 package dialogAgent;
 
 import city.City;
-import city.facility.Bank;
+import city.Bank;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.Drug;
-import drug.DrugFactory;
-import drug.DrugMarket;
 import drug.DrugType;
 import enemy.Enemy;
 import generalplayer.Person;

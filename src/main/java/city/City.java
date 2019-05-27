@@ -1,6 +1,5 @@
 package city;
 
-import city.facility.Bank;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
 import drug.DrugMarket;

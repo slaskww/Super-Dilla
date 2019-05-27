@@ -1,4 +1,4 @@
-import city.facility.Bank;
+import city.Bank;
 import dialogAgent.ConsoleDialogAgent;
 import dialogAgent.VisualConsoleAgent;
 import drug.DrugMarket;
