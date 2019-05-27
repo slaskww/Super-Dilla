@@ -81,3 +81,6 @@
 2019-05-27 08:34:19,461 INFO p.Player [main] Day 1, player=Player, city=Grassbay, balance=950, offensive=125, defensive=115, mental=59, weapon=Pork Dagger
 2019-05-27 08:34:19,467 INFO d.DrugMarket [main] Day 1, Prices on the market: type=MARIJUANA price=40.00, type=HEROIN price=50.00, type=ESCTASY price=50.00, type=COCAINE price=200.00, type=AMPHETAMINE price=30.00, 
 2019-05-27 08:34:19,485 INFO d.DrugMarket [main] {HEROIN=45.2176847979128050, MARIJUANA=36.8100029009267520, ESCTASY=45.3767343244021650, COCAINE=151.1659267301948800, AMPHETAMINE=47.6010771448321770}
+2019-05-27 09:18:08,774 INFO p.Player [main] Day 1, player=Player, city=Grassbay, balance=1000, offensive=210, defensive=185, mental=59, weapon=Assault rifle
+2019-05-27 09:18:08,777 INFO d.DrugMarket [main] Day 1, Prices on the market: type=MARIJUANA price=40.00, type=HEROIN price=50.00, type=ESCTASY price=50.00, type=COCAINE price=200.00, type=AMPHETAMINE price=30.00, 
+2019-05-27 09:18:08,789 INFO d.DrugMarket [main] {HEROIN=59.247030046216800, MARIJUANA=29.0514755497850880, ESCTASY=71.1836570147751350, COCAINE=133.1869259474591600, AMPHETAMINE=19.582390071235860}
