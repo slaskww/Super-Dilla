@@ -113,7 +113,7 @@ public class VisualConsoleAgent {
     private void showPriceList(Map<DrugType, BigDecimal> priceList) {
         int position = 1;
 
-        System.out.println(ANSI_GREEN + " ===================================\n " +
+        System.out.println(ANSI_GREEN + " ===================================\n" +
                 "|DIPPER EXCHANGE - IN DRUGS WE TRUST|\n" +
                 "|===================================|\n" +
                 "|   Type                Price       |\n" +
@@ -125,7 +125,7 @@ public class VisualConsoleAgent {
 
     }
 
-    private Integer getChoice(int numberOfOptions) {
+    public Integer getChoice(int numberOfOptions) {
 
         while (true) {
             while (!input.hasNextInt()) {
@@ -134,7 +134,7 @@ public class VisualConsoleAgent {
             }
             int option = input.nextInt();
 
-            if (option == 99) {
+            if (option == 997) {
                 return option;
             }
 
@@ -331,7 +331,7 @@ public class VisualConsoleAgent {
 
         while (isPlayerDealing) {
             showPriceList(currentPriceList);
-            int transactionType = getTransactionType(); //1 = buy, 2 = sell 3 = exit 4 = show backpack
+            int transactionType = getTransactionType(); //1 = buy, 2 = sell 3 = exit 4 = inspect your backpack
 
             switch (transactionType) {
                 case 1:
@@ -345,7 +345,10 @@ public class VisualConsoleAgent {
                     break;
                 case 4:
                     showBackpack(player);
+                    forceEnterAction();
+                    break;
             }
+
         }
     }
 
@@ -538,11 +541,17 @@ public class VisualConsoleAgent {
 
     public void handleGunShop(Player player) {
         System.out.println("# Witam pana, panie..." + player.getName() + "... dobrze pamietam? 'Siwy' wspominal o panu.\n" +
-                "# Potrzebna pukawka? Mam tu troche ciekawych zabawek: ");
+                "# Potrzebna pukawka? Mam tu troche ciekawych zabawek:\n");
         int index = 1;
         List<Weapon> weapons = WeaponFactory.getWeapons();
         for (Weapon weapon : weapons) {
-            System.out.print("(" + index++ + ")" + weapon.getName() + " " + weapon.getDescription() + "\n");
+            System.out.format("(%d)%s - %s, (cena: %.2f, def:%d, off:%d)\n"
+                    ,index++
+                    ,weapon.getName()
+                    ,weapon.getDescription()
+                    ,weapon.getPrice()
+                    ,weapon.getDefensiveLevel()
+                    ,weapon.getOffensiveLevel());
         }
         chooseWeaponType(weapons, player);
     }
@@ -572,15 +581,17 @@ public class VisualConsoleAgent {
             if (option > 0 && option <= weapons.size()) {
                 //  return DrugType.values()[option - 1];
                 if (player.getBalance().compareTo(weapons.get(option - 1).getPrice()) >= 0) {
-                    System.out.println("# Dobry wybor. Sasiedzi pozazdroszcza.");
-                    player.addWeapon(weapons.get(option - 1));
+                    Weapon chosenWeapon = weapons.get(option - 1);
+                    player.addWeapon(chosenWeapon);
+                    System.out.println("# " + chosenWeapon.getName() + " to swietny wybor. Sasiedzi pozazdroszcza.");
+                    player.getSmartBackpack().payForFacilities(chosenWeapon.getPrice());
                     return;
 
                 } else {
                     System.out.println("# Poszukajmy czegos tanszego.");
                 }
             }
-            System.out.println("# Wybierz wartosc od 1 do " + weapons.size() + "lub 0 by zrezygnowac z kupna");
+            System.out.println("# Wybierz wartosc od 1 do " + weapons.size() + " lub 0 by zrezygnowac z kupna");
         }
     }
 
@@ -589,39 +600,43 @@ public class VisualConsoleAgent {
 
         Bank bank = player.getCity().getBank();
 
-        System.out.println("<$ BANK $>");
+        System.out.println(ANSI_YELLOW + "<$ BANK $>" + ANSI_RESET);
         System.out.println("Witamy w oddziale naszego banku. U nas moze pan zdeponowac srodki na korzystny procent.\n" +
-                "W kazdej chwili moze Pan wycofac z rachunku zgromadzone srodki, zachowujac odsetki.\n" +
+                "W kazdej chwili moze Pan wycofac z rachunku zgromadzone srodki, zachowujac wszystkie odsetki.\n" +
                 "Jaki jest pana wybor?");
-        System.out.println("\t(1)deponuje srodki (maksymalnie: " + player.getBalance().setScale(2) + ", oproc: " + (bank.getInterestRate().subtract(BigDecimal.ONE)).multiply(BigDecimal.valueOf(100)).setScale(2) + "%)");
-        System.out.println("\t(2)wyplacam srodki (maksymalnie: " + bank.getUserBalance().setScale(2) + ")\n" +
-                            "\t(3)wychodze z banku");
         handleBankService(bank, player);
-
-
-
 
     }
 
     public void handleBankService(Bank bank, Player player) {
 
-        int option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK);
-        switch(option){
-            case 1:
-                BigDecimal amountToDeposit = getAmountToDeposit(player);
-                bank.deposit(amountToDeposit);
-                player.getSmartBackpack().updateWallet(BigDecimal.ZERO.subtract(amountToDeposit));
-                break;
-            case 2:
-                BigDecimal amountToWithdraw = getAmountToWithdraw(bank);
-                bank.withdraw(amountToWithdraw);
-                player.getSmartBackpack().updateWallet(amountToWithdraw);
-                break;
+        int option = 0;
 
-            case 3:
+        while(option != 3){
 
-                break;
+            System.out.println("\t(1)deponuje srodki (maksymalnie: " + player.getBalance().setScale(2) + ", oproc: " + (bank.getInterestRate().subtract(BigDecimal.ONE)).multiply(BigDecimal.valueOf(100)).setScale(2) + "%)");
+            System.out.println("\t(2)wyplacam srodki (maksymalnie: " + bank.getUserBalance().setScale(2) + ")\n" +
+                    "\t(3)wychodze z banku");
+
+            option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK);
+
+            switch(option){
+                case 1:
+                    BigDecimal amountToDeposit = getAmountToDeposit(player);
+                    bank.deposit(amountToDeposit);
+                    player.getSmartBackpack().updateWallet(BigDecimal.ZERO.subtract(amountToDeposit));
+                    break;
+                case 2:
+                    BigDecimal amountToWithdraw = getAmountToWithdraw(bank);
+                    bank.withdraw(amountToWithdraw);
+                    player.getSmartBackpack().updateWallet(amountToWithdraw);
+                    break;
+
+                case 3:
+                    break;
+            }
         }
+
         System.out.println("Dziekujemy za wizyte. Do widzenia");
     }
 

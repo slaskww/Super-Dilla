@@ -14,3 +14,10 @@
 2019-05-21 07:56:09,130 INFO u.ToFileListener [main] Player moved to city.City@7cbd213e with capital 1000
 2019-05-21 09:00:49,701 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 6
 2019-05-21 09:01:01,112 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 14
+2019-05-27 07:20:33,258 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-05-27 07:45:04,367 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-05-27 07:56:47,317 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-05-27 07:58:03,850 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-05-27 08:05:35,043 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-05-27 08:07:42,386 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 30
+2019-05-27 08:11:15,226 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5

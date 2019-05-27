@@ -38,11 +38,11 @@ public class WeaponFactory {
     }
 
     public static Weapon rifle(){
-        return new Weapon("Assault rifle", WeaponType.GUN, 110, 85, BigDecimal.valueOf(1000),17.5, "podobno sam Kingpin uzywal tej laski");
+        return new Weapon("Assault rifle", WeaponType.GUN, 110, 85, BigDecimal.valueOf(1000),17.5, "idealnie lezy w dloni");
     }
 
     public static Weapon walkingStick(){
-        return new Weapon("Laser walking stick", WeaponType.STICK, 170, 160, BigDecimal.valueOf(50000),12.5, "idealnie lezy w dloni");
+        return new Weapon("Laser walking stick", WeaponType.STICK, 170, 160, BigDecimal.valueOf(50000),12.5, "podobno sam Kingpin uzywal tej laski");
     }
 
     public static Weapon flower(){

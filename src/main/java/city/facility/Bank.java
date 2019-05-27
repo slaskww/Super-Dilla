@@ -29,6 +29,11 @@ static {
     }
 
     public  void deposit(BigDecimal amount){
+
+        if (amount.compareTo(BigDecimal.ZERO) == 0){
+            return;
+        }
+
         if (amount.compareTo(BigDecimal.ZERO) > 0)
         {userDeposit = userDeposit.add(amount);
         }else

@@ -77,6 +77,36 @@ public class PlayerTest {
         assertThat(isWeaponAfterDropping).isFalse();
     }
 
+
+    @Test
+    public void shouldChangeSkillsAfterDroppingWeapon() {
+        //Given
+        Integer initialOffensiveLevel = 100;
+        Integer initialDefensiveLevel = 100;
+        Integer initialMentalLevel = 100;
+        Player player = new Player("Player", announcer, initialOffensiveLevel, initialDefensiveLevel, initialMentalLevel);
+
+        Weapon initialWeapon = player.getWeapon();
+        Integer offensiveLevelOfInitialWeapon = initialWeapon.getOffensiveLevel();
+        Integer defensiveLevelOfInitialWeapon = initialWeapon.getDefensiveLevel();
+
+        Integer offensiveLevelOfPlayerBoostedByWeapon = player.getOffensiveLevel();
+        Integer defensiveLevelOfPlayerBoostedByWeapon = player.getDefensiveLevel();
+
+        assertThat(offensiveLevelOfPlayerBoostedByWeapon).isEqualTo(initialOffensiveLevel + offensiveLevelOfInitialWeapon);
+        assertThat(defensiveLevelOfPlayerBoostedByWeapon).isEqualTo(initialDefensiveLevel + defensiveLevelOfInitialWeapon);
+
+        player.dropWeapon();
+        Integer offensiveLevelOfPlayerAfterDroppingWeapon = player.getOffensiveLevel();
+        Integer defensiveLevelOfPlayerAfterDroppingWeapon = player.getDefensiveLevel();
+
+        assertThat(offensiveLevelOfPlayerAfterDroppingWeapon).isEqualTo(offensiveLevelOfPlayerBoostedByWeapon - offensiveLevelOfInitialWeapon);
+        assertThat(offensiveLevelOfPlayerAfterDroppingWeapon).isEqualTo(initialOffensiveLevel);
+        assertThat(defensiveLevelOfPlayerAfterDroppingWeapon).isEqualTo(defensiveLevelOfPlayerBoostedByWeapon - defensiveLevelOfInitialWeapon);
+        assertThat(defensiveLevelOfPlayerAfterDroppingWeapon).isEqualTo(initialDefensiveLevel);
+    }
+
+
     @Test
     public void shouldAddWeapon() {
         //Given
@@ -92,6 +122,37 @@ public class PlayerTest {
         assertThat(newWeapon).isNotEqualTo(oldWeapon);
         assertThat(newWeapon).isEqualTo(weaponPreviouslyAdded);
     }
+
+    @Test
+    public void shouldChangeSkillsAfterAddingWeapon() {
+        //Given
+        Integer initialOffensiveLevel = 100;
+        Integer initialDefensiveLevel = 100;
+        Integer initialMentalLevel = 100;
+        Player player = new Player("Player", announcer, initialOffensiveLevel, initialDefensiveLevel, initialMentalLevel);
+
+        Weapon initialWeapon = player.getWeapon();
+        Integer offensiveLevelOfInitialWeapon = initialWeapon.getOffensiveLevel();
+        Integer defensiveLevelOfInitialWeapon = initialWeapon.getDefensiveLevel();
+
+        Integer offensiveLevelOfPlayerBoostedByInitialWeapon = player.getOffensiveLevel();
+        Integer defensiveLevelOfPlayerBoostedByInitialWeapon = player.getDefensiveLevel();
+
+        assertThat(offensiveLevelOfPlayerBoostedByInitialWeapon).isEqualTo(initialOffensiveLevel + offensiveLevelOfInitialWeapon);
+        assertThat(defensiveLevelOfPlayerBoostedByInitialWeapon).isEqualTo(initialDefensiveLevel + defensiveLevelOfInitialWeapon);
+
+        Weapon newWeapon = WeaponFactory.ancientSword();
+        Integer offensiveLevelOfNewWeapon = newWeapon.getOffensiveLevel();
+        Integer defensiveLevelOfNewWeapon = newWeapon.getDefensiveLevel();
+
+        player.addWeapon(newWeapon);
+        Integer offensiveLevelOfPlayerBoostedByNewWeapon = player.getOffensiveLevel();
+        Integer defensiveLevelOfPlayerBoostedByNewWeapon = player.getDefensiveLevel();
+
+        assertThat(offensiveLevelOfPlayerBoostedByNewWeapon).isEqualTo(initialOffensiveLevel + offensiveLevelOfNewWeapon);
+        assertThat(defensiveLevelOfPlayerBoostedByNewWeapon).isEqualTo(initialDefensiveLevel + defensiveLevelOfNewWeapon);
+    }
+
 
     @Test
     public void shouldChangeCity() {

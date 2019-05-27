@@ -35,6 +35,13 @@ public class Player extends Person implements Listener {
         this.announcer = announcer;
     }
 
+    public Player(String name, Announcer announcer, Integer offensiveLevel, Integer defensiveLevel, Integer mentalLevel) {
+        super(name, PLAYER_PERSON_TYPE, offensiveLevel, defensiveLevel, mentalLevel ,BASIC_WEAPON);
+        this.smartBackpack = new SmartBackpack();
+        this.city = CityFactory.grassbay();
+        this.announcer = announcer;
+    }
+
     public SmartBackpack getSmartBackpack() {
         return smartBackpack;
     }
