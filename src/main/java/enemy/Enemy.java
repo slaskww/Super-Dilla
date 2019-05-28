@@ -19,4 +19,7 @@ public class Enemy extends Person {
     public boolean isCorruptible() {
         return isCorruptible;
     }
+
+
+
 }

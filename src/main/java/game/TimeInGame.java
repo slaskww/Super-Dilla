@@ -12,9 +12,9 @@ public class TimeInGame {
     private static TimeInGame date = null;
     private static Announcer announcer;
 
-    private TimeInGame(Announcer announcer) {
-        this.day = INITIAL_DAY;
-        this.announcer = announcer;
+    private TimeInGame(Announcer announc) {
+        day = INITIAL_DAY;
+        announcer = announc;
     }
 
     public Integer getDay() {

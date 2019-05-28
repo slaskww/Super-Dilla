@@ -21,11 +21,17 @@ public class DillaApp {
 
         Player player = new Player("Player", changeTheCityAnnouncer);
         Announcer endOfTheDayAnnouncer = new Announcer();
+
         endOfTheDayAnnouncer.addListener(player);
         endOfTheDayAnnouncer.addListener(DrugMarket.getDrugMarket());
         GameEngine game = new GameEngine(player, endOfTheDayAnnouncer, timeInGame);
         game.prepareGame();
+
         VisualConsoleAgent visualConsoleAgent = VisualConsoleAgent.getVisualConsoleAgent();
+        Announcer bossAnnihilationAnnouncer = new Announcer();
+        bossAnnihilationAnnouncer.addListener(game);
+        visualConsoleAgent.setAnnouncer(bossAnnihilationAnnouncer);
+
         ConsoleDialogAgent agent = new ConsoleDialogAgent(player, visualConsoleAgent);
         game.setDialogAgent(agent);
         game.start();

@@ -28,10 +28,10 @@ public class LinesRepository {
                 ANSI_RED + "Wpienia mnie ten bank, normalnie. Wzialem kase na kredyt i teraz dzwonia, ze mam im jakis hajs zwracac. Niech sie gonia, dali to bralem."+ ANSI_RESET,
                 ANSI_RED + "Uczciwie to juz sie nie da zyc w tym miescie. Wszedzie zlodziejstwo i szachrajstwo."+ ANSI_RESET,
                 ANSI_RED + "Stary, jak zyc? Kasy nie ma a palic sie chce. Daj jakies cygarety."+ ANSI_RESET,
-                ANSI_RED + "Te, slyszales o kolesiu, ktory zwinal kase z parafialnego kosciola? Podobno tak go potem gryzlo sumienie, ze totalnie zwariowal."+ ANSI_RESET
-                ANSI_RED + "Te, nie myslales, by skroic tych leszczy w czarnych lakierkach? Banksterzy zawsze mnie wpieniali. Wjedz tam z buta i powiedz \'rob\'. Nie zapomnij wziac dobrej pukawki."+ ANSI_RESET
+                ANSI_RED + "Te, slyszales o kolesiu, ktory zwinal kase z parafialnego kosciola? Podobno tak go potem gryzlo sumienie, ze totalnie zwariowal."+ ANSI_RESET,
+                ANSI_RED + "Te, nie myslales, by skroic tych leszczy w czarnych lakierkach? Banksterzy zawsze mnie wpieniali. Wjedz tam z buta i powiedz \'rob\'. Nie zapomnij wziac dobrej pukawki."+ ANSI_RESET,
                 ANSI_RED + "Typie, nie wiem co jest, ale " + DrugType.HEROIN + " podchodzi mi coraz slabiej. Chyba zmienie dostawce"+ ANSI_RESET,
-                ANSI_RED + "Zakochalem sie w Marysce. Martwi mie jednak fakt, ze ten zwiazek kosztuje mnie coraz wiecej."+ ANSI_RESET,
+                ANSI_RED + "Zakochalem sie w Marysce. Martwi mnie jednak fakt, ze ten zwiazek kosztuje mnie coraz wiecej."+ ANSI_RESET,
                 ANSI_RED + "Ty, potrzebujesz broni? Jakby co, stukasz 997 i jestes we wlasciwym miejscu."+ ANSI_RESET,
                 ANSI_RED + "Jesli cena " + DrugType.HEROIN  + " szybko nie pojdzie w gore, to jestem utopiony."+ ANSI_RESET,
                 ANSI_RED + "Szykuje sie ustawka na Dzikich Polach. Bedzie grill, wiec trzeba zabrac maczety i bejsbole."+ ANSI_RESET,
@@ -41,7 +41,7 @@ public class LinesRepository {
                 ANSI_RED + "997, ten numer to klopoty. Gdy wydazy sie incydent, to pojawia sie konfident..."+ ANSI_RESET,
                 ANSI_RED + "Skoncz juz ganiac z ta zardzewiala palka. Zakup jakas szacowna bron i pokaz sie miastu. Stukaj 997 i wkraczaj po najlepszy sprzet."+ ANSI_RESET,
                 ANSI_RED + "Te, nie myslales, by skroic  leszczy prowadzacych te smierdzaca jadlodajnie? Wjedz tam z buta i powiedz \'rob\'. Nie zapomnij wziac dobrej pukawki."+ ANSI_RESET,
-                ANSI_RED + "Te, slyszales o kolesiu, ktory zwinal kase z parafialnego kosciola? Podobno tak go potem gryzlo sumienie, ze totalnie zwariowal."+ ANSI_RESET,
+                ANSI_RED + "Te, slyszales o kolesiu, ktory zwinal kase z parafialnego kosciola? Podobno tak go potem gryzlo sumienie, ze totalnie zwariowal."+ ANSI_RESET
                 ));
     }
 

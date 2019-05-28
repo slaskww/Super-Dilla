@@ -13,6 +13,7 @@ import generalplayer.Person;
 import generalplayer.PersonType;
 import player.LinesRepository;
 import player.Player;
+import utils.Announcer;
 import weapon.Weapon;
 import weapon.WeaponFactory;
 import world.WorldBuilder;
@@ -20,6 +21,7 @@ import world.WorldBuilder;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.*;
+
 
 public class VisualConsoleAgent {
 
@@ -37,6 +39,7 @@ public class VisualConsoleAgent {
     public static final int NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_CAUGHT_BY_POLICE = 2;
     public static final int NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_CHANGE_THE_CITY = 4;
     public static final int NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK = 3;
+    public static  Announcer announcer = null;
 
 
     static {
@@ -284,10 +287,10 @@ public class VisualConsoleAgent {
 
         if (randomEnemyFormTheCity.getPersonType() == PersonType.POLICE_OFFICER) {
             fightWithPolice(randomEnemyFormTheCity, player);
+            player.getCity().deleteEnemy(indexOfRandomEnemy);
             return;
         }
         fightWithDealer(randomEnemyFormTheCity, player);
-
         player.getCity().deleteEnemy(indexOfRandomEnemy);
     }
 
@@ -337,8 +340,10 @@ public class VisualConsoleAgent {
             player.kill();
             System.out.println("Walczyles dzielnie, ale rany byly zbyt glebokie. Giniesz, ale miasto o tobie nie zapomni.");
         } else {
+            enemy.kill();
             player.reduceStrengthAfterFight(enemy);
             System.out.println("Wygrales, ale straciles sporo krwi. Przydalaby sie wizyta w szpitalu");
+            announcer.informListeners(enemy.getName());
         }
     }
 
@@ -768,5 +773,8 @@ public class VisualConsoleAgent {
                 +"........//.............\n" + ANSI_RESET);
     }
 
+public void setAnnouncer(Announcer announc){
+        announcer = announc;
+}
 
 }

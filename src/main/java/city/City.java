@@ -63,6 +63,7 @@ public class City {
             throw new IndexOutOfBoundsException();
         }
         ordinaryEnemies.remove(index);
+        System.out.println("wrogow: " + ordinaryEnemies.size());
     }
 
     public Enemy getBoss(){return this.superEnemy;}
@@ -92,5 +93,7 @@ public class City {
     public BigDecimal getCostOfTheTicketToGetHere() {
         return costOfTheTicketToGetHere;
     }
+
+
 
 }
