@@ -111,6 +111,10 @@ static {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static Double getResistanceToRobbery() {
         return resistanceToRobbery;
     }

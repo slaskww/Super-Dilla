@@ -646,7 +646,7 @@ public class VisualConsoleAgent {
             return;
         }
         
-        System.out.println(ANSI_YELLOW + "<$ BANK $>" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + bank.getName() + ANSI_RESET);
         System.out.println("Witamy w oddziale naszego banku. U nas moze pan zdeponowac srodki na korzystny procent.\n" +
                 "W kazdej chwili moze Pan wycofac z rachunku zgromadzone srodki, zachowujac wszystkie odsetki.\n" +
                 "Jaki jest pana wybor?");
