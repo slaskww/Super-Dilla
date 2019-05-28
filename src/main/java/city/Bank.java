@@ -26,6 +26,7 @@ static {
     private static BigDecimal bankSafe; //safe can be robbed
     private static Random rand;
     private static final Double ROE = 0.2; //Return On Equity
+    private static String name = "UNITED BANK OF GRASSLAND";
 
 
     private Bank() {
@@ -98,8 +99,6 @@ static {
 
     @Override
     public RobberyStatus rob(Player player) {
-
-        System.out.println("obrona banku: " + resistanceToRobbery);
 
         if (player.getOverallSkill() > resistanceToRobbery){
             player.getSmartBackpack().updateWallet(bankSafe);

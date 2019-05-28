@@ -247,28 +247,15 @@ public class VisualConsoleAgent {
         }
     }
 
-    public void forceEnterToFacilityAction(Player player, Facility facility) {
-        try {
-            System.out.println(ANSI_BLUE + "Nacisnij ENTER aby wejść do " + facility.getName() + ANSI_RESET);
-            Scanner scanner = new Scanner(System.in).useDelimiter("");
-            String input = scanner.next();
-            if (input.equals("rob")) {
-                rob(player, facility);
-            }
 
-        } catch (Exception error) {
-            //
-        }
-    }
-
-    public boolean isViolentEnterToBank(Player player, Bank bank) {
+    public boolean isViolentEnterToFacility(Player player, Robberable robberable) {
         try {
-            System.out.println(ANSI_BLUE + "Nacisnij ENTER aby wejść do banku." + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "Nacisnij ENTER aby wejść do srodka." + ANSI_RESET);
             Scanner scanner = new Scanner(System.in).useDelimiter("");
             String input = scanner.nextLine();
 
             if (input.equals("rob")) {
-                rob(player, bank);
+                rob(player, robberable);
                 return true;
             }
 
@@ -386,8 +373,12 @@ public class VisualConsoleAgent {
 
     public void handleHospital(Player player) {
         Facility hospital = FacilityFactory.hospital();
-        forceEnterToFacilityAction(player, hospital);
         BigDecimal costOfHospitalisation = hospital.getPrice();
+
+        if(isViolentEnterToFacility(player, hospital)){
+            return;
+        }
+
         System.out.println("# Witaj w najlepszym szpitalu w tym miescie. Pomozemy ci stanac na nogi.");
 
         if (player.getBalance().compareTo(costOfHospitalisation) < 0) {
@@ -405,8 +396,12 @@ public class VisualConsoleAgent {
 
     public void handlePub(Player player) {
         Facility pub = FacilityFactory.pub();
-        forceEnterToFacilityAction(player, pub);
         BigDecimal costOfDrinks = pub.getPrice();
+
+        if(isViolentEnterToFacility(player, pub)){
+            return;
+        }
+
         System.out.println("# Cieszymy sie, ze wpadles. Mocne ale z naszej warzelni od razu poprawi Ci humor.");
 
         if (player.getBalance().compareTo(costOfDrinks) < 0) {
@@ -423,8 +418,11 @@ public class VisualConsoleAgent {
 
     public void handleRestaurant(Player player) {
         Facility restaurant = FacilityFactory.restaurant();
-        forceEnterToFacilityAction(player, restaurant);
         BigDecimal costOfDinner = restaurant.getPrice();
+
+        if(isViolentEnterToFacility(player, restaurant)){
+            return;
+        }
 
         if (player.getBalance().compareTo(costOfDinner) < 0) {
             System.out.println("# Oj, przykro nam, ale nie stac ciebie na wizyte u nas. Koszt dobrego obiadu to " + costOfDinner.setScale(2) + ".\n" +
@@ -443,7 +441,11 @@ public class VisualConsoleAgent {
 
     public void handleChurch(Player player) {
         Facility church = FacilityFactory.church();
-        forceEnterToFacilityAction(player, church);
+
+        if(isViolentEnterToFacility(player, church)){
+            player.boostMentalLevel(-church.getMentalBenefitFromUsing());
+            return;
+        }
 
         if (player.getBalance().compareTo(church.getPrice()) < 0) {
             System.out.println("# Co laska wynosi " + church.getPrice().setScale(2) + ".\n" +
@@ -462,8 +464,11 @@ public class VisualConsoleAgent {
 
     public void handleGym(Player player) {
         Facility gym = FacilityFactory.gym();
-        forceEnterToFacilityAction(player, gym);
         BigDecimal ticketPrice = gym.getPrice();
+
+        if(isViolentEnterToFacility(player, gym)){
+            return;
+        }
 
         if (player.getBalance().compareTo(ticketPrice) < 0) {
             System.out.println("# Nie ma wstepu, koles. Wyrzucaj z siebie " + ticketPrice.setScale(2) + " albo pakuj w parku\n");
@@ -637,7 +642,7 @@ public class VisualConsoleAgent {
 
         Bank bank = player.getCity().getBank();
         
-        if(isViolentEnterToBank(player, bank)){
+        if(isViolentEnterToFacility(player, bank)){
             return;
         }
         
@@ -750,7 +755,7 @@ public class VisualConsoleAgent {
               System.out.println("Wyczysciles sejf. Masz respekt na dzielni!");
               break;
            case FACILITY_WAS_NOT_ROBBED:
-               System.out.println("Pracownik zadzwonil po gliny. Na miejscu stoczyles piekna walke, ale polegles wskutek doznanych ran.");
+               System.out.println("Pracownicy zadzwonili po gliny. Na miejscu stoczyles epicka walke, ale polegles wskutek doznanych ran.");
            break;
        }
     }

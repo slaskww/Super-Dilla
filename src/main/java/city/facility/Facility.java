@@ -69,8 +69,11 @@ public class Facility implements Robberable {
     @Override
     public RobberyStatus rob(Player player) {
 
-        if (player.getOverallSkill() > this.resistanceToRobbery) {
-            player.getSmartBackpack().updateWallet(this.cashBox);
+        System.out.println("obrona: " + resistanceToRobbery);
+
+        if (player.getOverallSkill() > resistanceToRobbery){
+            player.getSmartBackpack().updateWallet(cashBox);
+            setResistanceToRobbery();
             return RobberyStatus.FACILITY_WAS_ROBBED;
         } else {
             player.kill();
