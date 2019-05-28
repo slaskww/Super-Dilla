@@ -50,6 +50,11 @@ public class ConsoleDialogAgent implements DialogAgent {
                 visualAgent.forceEnterAction();
                 break;
 
+            case DEATH: visualAgent.showBody();
+            break;
+
+            case COMPLETE_THE_GAME: //TODO add method that presents overall stats
+            break;
         }
     }
 

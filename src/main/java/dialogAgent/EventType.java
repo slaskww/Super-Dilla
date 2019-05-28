@@ -6,4 +6,6 @@ public enum EventType {
     FIRST_DAY,
     NEW_DAY,
     FIGHT,
+    DEATH,
+    COMPLETE_THE_GAME
 }

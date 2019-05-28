@@ -2,6 +2,7 @@ package dialogAgent;
 
 import city.Bank;
 import city.City;
+import city.Robberable;
 import city.RobberyStatus;
 import city.facility.Facility;
 import city.facility.FacilityFactory;
@@ -271,7 +272,6 @@ public class VisualConsoleAgent {
                 return true;
             }
 
-            
 
         } catch (Exception error) {
             //
@@ -655,9 +655,10 @@ public class VisualConsoleAgent {
 
         while (option != 3) {
 
-            System.out.println("\t(1)deponuje srodki (maksymalnie: " + player.getBalance().setScale(2) + ", oproc: " + (bank.getInterestRate().subtract(BigDecimal.ONE)).multiply(BigDecimal.valueOf(100)).setScale(2) + "%)");
-            System.out.println("\t(2)wyplacam srodki (maksymalnie: " + bank.getUserBalance().setScale(2) + ")\n" +
-                    "\t(3)wychodze z banku");
+            System.out.format("\t(1)deponuje srodki (maksymalnie: %.2f, oproc: %.2f%%)\n\t(2)wyplacam srodki (maksymalnie: %.2f)\n\t(3)wychodze z banku\n"
+                    ,player.getBalance()
+                    ,(bank.getInterestRate().subtract(BigDecimal.ONE)).multiply(BigDecimal.valueOf(100))
+                    ,bank.getUserBalance());
 
             option = getChoice(NUMBER_OF_ALTERNATIVE_CHOICES_WHEN_IN_BANK);
 
@@ -740,20 +741,27 @@ public class VisualConsoleAgent {
         System.out.println("Podana kwota przekracza stan konta.");
     }
 
-    public void rob(Player player, Facility facility) {
-        facility.rob(player);
-    }
 
-    public void rob(Player player, Bank bank) {
-       RobberyStatus robberyStatus = bank.rob(player);
+    public void rob(Player player, Robberable place) {
+       RobberyStatus robberyStatus = place.rob(player);
 
        switch (robberyStatus){
           case FACILITY_WAS_ROBBED:
-              System.out.println("Obrobiles bank. Masz respekt na dzielni!");
+              System.out.println("Wyczysciles sejf. Masz respekt na dzielni!");
               break;
            case FACILITY_WAS_NOT_ROBBED:
-               System.out.println("Polegles. Bank okazal sie twierdza nie do przejscia");
+               System.out.println("Pracownik zadzwonil po gliny. Na miejscu stoczyles piekna walke, ale polegles wskutek doznanych ran.");
            break;
        }
     }
+
+    public void showBody(){
+
+        System.out.print(ANSI_RED + "      ___________\n"
+                +"..D==|  // |   x |.....\n"
+                +"..D==|___  |_|\\ x|.....\n"
+                +"........//.............\n" + ANSI_RESET);
+    }
+
+
 }

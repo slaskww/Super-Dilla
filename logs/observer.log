@@ -21,3 +21,12 @@
 2019-05-27 08:05:35,043 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
 2019-05-27 08:07:42,386 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 30
 2019-05-27 08:11:15,226 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-05-28 10:53:34,716 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 140.1265220489981400, volume: 5
+2019-05-28 11:31:47,426 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 77.207099572408984551954241785295393646215912387840185411598280564839167890693564342521672055577600, volume: 20
+2019-05-28 12:33:19,839 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 25
+2019-05-28 12:34:05,728 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 25.8995559938717840, volume: 77
+2019-05-28 12:36:51,712 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 302.913978969541600, volume: 3
+2019-05-28 12:38:29,999 INFO b.SmartBackpack [main] Removed drug: COCAINE, price: 556.327280928127328903968647945285417988341860934737997845794312800, volume: 3
+2019-05-28 12:41:32,272 INFO b.SmartBackpack [main] Added drug: HEROINprice: 78.498332539188850, volume: 12
+2019-05-28 12:42:18,117 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 25
+2019-05-28 12:43:12,461 INFO b.SmartBackpack [main] Removed drug: MARIJUANA, price: 39.3768434365918560, volume: 5

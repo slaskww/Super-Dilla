@@ -45,15 +45,23 @@ public class GameEngine {
 
         while (time.getDay() < MAX_NUMBER_OF_DAYS && player.isAlive()){
             time.setNextDay();
-            time.showFullHeader(player); //timee + skills
+            time.showFullHeader(player); //time + skills
             dialogAgent.spectate(EventType.NEW_DAY);
 
-            if (!player.isAlive()){break;}
+            if (!player.isAlive()){
+                break;}
+
             dialogAgent.spectate(EventType.FIGHT);
            // MessageCreator.executeLog(); //
             endOfTheDayAnnouncer.informListeners(time.getDay().toString());
 
         }
+
+       if (player.isAlive()){
+           dialogAgent.spectate(EventType.COMPLETE_THE_GAME);
+       } else{
+       dialogAgent.spectate(EventType.DEATH);
+       }
     }
 
     public void setDialogAgent(DialogAgent dialogAgent) {
