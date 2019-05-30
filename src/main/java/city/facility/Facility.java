@@ -5,10 +5,11 @@ import city.RobberyStatus;
 import generalplayer.Person;
 import player.Player;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Random;
 
-public class Facility implements Robberable {
+public class Facility implements Robberable, Serializable {
 
     private static BigDecimal INITIAL_AMOUNT_IN_CASHBOX = BigDecimal.valueOf(200);
     private static Integer RESISTANCE_BOOSTING_RATIO = 4;

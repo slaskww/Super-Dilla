@@ -7,12 +7,13 @@ import enemy.Enemy;
 import enemy.EnemyFactory;
 import generalplayer.PersonType;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class City {
+public class City implements Serializable {
 
     private String name;
     private DrugMarket market;

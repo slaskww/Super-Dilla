@@ -6,13 +6,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class SmartBackpack {
+public class SmartBackpack implements Serializable {
 
     private final Logger log = LogManager.getLogger(SmartBackpack.class.getName());
 

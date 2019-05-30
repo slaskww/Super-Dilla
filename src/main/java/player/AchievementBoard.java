@@ -4,11 +4,12 @@ import city.City;
 import utils.Listener;
 import world.World;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AchievementBoard implements Listener {
+public class AchievementBoard implements Listener, Serializable {
 
     private Map<String, String> listOfActualBosses;
     private Map<String, String> listOfDefeatedBosses;

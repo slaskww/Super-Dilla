@@ -14,7 +14,7 @@ public class DillaApp {
 
         Announcer timeInGameAnnouncer = new Announcer();
         timeInGameAnnouncer.addListener(Bank.getBankInstance());
-        TimeInGame timeInGame = TimeInGame.getDateInstance(timeInGameAnnouncer);
+        TimeInGame timeInGame = new TimeInGame(timeInGameAnnouncer);
 
         Announcer changeTheCityAnnouncer = new Announcer();
         changeTheCityAnnouncer.addListener(new ToFileListener());

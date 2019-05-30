@@ -4,9 +4,10 @@ import generalplayer.Person;
 import generalplayer.PersonType;
 import weapon.Weapon;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Enemy extends Person {
+public class Enemy extends Person implements Serializable {
 
     private boolean isCorruptible; //czy wróg jest skłonny wziąć łapówkę
     public final BigDecimal BRIBE = BigDecimal.valueOf(500);
@@ -19,7 +20,6 @@ public class Enemy extends Person {
     public boolean isCorruptible() {
         return isCorruptible;
     }
-
 
 
 }

@@ -1,8 +1,11 @@
 package generalplayer;
 
 import weapon.Weapon;
+import weapon.WeaponFactory;
 
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
 
     private String name;
     private PersonType personType;
@@ -21,6 +24,15 @@ public abstract class Person {
         this.mentalLevel = mentalLevel;
 
     }
+
+//    public Person(){
+//        this.name = "empty";
+//        this.personType = PersonType.PLAYER;
+//        this.weapon = WeaponFactory.flower();
+//        this.offensiveLevel = 0;
+//        this.defensiveLevel = 0;
+//        this.mentalLevel = 0;
+//    }
 
     public PersonType getPersonType() {
         return personType;
@@ -75,6 +87,10 @@ public abstract class Person {
         this.isAlive = false;
     }
 
+    public void resuscitate(){
+        this.isAlive = true;
+    }
+
     public void boostOffensiveLevel(Integer offensiveLevel) {
         this.offensiveLevel += offensiveLevel;
     }
@@ -115,4 +131,28 @@ public abstract class Person {
         return offensiveLevel + defensiveLevel + mentalLevel;
     }
 
+    public Person getInstanceOfPerson(){
+        return this;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOffensiveLevel(Integer offensiveLevel) {
+        this.offensiveLevel = offensiveLevel;
+    }
+
+    public void setDefensiveLevel(Integer defensiveLevel) {
+        this.defensiveLevel = defensiveLevel;
+    }
+
+    public void setMentalLevel(Integer mentalLevel) {
+        this.mentalLevel = mentalLevel;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
 }

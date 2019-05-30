@@ -1,8 +1,9 @@
 package weapon;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Weapon {
+public class Weapon implements Serializable {
 
     private String name;
     private WeaponType type;

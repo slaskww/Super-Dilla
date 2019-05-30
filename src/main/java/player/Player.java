@@ -14,9 +14,10 @@ import utils.Listener;
 import weapon.Weapon;
 import weapon.WeaponFactory;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Player extends Person implements Listener {
+public class Player extends Person implements Listener, Serializable {
 
     private SmartBackpack smartBackpack;
     private City city;
@@ -54,6 +55,14 @@ public class Player extends Person implements Listener {
         return city;
     }
 
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public void setSmartBackpack(SmartBackpack smartBackpack) {
+        this.smartBackpack = smartBackpack;
+    }
+
     public String getPerson(){
 
         StringBuilder builder = new StringBuilder();
@@ -74,6 +83,7 @@ public class Player extends Person implements Listener {
         String message = this.getName() + " moved to " + this.city + " with capital " + this.getBalance();
         announcer.informListeners(message);
     }
+
 
     public void reduceStrengthAfterFight(Enemy enemy){
         this.boostOffensiveLevel(-enemy.getOffensiveLevel());
@@ -105,5 +115,6 @@ public class Player extends Person implements Listener {
       //  MessageCreator.appendMessage(messageBuilder.toString());
         log.log(Level.INFO, messageBuilder.toString());
     }
+
 }
 

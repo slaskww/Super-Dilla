@@ -777,4 +777,22 @@ public void setAnnouncer(Announcer announc){
         announcer = announc;
 }
 
+public static boolean isLoadingThePreviousGameStateChosen(){
+    System.out.println("Załadować poprzedni stan gry?\n\t1 - tak\t2 - nie");
+
+    while (true) {
+        while (!input.hasNextInt()) {
+            input.next();
+            System.out.println("# Taki wybor to nie wybor. Podaj cyfre reprezentujaca wybrana opcje.");
+        }
+        int option = input.nextInt();
+
+        if (option > 0 && option <= 2) {
+            return option == 1;
+        }
+        System.out.println("# Wybierz wartosc miedzy : 1 a " + 2);
+    }
+
+}
+
 }

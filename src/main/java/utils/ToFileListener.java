@@ -7,11 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
 
-public class ToFileListener implements Listener {
+public class ToFileListener implements Listener, Serializable {
 
     static final Logger log = LogManager.getLogger(ToFileListener.class.getName());
 

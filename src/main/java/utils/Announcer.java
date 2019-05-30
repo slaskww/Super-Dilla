@@ -1,12 +1,11 @@
 package utils;
 
-import city.City;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Announcer { //or Subject
+public class Announcer implements Serializable { //or Subject
 
     private Set<Listener> listeners;
 

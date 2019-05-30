@@ -3,16 +3,18 @@ package game;
 import player.Player;
 import utils.Announcer;
 
-public class TimeInGame {
+import java.io.Serializable;
 
-    public static Integer INITIAL_DAY = 1;
-    public static Integer DAY = 1;
+public class TimeInGame implements Serializable {
 
-    public static Integer day;
-    private static TimeInGame date = null;
-    private static Announcer announcer;
+    public  Integer INITIAL_DAY = 1;
+    public  Integer DAY = 1;
 
-    private TimeInGame(Announcer announc) {
+    public  Integer day;
+    private  TimeInGame date = null;
+    private  Announcer announcer;
+
+    public TimeInGame(Announcer announc) {
         day = INITIAL_DAY;
         announcer = announc;
     }
@@ -41,11 +43,9 @@ public class TimeInGame {
         announcer.informListeners(day.toString());
     }
 
-    public static TimeInGame getDateInstance(Announcer announcer){
-        if (date == null) {
-            date = new TimeInGame(announcer);
-        }
-        return date;
+    public void setDay(Integer day){
+        this.day = day;
     }
+
 
 }

@@ -3,10 +3,12 @@ package city;
 import dialogAgent.VisualConsoleAgent;
 import player.Player;
 import utils.Listener;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Random;
 
-public class Bank implements Listener, Robberable {
+public class Bank implements Listener, Robberable, Serializable {
 
 static {
     userDeposit = BigDecimal.ZERO;

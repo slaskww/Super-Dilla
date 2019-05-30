@@ -2,10 +2,11 @@ package world;
 
 import city.City;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class World {
+public class World implements Serializable {
 
     private List<City> cities;
 

@@ -5,12 +5,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.Listener;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DrugMarket implements Listener { //implements Singleton
+public class DrugMarket implements Listener, Serializable { //implements Singleton
 
     private final Logger log = LogManager.getLogger(DrugMarket.class.getName());
     private final Logger log2 = LogManager.getLogger(DrugMarket.class.getName());
