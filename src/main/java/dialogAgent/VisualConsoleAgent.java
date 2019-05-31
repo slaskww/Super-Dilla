@@ -778,7 +778,7 @@ public void setAnnouncer(Announcer announc){
 }
 
 public static boolean isLoadingThePreviousGameStateChosen(){
-    System.out.println("Załadować poprzedni stan gry?\n\t1 - tak\t2 - nie");
+    System.out.println("Załadować poprzedni stan gry?\n\t1 - tak\n\t2 - nie");
 
     while (true) {
         while (!input.hasNextInt()) {

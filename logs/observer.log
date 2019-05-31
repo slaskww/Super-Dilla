@@ -50,3 +50,8 @@
 2019-05-30 18:16:40,867 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 36.1411302350833530, volume: 10
 2019-05-30 18:23:25,174 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 33.1033064481513947021998312838910, volume: 10
 2019-05-30 18:43:39,467 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 23.6473224828334956028319856530550, volume: 30
+2019-05-30 20:09:29,708 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 24.570392714042160, volume: 10
+2019-05-30 20:11:38,875 INFO b.SmartBackpack [main] Added drug: HEROINprice: 69.3766799630417750, volume: 10
+2019-05-30 20:12:49,001 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 10
+2019-05-30 20:20:48,801 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 19.5226347031149630, volume: 51
+2019-05-30 20:21:59,960 INFO b.SmartBackpack [main] Removed drug: AMPHETAMINE, price: 27.31589617832519219586135900929760, volume: 51

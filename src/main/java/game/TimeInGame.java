@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class TimeInGame implements Serializable {
 
-    public  Integer INITIAL_DAY = 1;
+    public static Integer INITIAL_DAY = 1;
     public  Integer DAY = 1;
 
     public  Integer day;
