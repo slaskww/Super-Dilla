@@ -42,7 +42,7 @@
             <AppenderRef ref="observerFileLog"/>
         </Logger>
 
-        <Logger name="drug" additivity="true" level="trace">
+        <Logger name="drug.DrugMarket" additivity="true" level="trace">
             <AppenderRef ref="priceFluctuationsLog"/>
         </Logger>
 

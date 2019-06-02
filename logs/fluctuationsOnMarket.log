@@ -1,1 +1,12 @@
-2019-05-20 19:11:09,933 INFO d.DrugMarket [main] {AMPHETAMINE=36.0, COCAINE=240.0, HEROIN=60.0, ESCTASY=60.0, MARIJUANA=48.0}
+2019-06-02 23:12:13,654 INFO d.DrugMarket [main] Prices on the market: (day 1) type=MARIJUANA price=40.00, type=HEROIN price=50.00, type=ESCTASY price=50.00, type=COCAINE price=200.00, type=AMPHETAMINE price=30.00, 
+2019-06-02 23:13:12,589 INFO d.DrugMarket [main] Prices on the market: (day 2) type=ESCTASY price=37.65, type=AMPHETAMINE price=45.69, type=MARIJUANA price=47.71, type=HEROIN price=70.25, type=COCAINE price=198.65, 
+2019-06-02 23:13:49,532 INFO d.DrugMarket [main] Prices on the market: (day 3) type=ESCTASY price=53.95, type=AMPHETAMINE price=70.23, type=MARIJUANA price=71.80, type=HEROIN price=80.20, type=COCAINE price=151.83, 
+2019-06-02 23:35:02,760 INFO d.DrugMarket [main] Prices on the market: (day 1) type=MARIJUANA price=40.00, type=HEROIN price=50.00, type=ESCTASY price=50.00, type=COCAINE price=200.00, type=AMPHETAMINE price=30.00, 
+2019-06-02 23:35:51,142 INFO d.DrugMarket [main] Prices on the market: (day 2) type=MARIJUANA price=47.99, type=HEROIN price=55.68, type=ESCTASY price=78.69, type=COCAINE price=129.91, type=AMPHETAMINE price=47.83, 
+2019-06-02 23:36:05,550 INFO d.DrugMarket [main] Prices on the market: (day 3) type=MARIJUANA price=44.49, type=HEROIN price=83.44, type=ESCTASY price=106.95, type=COCAINE price=201.35, type=AMPHETAMINE price=76.44, 
+2019-06-02 23:36:21,365 INFO d.DrugMarket [main] Prices on the market: (day 4) type=MARIJUANA price=41.72, type=HEROIN price=71.98, type=ESCTASY price=128.53, type=COCAINE price=295.93, type=AMPHETAMINE price=66.53, 
+2019-06-02 23:36:26,085 INFO d.DrugMarket [main] Prices on the market: (day 5) type=MARIJUANA price=35.93, type=HEROIN price=57.18, type=ESCTASY price=151.44, type=COCAINE price=264.97, type=AMPHETAMINE price=69.93, 
+2019-06-02 23:36:51,182 INFO d.DrugMarket [main] Prices on the market: (day 6) type=MARIJUANA price=36.90, type=HEROIN price=45.12, type=ESCTASY price=190.53, type=COCAINE price=386.77, type=AMPHETAMINE price=100.40, 
+2019-06-02 23:43:03,214 INFO d.DrugMarket [main] Prices on the market: (day 1) type=MARIJUANA price=40.00, type=HEROIN price=50.00, type=ESCTASY price=50.00, type=COCAINE price=200.00, type=AMPHETAMINE price=30.00, 
+2019-06-02 23:43:06,941 INFO d.DrugMarket [main] Prices on the market: (day 2) type=MARIJUANA price=61.46, type=HEROIN price=78.48, type=ESCTASY price=72.31, type=COCAINE price=290.60, type=AMPHETAMINE price=28.04, 
+2019-06-02 23:43:33,516 INFO d.DrugMarket [main] Prices on the market: (day 3) type=MARIJUANA price=89.25, type=HEROIN price=124.54, type=ESCTASY price=92.72, type=COCAINE price=254.86, type=AMPHETAMINE price=25.40, 

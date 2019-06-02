@@ -3,3 +3,5 @@ Player moved to city.City@69379752 with capital 700
 Player moved to city.City@4b53f538 with capital 1000
 Player moved to city.City@76b10754 with capital 623.80767039220409823249854220307209537465309583200
 Player moved to city.City@76b10754 with capital 700
+Player moved to city.City@76b10754 with capital 988.8329440995007000
+Player moved to city.City@2bea5ab4 with capital 600

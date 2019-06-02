@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class DrugMarket implements Listener, Serializable { //implements Singleton
 
     private final Logger log = LogManager.getLogger(DrugMarket.class.getName());
-    private final Logger log2 = LogManager.getLogger(DrugMarket.class.getName());
     private Map<DrugType, BigDecimal> priceList;
     private static DrugMarket shop = null;
     Random rand = new Random();
@@ -38,7 +37,11 @@ public class DrugMarket implements Listener, Serializable { //implements Singlet
 
 
     public Map<DrugType, BigDecimal> getPriceList() {
-        return this.priceList;
+
+       return priceList.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     public void changePrices() {
@@ -47,7 +50,7 @@ public class DrugMarket implements Listener, Serializable { //implements Singlet
         Map<DrugType, BigDecimal> priceListAfterChange;
 
         priceListAfterChange = priceList.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> BigDecimal.valueOf(getRate()).multiply(e.getValue())));
-        log.log(Level.INFO, priceListAfterChange.toString());
+     //   log.log(Level.INFO, priceListAfterChange.toString());
         this.priceList = priceListAfterChange;
     }
 
@@ -57,7 +60,7 @@ public class DrugMarket implements Listener, Serializable { //implements Singlet
         Map<DrugType, BigDecimal> priceListAfterChange;
 
         priceListAfterChange = priceList.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> BigDecimal.valueOf(rate).multiply(e.getValue())));
-        log.log(Level.INFO, priceListAfterChange.toString());
+      //  log.log(Level.INFO, priceListAfterChange.toString());
         this.priceList = priceListAfterChange;
     }
 
@@ -72,13 +75,15 @@ public class DrugMarket implements Listener, Serializable { //implements Singlet
 
     public List<DrugType> getDrugTypeListInOrder() {
 
-        List<DrugType> list = new ArrayList<>();
+//        List<DrugType> list = new ArrayList<>();
+//
+//        for (Map.Entry<DrugType, BigDecimal> entry :priceList.entrySet()){
+//            list.add(entry.getKey());
+//        }
+//
+//        return list;
 
-        for (Map.Entry<DrugType, BigDecimal> entry :priceList.entrySet()){
-            list.add(entry.getKey());
-        }
-
-        return list;
+       return getPriceList().entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
     }
 
     private String priceListToString(Map<DrugType, BigDecimal> priceList){
@@ -93,8 +98,10 @@ public class DrugMarket implements Listener, Serializable { //implements Singlet
 
     @Override
     public void update(String message) {
-        String messageToLog = "Day " + message + ", Prices on the market: " + priceListToString(this.priceList);
-        log2.log(Level.INFO, messageToLog);
+
+        String messageToLog = "Prices on the market: " + "(day " + message +  ") "+  priceListToString(getPriceList());
+
+        log.log(Level.INFO, messageToLog);
     }
 }
 

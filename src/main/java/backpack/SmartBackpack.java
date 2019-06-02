@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class SmartBackpack implements Serializable {
             Integer newVolume = oldVolume + volume;
             goods.replace(drug.getName(),newVolume);
             updateWallet(BigDecimal.ZERO.subtract(costOfDrug));
-            String message = "Added drug: " + drug.getName() + "price: " + drug.getPrice() + ", volume: " + volume;
+            String message = "Added drug: " + drug.getName() + ", price: " + drug.getPrice().setScale(2, RoundingMode.HALF_UP) + ", volume: " + volume;
             log.log(Level.INFO, message);
             return DealStatus.MAKE_A_DEAL;
         }
@@ -61,7 +62,7 @@ public class SmartBackpack implements Serializable {
             goods.replace(drug.getName(),newVolume);
             BigDecimal profitFromDrug = drug.getPrice().multiply(BigDecimal.valueOf(volume));
             updateWallet(profitFromDrug);
-            String message = "Removed drug: " + drug.getName()  + ", price: " + drug.getPrice() + ", volume: " + volume;
+            String message = "Removed drug: " + drug.getName()  + ", price: " + drug.getPrice().setScale(2, RoundingMode.HALF_UP) + ", volume: " + volume;
             log.log(Level.INFO, message);
 
             return DealStatus.MAKE_A_DEAL;

@@ -55,3 +55,19 @@
 2019-05-30 20:12:49,001 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 10
 2019-05-30 20:20:48,801 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 19.5226347031149630, volume: 51
 2019-05-30 20:21:59,960 INFO b.SmartBackpack [main] Removed drug: AMPHETAMINE, price: 27.31589617832519219586135900929760, volume: 51
+2019-06-02 07:11:47,109 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 200, volume: 5
+2019-06-02 07:12:11,204 INFO b.SmartBackpack [main] Removed drug: COCAINE, price: 197.7665888199001400, volume: 5
+2019-06-02 07:12:27,845 INFO u.ToFileListener [main] Player moved to city.City@76b10754 with capital 988.8329440995007000
+2019-06-02 07:26:20,333 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 1
+2019-06-02 07:26:25,001 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 1
+2019-06-02 22:55:35,987 INFO b.SmartBackpack [main] Added drug: AMPHETAMINEprice: 30, volume: 10
+2019-06-02 23:12:09,051 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 10
+2019-06-02 23:12:18,717 INFO u.ToFileListener [main] Player moved to city.City@2bea5ab4 with capital 600
+2019-06-02 23:13:39,861 INFO b.SmartBackpack [main] Removed drug: MARIJUANA, price: 71.79525115151334320418028481328240, volume: 10
+2019-06-02 23:34:58,333 INFO b.SmartBackpack [main] Added drug: MARIJUANAprice: 40, volume: 10
+2019-06-02 23:35:19,758 INFO b.SmartBackpack [main] Added drug: COCAINEprice: 129.9147681464607200, volume: 1
+2019-06-02 23:42:59,032 INFO b.SmartBackpack [main] Added drug: MARIJUANA, price: 40.00, volume: 10
+2019-06-02 23:43:15,609 INFO b.SmartBackpack [main] Added drug: ESCTASY, price: 92.72, volume: 1
+2019-06-02 23:43:46,523 INFO b.SmartBackpack [main] Removed drug: MARIJUANA, price: 137.71, volume: 10
+2019-06-02 23:43:55,860 INFO b.SmartBackpack [main] Removed drug: ESCTASY, price: 84.70, volume: 1
+2019-06-02 23:46:14,139 INFO b.SmartBackpack [main] Added drug: COCAINE, price: 355.09, volume: 1
