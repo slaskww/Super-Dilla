@@ -349,7 +349,7 @@ public class VisualConsoleAgent {
 
 
     public void handleMarket(Player player) {
-        Map<DrugType, BigDecimal> currentPriceList = player.getCity().getMarket().getPriceList();
+        Map<DrugType, BigDecimal> currentPriceList = player.getCity().getMarket().getPriceListInOrder();
         boolean isPlayerDealing = true;
         System.out.println("# Witaj na rynku wymiany towaru.\n");
 
@@ -574,7 +574,7 @@ public class VisualConsoleAgent {
         showBackpack(player);
         List<DrugType> drugTypeList = player.getSmartBackpack().getDrugTypeListInOrder();
         DrugType chosenProductType = chooseDrugType(drugTypeList);
-        BigDecimal chosenProductPrice = player.getCity().getMarket().getPriceList().get(chosenProductType);
+        BigDecimal chosenProductPrice = player.getCity().getMarket().getPriceListInOrder().get(chosenProductType);
         Integer volumeOfChosenProductInBackpack = player.getSmartBackpack().getDrugVolume(chosenProductType);
         int numberOfSoldProducts = getNumberOfProductsToSell(volumeOfChosenProductInBackpack);
 

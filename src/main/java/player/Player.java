@@ -16,6 +16,8 @@ import weapon.WeaponFactory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Player extends Person implements Listener, Serializable {
 
@@ -102,7 +104,7 @@ public class Player extends Person implements Listener, Serializable {
                 messageBuilder.append(", city=");
                 messageBuilder.append(this.city.getName());
                 messageBuilder.append(", balance=");
-                messageBuilder.append(this.getBalance());
+                messageBuilder.append(this.getBalance().setScale(2, RoundingMode.HALF_UP));
                 messageBuilder.append(", offensive=");
                 messageBuilder.append(getOffensiveLevel());
                 messageBuilder.append(", defensive=");

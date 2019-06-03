@@ -1,6 +1,7 @@
 package utils;
 
 import dialogAgent.VisualConsoleAgent;
+import drug.DrugType;
 import game.GameEngine;
 import game.TimeInGame;
 import player.AchievementBoard;
@@ -8,6 +9,8 @@ import player.Player;
 import world.World;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.util.Map;
 
 public class SaveAndLoadGameUtil {
 
@@ -28,6 +31,7 @@ public class SaveAndLoadGameUtil {
             objOutput.writeObject(player);
             objOutput.writeObject(day);
             objOutput.writeObject(achievementBoard);
+            objOutput.writeObject(player.getCity().getMarket().getPriceList());
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -46,8 +50,9 @@ public class SaveAndLoadGameUtil {
             Player player = (Player) oInput.readObject();
             Integer day = (Integer) oInput.readObject();
             AchievementBoard board = (AchievementBoard) oInput.readObject();
+            Map<DrugType, BigDecimal> pricesOnMarket = (Map<DrugType, BigDecimal>) oInput.readObject();
 
-            gameEngine.loadGame(world, day, board, player);
+            gameEngine.loadGame(world, day, board, player, pricesOnMarket);
         } catch (IOException e) {
             System.out.println("File not found");
 

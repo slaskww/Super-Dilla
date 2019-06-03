@@ -2,6 +2,8 @@ package game;
 
 import dialogAgent.DialogAgent;
 import dialogAgent.EventType;
+import drug.DrugMarket;
+import drug.DrugType;
 import player.AchievementBoard;
 import player.Player;
 import utils.Announcer;
@@ -9,6 +11,9 @@ import utils.Listener;
 import utils.SaveAndLoadGameUtil;
 import world.World;
 import world.WorldBuilder;
+
+import java.math.BigDecimal;
+import java.util.Map;
 
 public class GameEngine implements Listener {
     private int MAX_NUMBER_OF_DAYS = 60;
@@ -97,7 +102,7 @@ public class GameEngine implements Listener {
     }
 
 
-    public void loadGame(World world, Integer day, AchievementBoard board, Player playerAsAPerson) {
+    public void loadGame(World world, Integer day, AchievementBoard board, Player playerAsAPerson,  Map<DrugType, BigDecimal>  pricesOnMarket) {
         this.world = world;
         this.time.setDay(day);
         this.achievementBoard = board;
@@ -108,6 +113,7 @@ public class GameEngine implements Listener {
         this.player.setOffensiveLevel(playerAsAPerson.getOffensiveLevel());
         this.player.setMentalLevel(playerAsAPerson.getMentalLevel());
         this.player.setWeapon(playerAsAPerson.getWeapon());
+        DrugMarket.getDrugMarket().setPriceList(pricesOnMarket);
 
     }
 }

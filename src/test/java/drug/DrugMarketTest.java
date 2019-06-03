@@ -14,7 +14,7 @@ public class DrugMarketTest {
 
         //Given
         DrugMarket shop = DrugMarket.getDrugMarket();
-        Map<DrugType, BigDecimal> priceList = shop.getPriceList();
+        Map<DrugType, BigDecimal> priceList = shop.getPriceListInOrder();
 
         BigDecimal valueOfFirstElementBeforeChange = priceList.get(DrugType.AMPHETAMINE);
         BigDecimal valueOfSecondElementBeforeChange = priceList.get(DrugType.COCAINE);
@@ -27,7 +27,7 @@ public class DrugMarketTest {
 
         //When
         shop.changePrices(rate);
-        priceList = shop.getPriceList();
+        priceList = shop.getPriceListInOrder();
 
 
         BigDecimal valueOfFirstElementAfterChange = priceList.get(DrugType.AMPHETAMINE);
